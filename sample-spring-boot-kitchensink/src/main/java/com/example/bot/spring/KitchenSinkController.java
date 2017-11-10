@@ -393,7 +393,8 @@ public class KitchenSinkController {
                                         new ImagemapArea(
                                                 520, 0, 520, 520
                                         )
-                                ),
+                                )
+                                /*,
                                 new URIImagemapAction(
                                         "https://store.line.me/family/play/en",
                                         new ImagemapArea(
@@ -405,7 +406,7 @@ public class KitchenSinkController {
                                         new ImagemapArea(
                                                 520, 520, 520, 520
                                         )
-                                )
+                                )*/
                         )
                 ));
                 break;
