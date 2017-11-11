@@ -378,7 +378,8 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "poker": {
+            case "poker":
+            case "妞": {
                 ArrayList<Integer> randomNumSet = new ArrayList<>();
 
                 for (int i = 0; i < 5; i++) {
@@ -392,25 +393,23 @@ public class KitchenSinkController {
 //                    }
                     randomNumSet.add(i, randomNum);
                 }
-                System.out.println("1 random set -> "+ randomNumSet.size());
+
                 ArrayList<String> pockerSet = new ArrayList<>();
                 for (int num : randomNumSet) {
 //                    int poker = (num / 13) + (num % 13);
                     pockerSet.add(String.valueOf(num));
                 }
-                System.out.println("2 pockerSet -> "+ pockerSet.size());
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < pockerSet.size(); i++) {
-                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)), new MessageAction(String.valueOf((i + 1)),
+                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+".jpeg"), new MessageAction(String.valueOf((i + 1)),
                             pockerSet.get(i))));
                 }
-                System.out.println("3 imageCarouselColumns -> "+ imageCarouselColumns.size());
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         imageCarouselColumns
                 );
-                System.out.println("4");
+
                 TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
                 this.reply(replyToken, templateMessage);
                 break;
