@@ -449,13 +449,13 @@ public class KitchenSinkController {
                         )
                 ));
                 break;
-            /*default:
+            default:
                 log.info("Returns echo message {}: {}", replyToken, text);
                 this.replyText(
                         replyToken,
                         text
                 );
-                break;*/
+                break;
         }
     }
 
@@ -528,7 +528,8 @@ public class KitchenSinkController {
                     int num3 = numberSet.get(k);
                     int target = num1 + num2 + num3;
                     if (target % 10 == 0) {
-                        return ((total - target) % 10);
+                        result = ((total - target) % 10);
+                        break;
                     }
                 }
             }
