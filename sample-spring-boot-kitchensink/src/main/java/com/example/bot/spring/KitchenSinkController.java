@@ -382,7 +382,7 @@ public class KitchenSinkController {
                 ArrayList<Integer> randomNumSet = new ArrayList<>();
 
                 for (int i = 0; i < 5; i++) {
-                    int randomNum = 0;
+                    int randomNum = random();
 //                    for (int j = 0; j < 999; j++) {
 //                        randomNum = random();
 //                        if (randomNumSet.contains(randomNum))
@@ -401,9 +401,10 @@ public class KitchenSinkController {
                 System.out.println("2 pockerSet -> "+ pockerSet.size());
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
-                for (String poker : pockerSet) {
-                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + poker), new MessageAction("",
-                            "")));
+                for (int i = 1; i <= pockerSet.size(); i++) {
+
+                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)), new MessageAction(String.valueOf(i),
+                            pockerSet.get(i))));
                 }
                 System.out.println("3 imageCarouselColumns -> "+ imageCarouselColumns.size());
 
