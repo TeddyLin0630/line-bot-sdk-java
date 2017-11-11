@@ -378,19 +378,19 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "poker":
             case "妞": {
                 ArrayList<Integer> randomNumSet = new ArrayList<>();
 
                 for (int i = 0; i < 5; i++) {
-                    int randomNum = random();
-                    /*for (int j = 0; j < 999; j++) {
+                    int randomNum;
+                    while (true) {
                         randomNum = random();
-                        if (randomNumSet.contains(randomNum))
+                        if (randomNumSet.contains(randomNum)) {
                             continue;
-                        else
+                        } else {
                             break;
-                    }*/
+                        }
+                    }
                     randomNumSet.add(i, randomNum);
                 }
 
@@ -508,6 +508,6 @@ public class KitchenSinkController {
 
     private static int random() {
         Random rand = new Random();
-        return rand.nextInt(51) + 0;
+        return rand.nextInt(52) + 1;
     }
 }
