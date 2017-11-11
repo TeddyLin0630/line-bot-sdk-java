@@ -522,7 +522,7 @@ public class KitchenSinkController {
 
         for (int i = 0; i < numberSet.size(); i++) {
             int num1 = numberSet.get(i);
-            for (int j = i + 1; i < numberSet.size(); j++) {
+            for (int j = i + 1; j < numberSet.size(); j++) {
                 int num2 = numberSet.get(j);
                 for (int k = j + 1; k < numberSet.size(); k++) {
                     int num3 = numberSet.get(k);
