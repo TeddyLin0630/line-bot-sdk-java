@@ -390,20 +390,18 @@ public class KitchenSinkController {
                             break;
                         }
                     }
-                    randomNumSet.add(i, randomNum);
+                    randomNumSet.add(i, getPockerPoint(randomNum));
                 }
 
                 String result = caculate(randomNumSet);
 
-                ArrayList<String> pockerSet = new ArrayList<>();
-                for (int num : randomNumSet) {
-//                    int poker = (num / 13) + (num % 13);
-                    pockerSet.add(String.valueOf(num));
-                }
-
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
-                for (int i = 0; i < pockerSet.size(); i++) {
-                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+".jpeg"), new MessageAction(String.valueOf((i + 1)),
+
+                for (int i = 0; i < randomNumSet.size(); i++) {
+                    String pokerPoint = String.valueOf(randomNumSet.get(i));
+                    imageCarouselColumns.add(
+                            new ImageCarouselColumn(createUri("/static/poker/" + pokerPoint +".jpeg"),
+                            new MessageAction(pokerPoint,
                             result)));
                 }
 
@@ -514,21 +512,21 @@ public class KitchenSinkController {
 
     private static String caculate(ArrayList<Integer> numberSet) {
         String resultText = "沒妞";
-        int result = 0;
+        int result;
         int total = 0;
 
         for (int num : numberSet) {
-            total += getPockerPoint(num);
+            total += num;
         }
         for (int i = 0; i < numberSet.size(); i++) {
-            int num1 = getPockerPoint(numberSet.get(i));
+            int num1 = numberSet.get(i);
             for (int j = i + 1; j < numberSet.size(); j++) {
-                int num2 = getPockerPoint(numberSet.get(j));
+                int num2 = numberSet.get(j);
                 for (int k = j + 1; k < numberSet.size(); k++) {
-                    int num3 = getPockerPoint(numberSet.get(k));
+                    int num3 = numberSet.get(k);
                     int target = num1 + num2 + num3;
                     if (target % 10 == 0) {
-                        System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
+//                        System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
                         result = ((total - target) % 10);
                         resultText = (result == 0) ? "妞妞" : result + "妞";
                         break;
