@@ -527,6 +527,7 @@ public class KitchenSinkController {
                 for (int k = j + 1; k < numberSet.size(); k++) {
                     int num3 = getPockerPoint(numberSet.get(k));
                     int target = num1 + num2 + num3;
+                    System.out.println("target ===========================> " + target);
                     if (target % 10 == 0) {
                         result = ((total - target) % 10);
                         break;
@@ -538,9 +539,9 @@ public class KitchenSinkController {
     }
 
     private static int getPockerPoint(int number) {
-        int result;
-        result = (number % 13);
+        int modNum = (number % 13);
+        int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
         System.out.println(number + " number ===========================> result " + result);
-        return (result > 10 || result < 1) ? 10 : result;
+        return result;
     }
 }
