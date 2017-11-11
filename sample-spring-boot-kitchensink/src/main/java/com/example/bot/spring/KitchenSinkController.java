@@ -379,29 +379,30 @@ public class KitchenSinkController {
                 break;
             }
             case "妞": {
-                ArrayList<Integer> randomNumSet = new ArrayList<>();
+                ArrayList<Integer> pokerpointSet = new ArrayList<>();
+                ArrayList<Integer> imagePathSet = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
                     int randomNum;
                     while (true) {
                         randomNum = random();
-                        if (randomNumSet.contains(randomNum)) {
+                        if (pokerpointSet.contains(randomNum)) {
                             continue;
                         } else {
                             break;
                         }
                     }
-                    randomNumSet.add(i, getPockerPoint(randomNum));
+                    imagePathSet.add(i, randomNum);
+                    pokerpointSet.add(i, getPockerPoint(randomNum));
                 }
 
-                String result = caculate(randomNumSet);
+                String result = caculate(pokerpointSet);
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
 
-                for (int i = 0; i < randomNumSet.size(); i++) {
-                    String pokerPoint = String.valueOf(randomNumSet.get(i));
+                for (int i = 0; i < pokerpointSet.size(); i++) {
                     imageCarouselColumns.add(
-                            new ImageCarouselColumn(createUri("/static/poker/" + pokerPoint +".jpeg"),
-                            new MessageAction(pokerPoint,
+                            new ImageCarouselColumn(createUri("/static/poker/" + String.valueOf(imagePathSet.get(i)) +".jpeg"),
+                            new MessageAction(String.valueOf(pokerpointSet.get(i)),
                             result)));
                 }
 
@@ -518,6 +519,7 @@ public class KitchenSinkController {
         for (int num : numberSet) {
             total += num;
         }
+
         for (int i = 0; i < numberSet.size(); i++) {
             int num1 = numberSet.get(i);
             for (int j = i + 1; j < numberSet.size(); j++) {
