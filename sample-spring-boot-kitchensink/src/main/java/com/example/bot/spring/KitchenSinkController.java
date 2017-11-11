@@ -380,7 +380,6 @@ public class KitchenSinkController {
             }
             case "妞": {
                 ArrayList<Integer> randomNumSet = new ArrayList<>();
-
                 for (int i = 0; i < 5; i++) {
                     int randomNum;
                     while (true) {
@@ -394,6 +393,8 @@ public class KitchenSinkController {
                     randomNumSet.add(i, randomNum);
                 }
 
+                int result = caculate(randomNumSet);
+
                 ArrayList<String> pockerSet = new ArrayList<>();
                 for (int num : randomNumSet) {
 //                    int poker = (num / 13) + (num % 13);
@@ -403,7 +404,7 @@ public class KitchenSinkController {
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < pockerSet.size(); i++) {
                     imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+".jpeg"), new MessageAction(String.valueOf((i + 1)),
-                            pockerSet.get(i))));
+                            pockerSet.get(result))));
                 }
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
@@ -448,13 +449,13 @@ public class KitchenSinkController {
                         )
                 ));
                 break;
-            default:
+            /*default:
                 log.info("Returns echo message {}: {}", replyToken, text);
                 this.replyText(
                         replyToken,
                         text
                 );
-                break;
+                break;*/
         }
     }
 
@@ -509,5 +510,29 @@ public class KitchenSinkController {
     private static int random() {
         Random rand = new Random();
         return rand.nextInt(52) + 1;
+    }
+
+    private static int caculate(ArrayList<Integer> numberSet) {
+        int result = 0;
+        int total = 0;
+
+        for (int num : numberSet) {
+            total += num;
+        }
+
+        for (int i = 0; i < numberSet.size(); i++) {
+            int num1 = numberSet.get(i);
+            for (int j = i + 1; i < numberSet.size(); j++) {
+                int num2 = numberSet.get(j);
+                for (int k = j + 1; k < numberSet.size(); k++) {
+                    int num3 = numberSet.get(k);
+                    int target = num1 + num2 + num3;
+                    if (target % 10 == 0) {
+                        return ((total - target) % 10);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
