@@ -398,19 +398,19 @@ public class KitchenSinkController {
                     int poker = (num / 13) + (num % 13);
                     pockerSet.add(String.valueOf(poker));
                 }
-                log.info("2" ," pockerSet -> ", pockerSet.size());
+                System.out.println("2 pockerSet -> "+ pockerSet.size());
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (String poker : pockerSet) {
                     imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + poker), new MessageAction("",
-                            ""));
+                            "")));
                 }
-                log.info("3" ," imageCarouselColumns -> ", imageCarouselColumns.size());
+                System.out.println("3 imageCarouselColumns -> "+ imageCarouselColumns.size());
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         imageCarouselColumns
                 );
-                log.info("4");
+                System.out.println("4");
                 TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
                 this.reply(replyToken, templateMessage);
                 break;
