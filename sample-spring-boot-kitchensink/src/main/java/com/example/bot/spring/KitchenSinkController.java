@@ -384,21 +384,24 @@ public class KitchenSinkController {
                 for (int i = 0; i < 5; i++) {
                     randomNumSet.add(i, random());
                 }
-
+                log.info("1" ," random set -> ", randomNumSet.size());
                 ArrayList<String> pockerSet = new ArrayList<>();
                 for (int num : randomNumSet) {
                     int poker = (num / 13) + (num % 13);
                     pockerSet.add(String.valueOf(poker));
                 }
+                log.info("2" ," pockerSet -> ", pockerSet.size());
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (String poker : pockerSet) {
                     imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + poker), null));
                 }
+                log.info("3" ," imageCarouselColumns -> ", imageCarouselColumns.size());
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         imageCarouselColumns
                 );
+                log.info("4");
                 TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
                 this.reply(replyToken, templateMessage);
                 break;
