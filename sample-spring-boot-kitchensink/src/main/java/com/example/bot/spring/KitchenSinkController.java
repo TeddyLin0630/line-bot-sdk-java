@@ -531,6 +531,7 @@ public class KitchenSinkController {
                     if (target % 10 == 0) {
                         System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
                         result = ((total - target) % 10);
+                        System.out.println("result !! " + result );
                         break;
                     }
                 }
@@ -542,7 +543,7 @@ public class KitchenSinkController {
     private static int getPockerPoint(int number) {
         int modNum = (number % 13);
         int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
-        System.out.println(number + " number ===========================> result " + result);
+        System.out.println(number + " number ===========================> point " + result);
         return result;
     }
 }
