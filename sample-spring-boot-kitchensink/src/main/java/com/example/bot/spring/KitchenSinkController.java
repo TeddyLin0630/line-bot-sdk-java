@@ -384,13 +384,13 @@ public class KitchenSinkController {
 
                 for (int i = 0; i < 5; i++) {
                     int randomNum = random();
-//                    for (int j = 0; j < 999; j++) {
-//                        randomNum = random();
-//                        if (randomNumSet.contains(randomNum))
-//                            continue;
-//                        else
-//                            break;
-//                    }
+                    /*for (int j = 0; j < 999; j++) {
+                        randomNum = random();
+                        if (randomNumSet.contains(randomNum))
+                            continue;
+                        else
+                            break;
+                    }*/
                     randomNumSet.add(i, randomNum);
                 }
 
@@ -402,7 +402,7 @@ public class KitchenSinkController {
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < pockerSet.size(); i++) {
-                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+".jpeg"), new MessageAction(String.valueOf((i + 1)),
+                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+"/520.jpeg"), new MessageAction(String.valueOf((i + 1)),
                             pockerSet.get(i))));
                 }
 
