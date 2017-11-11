@@ -393,7 +393,7 @@ public class KitchenSinkController {
                     randomNumSet.add(i, randomNum);
                 }
 
-                int result = caculate(randomNumSet);
+                String result = caculate(randomNumSet);
 
                 ArrayList<String> pockerSet = new ArrayList<>();
                 for (int num : randomNumSet) {
@@ -404,7 +404,7 @@ public class KitchenSinkController {
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < pockerSet.size(); i++) {
                     imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)+".jpeg"), new MessageAction(String.valueOf((i + 1)),
-                            pockerSet.get(result))));
+                            result)));
                 }
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
@@ -512,7 +512,7 @@ public class KitchenSinkController {
         return rand.nextInt(52) + 1;
     }
 
-    private static int caculate(ArrayList<Integer> numberSet) {
+    private static String caculate(ArrayList<Integer> numberSet) {
         int result = 0;
         int total = 0;
 
@@ -532,12 +532,12 @@ public class KitchenSinkController {
                         System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
                         result = ((total - target) % 10);
                         System.out.println("result !! " + result );
-                        break;
+                        return result == 0 ? "妞妞" : result + "妞";
                     }
                 }
             }
         }
-        return result;
+        return "沒妞";
     }
 
     private static int getPockerPoint(int number) {
