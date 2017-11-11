@@ -451,10 +451,10 @@ public class KitchenSinkController {
                 break;
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
-                this.replyText(
+                /*this.replyText(
                         replyToken,
                         text
-                );
+                );*/
                 break;
         }
     }
@@ -517,15 +517,15 @@ public class KitchenSinkController {
         int total = 0;
 
         for (int num : numberSet) {
-            total += num;
+            total += getPockerPoint(num);
         }
-
+        System.out.println("total ===========================> " + total);
         for (int i = 0; i < numberSet.size(); i++) {
-            int num1 = numberSet.get(i);
+            int num1 = getPockerPoint(numberSet.get(i));
             for (int j = i + 1; j < numberSet.size(); j++) {
-                int num2 = numberSet.get(j);
+                int num2 = getPockerPoint(numberSet.get(j));
                 for (int k = j + 1; k < numberSet.size(); k++) {
-                    int num3 = numberSet.get(k);
+                    int num3 = getPockerPoint(numberSet.get(k));
                     int target = num1 + num2 + num3;
                     if (target % 10 == 0) {
                         result = ((total - target) % 10);
@@ -535,5 +535,12 @@ public class KitchenSinkController {
             }
         }
         return result;
+    }
+
+    private static int getPockerPoint(int number) {
+        int result;
+        result = (number % 13);
+        System.out.println(number + " number ===========================> result " + result);
+        return (result > 10 || result < 1) ? 10 : result;
     }
 }
