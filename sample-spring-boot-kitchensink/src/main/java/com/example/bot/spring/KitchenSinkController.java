@@ -22,9 +22,11 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -376,6 +378,31 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
+            case "poker": {
+                ArrayList<Integer> randomNumSet = new ArrayList<>();
+
+                for (int i = 0; i < 5; i++) {
+                    randomNumSet.add(i, random());
+                }
+
+                ArrayList<String> pockerSet = new ArrayList<>();
+                for (int num : randomNumSet) {
+                    int poker = (num / 13) + (num % 13);
+                    pockerSet.add(String.valueOf(poker));
+                }
+
+                ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
+                for (String poker : pockerSet) {
+                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + poker), null));
+                }
+
+                ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
+                        imageCarouselColumns
+                );
+                TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
+                this.reply(replyToken, templateMessage);
+                break;
+            }
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -394,7 +421,7 @@ public class KitchenSinkController {
                                                 520, 0, 520, 520
                                         )
                                 )
-                                /*,
+                                ,
                                 new URIImagemapAction(
                                         "https://store.line.me/family/play/en",
                                         new ImagemapArea(
@@ -406,7 +433,7 @@ public class KitchenSinkController {
                                         new ImagemapArea(
                                                 520, 520, 520, 520
                                         )
-                                )*/
+                                )
                         )
                 ));
                 break;
@@ -466,5 +493,10 @@ public class KitchenSinkController {
     public static class DownloadedContent {
         Path path;
         String uri;
+    }
+
+    private static int random() {
+        Random rand = new Random();
+        return rand.nextInt(52) + 1;
     }
 }
