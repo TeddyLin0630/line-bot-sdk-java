@@ -513,13 +513,13 @@ public class KitchenSinkController {
     }
 
     private static String caculate(ArrayList<Integer> numberSet) {
+        String resultText = "沒妞";
         int result = 0;
         int total = 0;
 
         for (int num : numberSet) {
             total += getPockerPoint(num);
         }
-        System.out.println("total ===========================> " + total);
         for (int i = 0; i < numberSet.size(); i++) {
             int num1 = getPockerPoint(numberSet.get(i));
             for (int j = i + 1; j < numberSet.size(); j++) {
@@ -527,23 +527,21 @@ public class KitchenSinkController {
                 for (int k = j + 1; k < numberSet.size(); k++) {
                     int num3 = getPockerPoint(numberSet.get(k));
                     int target = num1 + num2 + num3;
-                    System.out.println("target ===========================> " + target);
                     if (target % 10 == 0) {
                         System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
                         result = ((total - target) % 10);
-                        System.out.println("result !! " + result );
-                        return result == 0 ? "妞妞" : result + "妞";
+                        resultText = (result == 0) ? "妞妞" : result + "妞";
+                        break;
                     }
                 }
             }
         }
-        return "沒妞";
+        return resultText;
     }
 
     private static int getPockerPoint(int number) {
         int modNum = (number % 13);
         int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
-        System.out.println(number + " number ===========================> point " + result);
         return result;
     }
 }
