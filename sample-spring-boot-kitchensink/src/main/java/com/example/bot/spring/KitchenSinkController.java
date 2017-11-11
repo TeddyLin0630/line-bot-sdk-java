@@ -401,9 +401,8 @@ public class KitchenSinkController {
                 System.out.println("2 pockerSet -> "+ pockerSet.size());
 
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
-                for (int i = 1; i <= pockerSet.size(); i++) {
-
-                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)), new MessageAction(String.valueOf(i),
+                for (int i = 0; i < pockerSet.size(); i++) {
+                    imageCarouselColumns.add(new ImageCarouselColumn(createUri("/static/poker/" + pockerSet.get(i)), new MessageAction(String.valueOf((i + 1)),
                             pockerSet.get(i))));
                 }
                 System.out.println("3 imageCarouselColumns -> "+ imageCarouselColumns.size());
