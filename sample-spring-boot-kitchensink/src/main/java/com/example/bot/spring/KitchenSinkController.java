@@ -383,20 +383,20 @@ public class KitchenSinkController {
 
                 for (int i = 0; i < 5; i++) {
                     int randomNum = 0;
-                    for (int j = 0; j < 999; j++) {
-                        randomNum = random();
-                        if (randomNumSet.contains(randomNum))
-                            continue;
-                        else
-                            break;
-                    }
+//                    for (int j = 0; j < 999; j++) {
+//                        randomNum = random();
+//                        if (randomNumSet.contains(randomNum))
+//                            continue;
+//                        else
+//                            break;
+//                    }
                     randomNumSet.add(i, randomNum);
                 }
                 System.out.println("1 random set -> "+ randomNumSet.size());
                 ArrayList<String> pockerSet = new ArrayList<>();
                 for (int num : randomNumSet) {
-                    int poker = (num / 13) + (num % 13);
-                    pockerSet.add(String.valueOf(poker));
+//                    int poker = (num / 13) + (num % 13);
+                    pockerSet.add(String.valueOf(num));
                 }
                 System.out.println("2 pockerSet -> "+ pockerSet.size());
 
