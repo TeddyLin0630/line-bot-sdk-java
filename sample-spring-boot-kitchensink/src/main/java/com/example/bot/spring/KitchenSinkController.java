@@ -529,6 +529,7 @@ public class KitchenSinkController {
                     int target = num1 + num2 + num3;
                     System.out.println("target ===========================> " + target);
                     if (target % 10 == 0) {
+                        System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
                         result = ((total - target) % 10);
                         break;
                     }
