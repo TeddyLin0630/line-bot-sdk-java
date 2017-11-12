@@ -380,34 +380,18 @@ public class KitchenSinkController {
                 break;
             }
             case "妞": {
-                /*ArrayList<Integer> pokerpointSet = new ArrayList<>();
-                ArrayList<Integer> imagePathSet = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    int randomNum;
-                    while (true) {
-                        randomNum = random();
-                        if (pokerpointSet.contains(randomNum)) {
-                            continue;
-                        } else {
-                            break;
-                        }
-                    }
-                    imagePathSet.add(i, randomNum);
-                    pokerpointSet.add(i, getPockerPoint(randomNum));
-                }
-
-                String result = caculate(pokerpointSet);*/
                 int numberOfPokers = 5;
+
                 Niuniu niuniu = new Niuniu(numberOfPokers);
                 String result = niuniu.caculate();
-                ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
 
+                ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < numberOfPokers; i++) {
                     String imagePath = niuniu.getPath(i);
                     String pokerPoint = String.valueOf(niuniu.getPoint(i));
                     imageCarouselColumns.add(
                             new ImageCarouselColumn(createUri("/static/poker/" + imagePath +".jpeg"),
-                            new MessageAction(pokerPoint, result)));
+                                    new MessageAction(pokerPoint, result)));
                 }
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
