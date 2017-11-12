@@ -14,16 +14,16 @@ public class Niuniu extends Poker {
         int result;
         int total = 0;
 
-        for (int num : pokerpointSet) {
+        for (int num : pokerPointSet) {
             total += num;
         }
 
-        for (int i = 0; i < pokerpointSet.size(); i++) {
-            int num1 = pokerpointSet.get(i);
-            for (int j = i + 1; j < pokerpointSet.size(); j++) {
-                int num2 = pokerpointSet.get(j);
-                for (int k = j + 1; k < pokerpointSet.size(); k++) {
-                    int num3 = pokerpointSet.get(k);
+        for (int i = 0; i < pokerPointSet.size(); i++) {
+            int num1 = pokerPointSet.get(i);
+            for (int j = i + 1; j < pokerPointSet.size(); j++) {
+                int num2 = pokerPointSet.get(j);
+                for (int k = j + 1; k < pokerPointSet.size(); k++) {
+                    int num3 = pokerPointSet.get(k);
                     int target = num1 + num2 + num3;
                     if (target % 10 == 0) {
 //                        System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
@@ -35,5 +35,29 @@ public class Niuniu extends Poker {
             }
         }
         return resultText;
+    }
+
+    @Override
+    public void deal(int num) {
+        for (int i = 0; i < num; i++) {
+            int randomNum;
+            while (true) {
+                randomNum = random();
+                if (pokerPointSet.contains(randomNum)) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            imagePathSet.add(i, randomNum);
+            pokerPointSet.add(i, getPokerPoint(randomNum));
+        }
+    }
+
+    @Override
+    public int getPokerPoint(int number) {
+        int modNum = (number % 13);
+        int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
+        return result;
     }
 }
