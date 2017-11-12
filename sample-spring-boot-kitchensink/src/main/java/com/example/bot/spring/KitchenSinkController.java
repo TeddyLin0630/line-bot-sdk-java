@@ -384,15 +384,39 @@ public class KitchenSinkController {
             case "妞":
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
-                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+//                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+
+                String userId = event.getSource().getUserId();
+                if (userId != null) {
+                    lineMessagingClient
+                            .getProfile(userId)
+                            .whenComplete((profile, throwable) -> {
+                                if (throwable != null) {
+                                    this.replyText(replyToken, throwable.getMessage());
+                                    return;
+                                }
+
+                                this.reply(
+                                        replyToken,
+                                        Arrays.asList(new TextMessage(
+                                                        "Player name: " + profile.getDisplayName()),
+                                                createPokerMessage(numberOfPokersForNiuniu, niuniu))
+                                );
+
+                            });
+                } else {
+                    this.replyText(replyToken, "Bot can't use profile API without user ID");
+                }
                 break;
 
-            case "摸":
+            case "抽":
                 int numberOfPokersForBigOne = 1;
                 BigOne bigOne = new BigOne(numberOfPokersForBigOne);
                 this.reply(replyToken, createPokerMessage(numberOfPokersForBigOne, bigOne));
                 break;
 
+            case "射":
+                break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -501,4 +525,5 @@ public class KitchenSinkController {
         Path path;
         String uri;
     }
+
 }
