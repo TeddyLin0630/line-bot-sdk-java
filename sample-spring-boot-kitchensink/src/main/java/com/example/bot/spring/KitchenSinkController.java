@@ -382,15 +382,15 @@ public class KitchenSinkController {
                 break;
             }
             case "妞":
-                int numberOfPokers = 5;
-                Niuniu niuniu = new Niuniu(numberOfPokers);
-                this.reply(replyToken, createPokerMessage(numberOfPokers, niuniu));
+                int numberOfPokersForNiuniu = 5;
+                Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
+                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
                 break;
-            
+
             case "摸":
-                int numberOfPokers = 1;
-                BigOne bigOne = new BigOne(numberOfPokers);
-                this.reply(replyToken, createPokerMessage(numberOfPokers, bigOne));
+                int numberOfPokersForBigOne = 1;
+                BigOne bigOne = new BigOne(numberOfPokersForBigOne);
+                this.reply(replyToken, createPokerMessage(numberOfPokersForBigOne, bigOne));
                 break;
 
             case "imagemap":
