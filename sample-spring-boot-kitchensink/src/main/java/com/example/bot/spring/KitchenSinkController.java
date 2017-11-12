@@ -31,7 +31,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import com.example.bot.spring.poker.BigOne;
 import com.example.bot.spring.poker.Niuniu;
+import com.example.bot.spring.poker.Poker;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -379,29 +381,18 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "妞": {
+            case "妞":
                 int numberOfPokers = 5;
-
                 Niuniu niuniu = new Niuniu(numberOfPokers);
-                String result = niuniu.caculate();
-
-                ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
-                for (int i = 0; i < numberOfPokers; i++) {
-                    String imagePath = niuniu.getPath(i);
-                    String pokerPoint = String.valueOf(niuniu.getPoint(i));
-                    imageCarouselColumns.add(
-                            new ImageCarouselColumn(createUri("/static/poker/" + imagePath +".jpeg"),
-                                    new MessageAction(pokerPoint, result)));
-                }
-
-                ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
-                        imageCarouselColumns
-                );
-
-                TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
-                this.reply(replyToken, templateMessage);
+                this.reply(replyToken, createPokerMessage(numberOfPokers, niuniu));
                 break;
-            }
+            
+            case "摸":
+                int numberOfPokers = 1;
+                BigOne bigOne = new BigOne(numberOfPokers);
+                this.reply(replyToken, createPokerMessage(numberOfPokers, bigOne));
+                break;
+
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -444,6 +435,23 @@ public class KitchenSinkController {
                 );*/
                 break;
         }
+    }
+
+    private static TemplateMessage createPokerMessage(int numberOfPokers, Poker poker) {
+        ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
+        for (int i = 0; i < numberOfPokers; i++) {
+            String imagePath = poker.getPath(i);
+            String pokerPoint = String.valueOf(poker.getPoint(i));
+            imageCarouselColumns.add(
+                    new ImageCarouselColumn(createUri("/static/poker/" + imagePath +".jpeg"),
+                            new MessageAction(pokerPoint, poker.getResult())));
+        }
+
+        ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
+                imageCarouselColumns
+        );
+
+        return new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
     }
 
     private static String createUri(String path) {
@@ -492,44 +500,5 @@ public class KitchenSinkController {
     public static class DownloadedContent {
         Path path;
         String uri;
-    }
-
-    private static int random() {
-        Random rand = new Random();
-        return rand.nextInt(52) + 1;
-    }
-
-    private static String caculate(ArrayList<Integer> numberSet) {
-        String resultText = "沒妞";
-        int result;
-        int total = 0;
-
-        for (int num : numberSet) {
-            total += num;
-        }
-
-        for (int i = 0; i < numberSet.size(); i++) {
-            int num1 = numberSet.get(i);
-            for (int j = i + 1; j < numberSet.size(); j++) {
-                int num2 = numberSet.get(j);
-                for (int k = j + 1; k < numberSet.size(); k++) {
-                    int num3 = numberSet.get(k);
-                    int target = num1 + num2 + num3;
-                    if (target % 10 == 0) {
-//                        System.out.println("hit !! " + num1 +"/"+num2+"/"+num3 );
-                        result = ((total - target) % 10);
-                        resultText = (result == 0) ? "妞妞" : result + "妞";
-                        break;
-                    }
-                }
-            }
-        }
-        return resultText;
-    }
-
-    private static int getPockerPoint(int number) {
-        int modNum = (number % 13);
-        int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
-        return result;
     }
 }

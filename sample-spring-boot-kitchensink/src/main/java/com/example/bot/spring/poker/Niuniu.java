@@ -1,44 +1,15 @@
 package com.example.bot.spring.poker;
 
-import java.util.Random;
-
 /**
  * Created by teddylin on 2017/11/12.
  */
 public class Niuniu extends Poker {
     public Niuniu(int num) {
-        deal(num);
+        super(num);
     }
 
     @Override
-    public void deal(int num) {
-        for (int i = 0; i < num; i++) {
-            int randomNum;
-            while (true) {
-                randomNum = random();
-                if (pokerpointSet.contains(randomNum)) {
-                    continue;
-                } else {
-                    break;
-                }
-            }
-            imagePathSet.add(i, randomNum);
-            pokerpointSet.add(i, getPockerPoint(randomNum));
-        }
-    }
-
-    private int getPockerPoint(int number) {
-        int modNum = (number % 13);
-        int result = (modNum > 10 || modNum < 1) ? 10 : modNum;
-        return result;
-    }
-
-    private int random() {
-        Random rand = new Random();
-        return rand.nextInt(52) + 1;
-    }
-
-    public String caculate () {
+    public String getResult () {
         String resultText = "沒妞";
         int result;
         int total = 0;
@@ -64,13 +35,5 @@ public class Niuniu extends Poker {
             }
         }
         return resultText;
-    }
-
-    public String getPath(int number) {
-        return String.valueOf(imagePathSet.get(number));
-    }
-
-    public int getPoint(int number) {
-        return pokerpointSet.get(number);
     }
 }
