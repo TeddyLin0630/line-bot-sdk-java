@@ -98,7 +98,7 @@ public class KitchenSinkController {
 
     @EventMapping
     public void handleStickerMessageEvent(MessageEvent<StickerMessageContent> event) {
-        handleSticker(event.getReplyToken(), event.getMessage());
+//        handleSticker(event.getReplyToken(), event.getMessage());
     }
 
     @EventMapping
@@ -312,7 +312,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "carousel": {
+            /*case "carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
                 CarouselTemplate carouselTemplate = new CarouselTemplate(
                         Arrays.asList(
@@ -358,8 +358,8 @@ public class KitchenSinkController {
                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
                 this.reply(replyToken, templateMessage);
                 break;
-            }
-            case "image_carousel": {
+            }*/
+            /*case "image_carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         Arrays.asList(
@@ -380,7 +380,7 @@ public class KitchenSinkController {
                 TemplateMessage templateMessage = new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate);
                 this.reply(replyToken, templateMessage);
                 break;
-            }
+            }*/
             case "妞":
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
@@ -409,13 +409,14 @@ public class KitchenSinkController {
                 }*/
                 break;
 
-            case "抽":
+            case "發":
                 int numberOfPokersForBigOne = 1;
                 BigOne bigOne = new BigOne(numberOfPokersForBigOne);
                 this.reply(replyToken, createPokerMessage(numberOfPokersForBigOne, bigOne));
                 break;
 
-            case "射":
+            case "抽":
+                this.reply(replyToken, new ImageMessage("static/girl/1thumbnail.jpg", "static/girl/1.jpg") );
                 break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
