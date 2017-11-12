@@ -416,7 +416,7 @@ public class KitchenSinkController {
                 break;
 
             case "抽":
-                this.reply(replyToken, new ImageMessage(createUri("static/girl/1thumbnail.jpg"), createUri("static/girl/1.jpg") );
+                this.reply(replyToken, new ImageMessage(createUri("static/girl/1thumbnail.jpg"), createUri("static/girl/1.jpg")));
                 break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
