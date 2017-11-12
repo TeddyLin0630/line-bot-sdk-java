@@ -384,9 +384,9 @@ public class KitchenSinkController {
             case "妞":
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
-//                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
 
-                String userId = event.getSource().getUserId();
+                /*String userId = event.getSource().getUserId();
                 if (userId != null) {
                     lineMessagingClient
                             .getProfile(userId)
@@ -406,7 +406,7 @@ public class KitchenSinkController {
                             });
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");
-                }
+                }*/
                 break;
 
             case "抽":
