@@ -416,7 +416,9 @@ public class KitchenSinkController {
                 break;
 
             case "抽":
-                this.reply(replyToken, new ImageMessage(createUri("static/girl/1.jpg"), createUri("static/girl/1.jpg")));
+                Random random = new Random();
+                int imagePath = random.nextInt(10) + 1 ;
+                this.reply(replyToken, new ImageMessage(createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"), createUri("static/girl/"+ String.valueOf(imagePath) +".jpg")));
                 break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
