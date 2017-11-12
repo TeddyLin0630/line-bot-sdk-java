@@ -384,30 +384,7 @@ public class KitchenSinkController {
             case "妞":
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
-                String niuniuUserId = event.getSource().getUserId();
-                System.out.println(" niuniuUserId : "+niuniuUserId);
-                if (niuniuUserId != null) {
-                    lineMessagingClient
-                            .getProfile(niuniuUserId)
-                            .whenComplete((profile, throwable) -> {
-                                if (throwable != null) {
-                                    this.replyText(replyToken, throwable.getMessage());
-                                    System.out.println(" throwable : "+throwable.getMessage());
-                                    return;
-                                }
-
-                                System.out.println(" send message  : "+profile.getDisplayName());
-                                this.reply(
-                                        replyToken,
-                                        Arrays.asList(new TextMessage(
-                                                        "Display name: " + profile.getDisplayName()),
-                                                createPokerMessage(numberOfPokersForNiuniu, niuniu))
-                                );
-
-                            });
-                }
-
-//                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
                 break;
 
             case "摸":
