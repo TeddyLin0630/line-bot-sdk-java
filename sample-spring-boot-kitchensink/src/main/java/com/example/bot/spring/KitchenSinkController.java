@@ -385,25 +385,6 @@ public class KitchenSinkController {
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
                 this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
-
-                String userId = event.getSource().getUserId();
-                if (userId != null) {
-                    lineMessagingClient
-                            .getProfile(userId)
-                            .whenComplete((profile, throwable) -> {
-                                if (throwable != null) {
-                                    this.replyText(replyToken, throwable.getMessage());
-                                    return;
-                                }
-
-                                this.reply(
-                                        replyToken,
-                                        Arrays.asList(new TextMessage(profile.getDisplayName() + " " + niuniu.getResult()))
-                                );
-
-                            });
-                }
-
                 break;
 
             case "摸":
