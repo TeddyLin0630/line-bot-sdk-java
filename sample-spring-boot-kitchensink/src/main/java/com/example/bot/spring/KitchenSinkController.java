@@ -420,6 +420,14 @@ public class KitchenSinkController {
                 int imagePath = random.nextInt(14) + 1 ;
                 this.reply(replyToken, new ImageMessage(createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"), createUri("static/girl/"+ String.valueOf(imagePath) +".jpg")));
                 break;
+
+            case "!help":
+                this.reply(
+                        replyToken, new TextMessage("[指令]\n"+
+                                "\"妞\" : 妞妞樸克\n" +
+                                "\"發\" : 發一張牌（可玩比大小）" +
+                                "\"發\" : 抽美女圖"));
+                break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
