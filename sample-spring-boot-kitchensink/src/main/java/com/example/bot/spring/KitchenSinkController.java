@@ -399,6 +399,8 @@ public class KitchenSinkController {
             case "抽":
                 Random random = new Random();
                 int imagePath = random.nextInt(14) + 1 ;
+
+                System.out.println("抽 url : "+createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"));
                 this.reply(replyToken, new ImageMessage(createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"), createUri("static/girl/"+ String.valueOf(imagePath) +".jpg")));
                 break;
 
@@ -420,7 +422,8 @@ public class KitchenSinkController {
                 }
                 Random rand = new Random();
                 int randNum = rand.nextInt(xvideos.size());
-                String url = thumbs.get(randNum);
+                String url = thumbs.get(randNum).replace("http", "https");
+                System.out.println("抓 url : "+url);
                 this.reply(replyToken, new ImageMessage(url, url));
                 break;
 
