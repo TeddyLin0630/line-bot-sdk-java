@@ -432,7 +432,7 @@ public class KitchenSinkController {
                 for (int i = 0; i < 1; i++) {
                     imageCarouselColumns.add(
                             new ImageCarouselColumn(url,
-                                    new URIAction("~~Video~~", videoUrl)));
+                                    new URIAction("點一下開始播放", videoUrl)));
                 }
 
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
@@ -446,6 +446,7 @@ public class KitchenSinkController {
                         replyToken, new TextMessage("[指令]\n"+
                                 "\"妞\" : 妞妞樸克\n" +
                                 "\"發\" : 發一張牌（可玩比大小）\n" +
+                                "\"抓\" : 抓片）\n" +
                                 "\"抽\" : 抽美女圖"));
                 break;
             case "imagemap":
