@@ -423,8 +423,22 @@ public class KitchenSinkController {
                 Random rand = new Random();
                 int randNum = rand.nextInt(xvideos.size());
                 String url = thumbs.get(randNum).replace("http", "https");
-                System.out.println("抓 url : "+url);
-                this.reply(replyToken, new ImageMessage(url, url));
+                String videoUrl = xvideos.get(randNum);
+
+                /*System.out.println("抓 url : "+url);
+                this.reply(replyToken, new ImageMessage(url, url));*/
+
+                ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
+                for (int i = 0; i < 1; i++) {
+                    imageCarouselColumns.add(
+                            new ImageCarouselColumn(url,
+                                    new URIAction("~~Video~~", videoUrl)));
+                }
+
+                ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
+                        imageCarouselColumns);
+
+                this.reply(replyToken,new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate));
                 break;
 
             case "!help":
