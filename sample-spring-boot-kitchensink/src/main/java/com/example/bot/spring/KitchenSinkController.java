@@ -36,6 +36,10 @@ import com.example.bot.spring.poker.Niuniu;
 import com.example.bot.spring.poker.Poker;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -385,28 +389,6 @@ public class KitchenSinkController {
                 int numberOfPokersForNiuniu = 5;
                 Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
                 this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
-
-                /*String userId = event.getSource().getUserId();
-                if (userId != null) {
-                    lineMessagingClient
-                            .getProfile(userId)
-                            .whenComplete((profile, throwable) -> {
-                                if (throwable != null) {
-                                    this.replyText(replyToken, throwable.getMessage());
-                                    return;
-                                }
-
-                                this.reply(
-                                        replyToken,
-                                        Arrays.asList(new TextMessage(
-                                                        "Player name: " + profile.getDisplayName()),
-                                                createPokerMessage(numberOfPokersForNiuniu, niuniu))
-                                );
-
-                            });
-                } else {
-                    this.replyText(replyToken, "Bot can't use profile API without user ID");
-                }*/
                 break;
 
             case "發":
@@ -419,6 +401,20 @@ public class KitchenSinkController {
                 Random random = new Random();
                 int imagePath = random.nextInt(14) + 1 ;
                 this.reply(replyToken, new ImageMessage(createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"), createUri("static/girl/"+ String.valueOf(imagePath) +".jpg")));
+                break;
+
+            case "抓":
+                Document doc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
+                Elements xvideoUrlSet = doc.select("flv_embed");
+                List<String> xvideos = new ArrayList<>();
+                for (Element xvideo : xvideoUrlSet) {
+                    String html = xvideo.html();
+                    String result = html.substring(html.indexOf("\"") + 1, html.lastIndexOf("\""));
+                    xvideos.add(result);
+                }
+
+                Random rand = new Random();
+                this.reply(replyToken, new TextMessage(xvideos.get(rand.nextInt(xvideos.size()))));
                 break;
 
             case "!help":
