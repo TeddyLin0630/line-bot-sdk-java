@@ -18,4 +18,5 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(':line-bot-spring-boot')
+    compile 'org.jsoup:jsoup:1.11.1'
 }
