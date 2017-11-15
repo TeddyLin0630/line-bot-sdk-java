@@ -412,8 +412,16 @@ public class KitchenSinkController {
                     xvideos.add(result);
                 }
 
+
+                Elements xvideoThumbSet = doc.select("thumb_big");
+                List<String> thumbs = new ArrayList<>();
+                for (Element thumb : xvideoThumbSet) {
+                    thumbs.add(thumb.text());
+                }
                 Random rand = new Random();
-                this.reply(replyToken, new TextMessage(xvideos.get(rand.nextInt(xvideos.size()))));
+                int randNum = rand.nextInt(xvideos.size());
+                String url = thumbs.get(randNum);
+                this.reply(replyToken, new ImageMessage(url, url));
                 break;
 
             case "!help":
