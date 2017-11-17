@@ -397,7 +397,8 @@ public class KitchenSinkController {
                 break;
 
             case "抽":
-                List<String> jpBeautyHouseUri = new ArrayList<>();
+                //jpBeautyHouse
+                List<String> imageUriSet = new ArrayList<>();
                 Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
                 Elements jpBeautyHouseSet = jpDoc.select("content");
                 for (Element jpBeautyHouse : jpBeautyHouseSet) {
@@ -406,13 +407,35 @@ public class KitchenSinkController {
                     for (Element e : elements) {
                         Elements elements1 = e.select("img");
                         for(Element e1 : elements1) {
-                            jpBeautyHouseUri.add(e1.attr("src"));
+                            imageUriSet.add(e1.attr("src"));
                         }
                     }
                 }
+
+                //ck101
+                Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
+                Elements ck101LinkSet = ck101Doc.select("item");
+                List<String> links = new ArrayList<String>();
+                for (Element ck101Link : ck101LinkSet) {
+                    links.add(ck101Link.select("link").text());
+                }
+
                 Random random = new Random();
-                int jpNumber = random.nextInt(jpBeautyHouseUri.size()) ;
-                this.reply(replyToken, new ImageMessage(jpBeautyHouseUri.get(jpNumber), jpBeautyHouseUri.get(jpNumber)));
+                if (links.size() > 0) {
+                    int ck101Num = random.nextInt(links.size());
+                    String link = links.get(ck101Num);
+                    Document ck101SubDoc = Jsoup.connect(link).get();
+                    Elements imageSet = ck101SubDoc.select("div[class=article_plc_user]");
+                    for (Element e : imageSet) {
+                        Elements ck101Set = e.select("img[file]");
+                        for (Element e1 : ck101Set) {
+                            imageUriSet.add(e1.attr("file"));
+                        }
+                    }
+                }
+
+                int imageNumber = random.nextInt(imageUriSet.size()) ;
+                this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                 break;
 
             case "抓":
