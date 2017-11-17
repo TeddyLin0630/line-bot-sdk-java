@@ -397,16 +397,27 @@ public class KitchenSinkController {
                 break;
 
             case "抽":
+                List<String> jpBeautyHouseUri = new ArrayList<>();
+                Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
+                Elements jpBeautyHouseSet = jpDoc.select("content");
+                for (Element jpBeautyHouse : jpBeautyHouseSet) {
+                    Document elementDoc = Jsoup.parse(jpBeautyHouse.text());
+                    Elements elements = elementDoc.select("div");
+                    for (Element e : elements) {
+                        Elements elements1 = e.select("img");
+                        for(Element e1 : elements1) {
+                            jpBeautyHouseUri.add(e1.attr("src"));
+                        }
+                    }
+                }
                 Random random = new Random();
-                int imagePath = random.nextInt(14) + 1 ;
-
-                System.out.println("抽 url : "+createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"));
-                this.reply(replyToken, new ImageMessage(createUri("static/girl/"+ String.valueOf(imagePath) + ".jpg"), createUri("static/girl/"+ String.valueOf(imagePath) +".jpg")));
+                int jpNumber = random.nextInt(jpBeautyHouseUri.size()) ;
+                this.reply(replyToken, new ImageMessage(jpBeautyHouseUri.get(jpNumber), jpBeautyHouseUri.get(jpNumber)));
                 break;
 
             case "抓":
-                Document doc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
-                Elements xvideoUrlSet = doc.select("flv_embed");
+                Document xvideosDoc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
+                Elements xvideoUrlSet = xvideosDoc.select("flv_embed");
                 List<String> xvideos = new ArrayList<>();
                 for (Element xvideo : xvideoUrlSet) {
                     String html = xvideo.html();
@@ -415,7 +426,7 @@ public class KitchenSinkController {
                 }
 
 
-                Elements xvideoThumbSet = doc.select("thumb_big");
+                Elements xvideoThumbSet = xvideosDoc.select("thumb_big");
                 List<String> thumbs = new ArrayList<>();
                 for (Element thumb : xvideoThumbSet) {
                     thumbs.add(thumb.text());
