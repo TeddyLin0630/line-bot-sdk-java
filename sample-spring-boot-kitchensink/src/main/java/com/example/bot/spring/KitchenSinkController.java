@@ -461,7 +461,6 @@ public class KitchenSinkController {
                         int imageNumber = random.nextInt(imageUriSet.size()) ;
                         this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                         break;
-                        break;
                 }
 
             case "抓":
