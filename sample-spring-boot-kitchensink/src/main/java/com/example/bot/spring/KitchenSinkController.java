@@ -400,57 +400,69 @@ public class KitchenSinkController {
                 List<String> imageUriSet = new ArrayList<>();
                 Random random = new Random();
 
-                //jpBeautyHouse
-                /*Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
-                Elements jpBeautyHouseSet = jpDoc.select("content");
-                for (Element jpBeautyHouse : jpBeautyHouseSet) {
-                    Document elementDoc = Jsoup.parse(jpBeautyHouse.text());
-                    Elements elements = elementDoc.select("div");
-                    for (Element e : elements) {
-                        Elements elements1 = e.select("img");
-                        for(Element e1 : elements1) {
-                            imageUriSet.add(e1.attr("src"));
+                ArrayList<String> website = new ArrayList<>();
+                website.add("jpBeautyHouse");
+                website.add("ck101");
+                website.add("bbs.voc.com.cn");
+
+                switch (random.nextInt(website.size())) {
+                    case 0:
+                        //jpBeautyHouse
+                        Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
+                        Elements jpBeautyHouseSet = jpDoc.select("content");
+                        for (Element jpBeautyHouse : jpBeautyHouseSet) {
+                            Document elementDoc = Jsoup.parse(jpBeautyHouse.text());
+                            Elements elements = elementDoc.select("div");
+                            for (Element e : elements) {
+                                Elements elements1 = e.select("img");
+                                for(Element e1 : elements1) {
+                                    imageUriSet.add(e1.attr("src"));
+                                }
+                            }
                         }
-                    }
-                }*/
-
-                //ck101
-                Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
-                Elements ck101LinkSet = ck101Doc.select("item");
-                List<String> links = new ArrayList<String>();
-                for (Element ck101Link : ck101LinkSet) {
-                    links.add(ck101Link.select("link").text());
-                }
-
-                if (links.size() > 0) {
-                    int ck101Num = random.nextInt(links.size());
-                    String link = links.get(ck101Num);
-                    Document ck101SubDoc = Jsoup.connect(link).get();
-                    Elements imageSet = ck101SubDoc.select("div[class=article_plc_user]");
-                    for (Element e : imageSet) {
-                        Elements ck101Set = e.select("img[file]");
-                        for (Element e1 : ck101Set) {
-                            imageUriSet.add(e1.attr("file"));
+                        break;
+                    case 1:
+                        //ck101
+                        Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
+                        Elements ck101LinkSet = ck101Doc.select("item");
+                        List<String> links = new ArrayList<String>();
+                        for (Element ck101Link : ck101LinkSet) {
+                            links.add(ck101Link.select("link").text());
                         }
-                    }
+
+                        if (links.size() > 0) {
+                            int ck101Num = random.nextInt(links.size());
+                            String link = links.get(ck101Num);
+                            Document ck101SubDoc = Jsoup.connect(link).get();
+                            Elements imageSet = ck101SubDoc.select("div[class=article_plc_user]");
+                            for (Element e : imageSet) {
+                                Elements ck101Set = e.select("img[file]");
+                                for (Element e1 : ck101Set) {
+                                    imageUriSet.add(e1.attr("file"));
+                                }
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        //http://bbs.voc.com.cn/
+                        Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
+                        Elements vocItemSet = vocDoc.select("item");
+                        Elements vocLinkSet = vocItemSet.select("link");
+                        String link = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
+                        System.out.println("result: " + link +"\n\n\n");
+
+                        Document vocImgDoc = Jsoup.connect(link).get();
+                        Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
+                        for (Element vocImg : vocImgDivSet) {
+                            imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
+                        }
+
+                        int imageNumber = random.nextInt(imageUriSet.size()) ;
+                        this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
+                        break;
+                        break;
                 }
-
-                //http://bbs.voc.com.cn/
-                Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
-                Elements vocItemSet = vocDoc.select("item");
-                Elements vocLinkSet = vocItemSet.select("link");
-                String link = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
-                System.out.println("result: " + link +"\n\n\n");
-
-                Document vocImgDoc = Jsoup.connect(link).get();
-                Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
-                for (Element vocImg : vocImgDivSet) {
-                    imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
-                }
-
-                int imageNumber = random.nextInt(imageUriSet.size()) ;
-                this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
-                break;
 
             case "抓":
                 Document xvideosDoc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
