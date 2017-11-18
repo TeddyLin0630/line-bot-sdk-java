@@ -398,6 +398,7 @@ public class KitchenSinkController {
 
             case "抽":
                 List<String> imageUriSet = new ArrayList<>();
+                Random random = new Random();
 
                 //jpBeautyHouse
                 /*Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
@@ -421,7 +422,6 @@ public class KitchenSinkController {
                     links.add(ck101Link.select("link").text());
                 }
 
-                Random random = new Random();
                 if (links.size() > 0) {
                     int ck101Num = random.nextInt(links.size());
                     String link = links.get(ck101Num);
@@ -445,7 +445,7 @@ public class KitchenSinkController {
                 Document vocImgDoc = Jsoup.connect(link).get();
                 Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
                 for (Element vocImg : vocImgDivSet) {
-                    imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src"));
+                    imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
                 }
 
                 int imageNumber = random.nextInt(imageUriSet.size()) ;
