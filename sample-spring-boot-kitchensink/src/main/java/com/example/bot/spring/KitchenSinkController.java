@@ -90,6 +90,9 @@ import java.util.function.Consumer;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+    enum WEB_SITES {
+        jpBeautifyHouse, ck101, voc
+    }
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -400,14 +403,10 @@ public class KitchenSinkController {
                 List<String> imageUriSet = new ArrayList<>();
                 Random random = new Random();
 
-                ArrayList<String> website = new ArrayList<>();
-                website.add("jpBeautyHouse");
-                website.add("ck101");
-                website.add("bbs.voc.com.cn");
-
-                switch (random.nextInt(website.size())) {
-                    case 0:
-                        //jpBeautyHouse
+                WEB_SITES who = WEB_SITES.values()[random.nextInt(WEB_SITES.values().length)];
+                switch (who) {
+                    //jpBeautyHouse
+                    case jpBeautifyHouse:
                         Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
                         Elements jpBeautyHouseSet = jpDoc.select("content");
                         for (Element jpBeautyHouse : jpBeautyHouseSet) {
@@ -422,7 +421,7 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    case 1:
+                    case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
                         Elements ck101LinkSet = ck101Doc.select("item");
@@ -444,25 +443,23 @@ public class KitchenSinkController {
                             }
                         }
                         break;
-
-                    case 2:
+                        
+                   default:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
                         Elements vocItemSet = vocDoc.select("item");
                         Elements vocLinkSet = vocItemSet.select("link");
                         String link = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
-                        System.out.println("result: " + link +"\n\n\n");
 
                         Document vocImgDoc = Jsoup.connect(link).get();
                         Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
                         for (Element vocImg : vocImgDivSet) {
                             imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
                         }
-
-                        int imageNumber = random.nextInt(imageUriSet.size()) ;
-                        this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                         break;
                 }
+                int imageNumber = random.nextInt(imageUriSet.size()) ;
+                this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                 break;
 
             case "抓":
