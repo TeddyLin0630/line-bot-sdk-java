@@ -423,7 +423,12 @@ public class KitchenSinkController {
                     image18UriSet.add(plus28Img.attr("src"));
                 }
                 int image18Number = randomFor18.nextInt(image18UriSet.size()) ;
-                this.reply(replyToken, new ImageMessage(image18UriSet.get(image18Number), image18UriSet.get(image18Number)));
+
+                String image18Uri = image18UriSet.get(image18Number);
+                if (!image18Uri.contains("https")) {
+                    image18Uri = image18Uri.replaceFirst("http", "https");
+                }
+                this.reply(replyToken, new ImageMessage(image18Uri, image18Uri));
                 break;
 
             case "抽":
@@ -504,7 +509,11 @@ public class KitchenSinkController {
                         break;
                 }
                 int imageNumber = random.nextInt(imageUriSet.size()) ;
-                this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
+                String imageUri = imageUriSet.get(imageNumber);
+                if (!imageUri.contains("https")) {
+                    imageUri = imageUri.replaceFirst("http", "https");
+                }
+                this.reply(replyToken, new ImageMessage(imageUri, imageUri));
                 break;
 
             case "抓":
