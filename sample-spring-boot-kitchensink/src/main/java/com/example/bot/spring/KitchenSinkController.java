@@ -421,6 +421,7 @@ public class KitchenSinkController {
                             }
                         }
                         break;
+
                     case 1:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
@@ -462,6 +463,7 @@ public class KitchenSinkController {
                         this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                         break;
                 }
+                break;
 
             case "抓":
                 Document xvideosDoc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
