@@ -92,8 +92,8 @@ import java.util.function.Consumer;
 public class KitchenSinkController {
     enum WEB_SITES {
         jpBeautifyHouse,
-//        ck101,
-        voc,
+        ck101,
+//        voc,
         plus28
     }
     @Autowired
@@ -457,7 +457,7 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    /*case ck101:
+                    case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
                         Elements ck101LinkSet = ck101Doc.select("item");
@@ -478,9 +478,23 @@ public class KitchenSinkController {
                                 }
                             }
                         }
+                        break;
+
+                    /*case voc:
+                        //http://bbs.voc.com.cn/
+                        Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
+                        Elements vocItemSet = vocDoc.select("item");
+                        Elements vocLinkSet = vocItemSet.select("link");
+                        String vocLink = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
+
+                        Document vocImgDoc = Jsoup.connect(vocLink).get();
+                        Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
+                        for (Element vocImg : vocImgDivSet) {
+                            imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
+                        }
                         break;*/
 
-                    case plus28:
+                    default:
                         String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
                         "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
                         "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
@@ -494,20 +508,6 @@ public class KitchenSinkController {
                         Elements plus28ImgSet = plus28ImgDivSet.get(0).select("img[src$=.jpg]");
                         for (Element plus28Img : plus28ImgSet) {
                             imageUriSet.add(plus28Img.attr("src"));
-                        }
-                        break;
-
-                   default:
-                        //http://bbs.voc.com.cn/
-                        Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
-                        Elements vocItemSet = vocDoc.select("item");
-                        Elements vocLinkSet = vocItemSet.select("link");
-                        String vocLink = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
-
-                        Document vocImgDoc = Jsoup.connect(vocLink).get();
-                        Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
-                        for (Element vocImg : vocImgDivSet) {
-                            imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
                         }
                         break;
                 }
