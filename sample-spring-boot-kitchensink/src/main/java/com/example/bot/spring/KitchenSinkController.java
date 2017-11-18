@@ -435,6 +435,19 @@ public class KitchenSinkController {
                     }
                 }
 
+                //http://bbs.voc.com.cn/
+                Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
+                Elements vocItemSet = vocDoc.select("item");
+                Elements vocLinkSet = vocItemSet.select("link");
+                String link = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
+                System.out.println("result: " + link +"\n\n\n");
+
+                Document vocImgDoc = Jsoup.connect(link).get();
+                Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
+                for (Element vocImg : vocImgDivSet) {
+                    imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src"));
+                }
+
                 int imageNumber = random.nextInt(imageUriSet.size()) ;
                 this.reply(replyToken, new ImageMessage(imageUriSet.get(imageNumber), imageUriSet.get(imageNumber)));
                 break;
