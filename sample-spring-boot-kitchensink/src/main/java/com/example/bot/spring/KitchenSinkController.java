@@ -91,7 +91,10 @@ import java.util.function.Consumer;
 @LineMessageHandler
 public class KitchenSinkController {
     enum WEB_SITES {
-        jpBeautifyHouse, ck101, voc, plus28
+        jpBeautifyHouse,
+//        ck101,
+        voc,
+        plus28
     }
     @Autowired
     private LineMessagingClient lineMessagingClient;
@@ -454,7 +457,7 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    case ck101:
+                    /*case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
                         Elements ck101LinkSet = ck101Doc.select("item");
@@ -475,7 +478,7 @@ public class KitchenSinkController {
                                 }
                             }
                         }
-                        break;
+                        break;*/
 
                     case plus28:
                         String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
