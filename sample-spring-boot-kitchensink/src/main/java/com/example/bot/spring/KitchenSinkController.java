@@ -398,7 +398,7 @@ public class KitchenSinkController {
 
             case "抽":
                 //jpBeautyHouse
-                List<String> imageUriSet = new ArrayList<>();
+                /*List<String> imageUriSet = new ArrayList<>();
                 Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
                 Elements jpBeautyHouseSet = jpDoc.select("content");
                 for (Element jpBeautyHouse : jpBeautyHouseSet) {
@@ -410,7 +410,7 @@ public class KitchenSinkController {
                             imageUriSet.add(e1.attr("src"));
                         }
                     }
-                }
+                }*/
 
                 //ck101
                 Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
