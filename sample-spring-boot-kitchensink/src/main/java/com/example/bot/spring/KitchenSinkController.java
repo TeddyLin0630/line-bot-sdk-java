@@ -91,7 +91,7 @@ import java.util.function.Consumer;
 @LineMessageHandler
 public class KitchenSinkController {
     enum WEB_SITES {
-        jpBeautifyHouse, ck101, voc
+        jpBeautifyHouse, ck101, voc, plus28
     }
     @Autowired
     private LineMessagingClient lineMessagingClient;
@@ -399,11 +399,37 @@ public class KitchenSinkController {
                 this.reply(replyToken, createPokerMessage(numberOfPokersForBigOne, bigOne));
                 break;
 
+            case "18抽":
+                List<String> image18UriSet = new ArrayList<>();
+                Random randomFor18 = new Random();
+                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
+                        "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
+                        "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
+                "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
+                "https://www.plus28.com/rss.php?fid=1286&auth=e4efX98trILBTjq39QV97u8kgp7NDh%2Bmf1lr0QPkxlViv2eth9yChW6CcanpNr6mIZY",
+                "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY"};
+
+                System.out.println("18抽 website : " + plus2818Set[randomFor18.nextInt(plus2818Set.length)]);
+                Document plus2818Doc = Jsoup.connect(plus2818Set[randomFor18.nextInt(plus2818Set.length)]).get();
+                Elements plus2818ItemSet = plus2818Doc.select("item");
+                Elements plus2818LinkSet = plus2818ItemSet.select("link");
+                String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
+                Document plus2818ImgDoc = Jsoup.connect(plus2818Link).get();
+                Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
+                Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
+                for (Element plus28Img : plus2818ImgSet) {
+                    image18UriSet.add(plus28Img.attr("src"));
+                }
+                int image18Number = randomFor18.nextInt(image18UriSet.size()) ;
+                this.reply(replyToken, new ImageMessage(image18UriSet.get(image18Number), image18UriSet.get(image18Number)));
+                break;
+
             case "抽":
                 List<String> imageUriSet = new ArrayList<>();
                 Random random = new Random();
 
                 WEB_SITES who = WEB_SITES.values()[random.nextInt(WEB_SITES.values().length)];
+                System.out.println("抽 website : " + who.name());
                 switch (who) {
                     //jpBeautyHouse
                     case jpBeautifyHouse:
@@ -443,15 +469,32 @@ public class KitchenSinkController {
                             }
                         }
                         break;
-                        
+
+                    case plus28:
+                        String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
+                        "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
+                        "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
+
+                        Document plus28Doc = Jsoup.connect(plus28Set[random.nextInt(plus28Set.length)]).get();
+                        Elements plus28ItemSet = plus28Doc.select("item");
+                        Elements plus28LinkSet = plus28ItemSet.select("link");
+                        String plus28Link = plus28LinkSet.get(random.nextInt(plus28LinkSet.size())).text();
+                        Document plus28ImgDoc = Jsoup.connect(plus28Link).get();
+                        Elements plus28ImgDivSet = plus28ImgDoc.select("div[class=t_msgfont]");
+                        Elements plus28ImgSet = plus28ImgDivSet.get(0).select("img[src$=.jpg]");
+                        for (Element plus28Img : plus28ImgSet) {
+                            imageUriSet.add(plus28Img.attr("src"));
+                        }
+                        break;
+
                    default:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
                         Elements vocItemSet = vocDoc.select("item");
                         Elements vocLinkSet = vocItemSet.select("link");
-                        String link = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
+                        String vocLink = vocLinkSet.get(random.nextInt(vocLinkSet.size())).text();
 
-                        Document vocImgDoc = Jsoup.connect(link).get();
+                        Document vocImgDoc = Jsoup.connect(vocLink).get();
                         Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
                         for (Element vocImg : vocImgDivSet) {
                             imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
