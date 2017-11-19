@@ -65,6 +65,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -81,7 +82,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -90,12 +93,14 @@ import java.util.function.Consumer;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+
     enum WEB_SITES {
         jpBeautifyHouse,
         ck101,
-//        voc,
+        //        voc,
         plus28
     }
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -136,7 +141,7 @@ public class KitchenSinkController {
                             jpg.path.toString(),
                             previewImg.path.toString());
                     reply(((MessageEvent) event).getReplyToken(),
-                          new ImageMessage(jpg.getUri(), jpg.getUri()));
+                            new ImageMessage(jpg.getUri(), jpg.getUri()));
                 });
     }
 
@@ -161,10 +166,10 @@ public class KitchenSinkController {
                     DownloadedContent mp4 = saveContent("mp4", responseBody);
                     DownloadedContent previewImg = createTempFile("jpg");
                     system("convert",
-                           mp4.path + "[0]",
-                           previewImg.path.toString());
+                            mp4.path + "[0]",
+                            previewImg.path.toString());
                     reply(((MessageEvent) event).getReplyToken(),
-                          new VideoMessage(mp4.getUri(), previewImg.uri));
+                            new VideoMessage(mp4.getUri(), previewImg.uri));
                 });
     }
 
@@ -232,7 +237,7 @@ public class KitchenSinkController {
         final MessageContentResponse response;
         try {
             response = lineMessagingClient.getMessageContent(messageId)
-                                          .get();
+                    .get();
         } catch (InterruptedException | ExecutionException e) {
             reply(replyToken, new TextMessage("Cannot get image: " + e.getMessage()));
             throw new RuntimeException(e);
@@ -266,9 +271,9 @@ public class KitchenSinkController {
                                 this.reply(
                                         replyToken,
                                         Arrays.asList(new TextMessage(
-                                                              "Display name: " + profile.getDisplayName()),
-                                                      new TextMessage("Status message: "
-                                                                      + profile.getStatusMessage()))
+                                                        "Display name: " + profile.getDisplayName()),
+                                                new TextMessage("Status message: "
+                                                        + profile.getStatusMessage()))
                                 );
 
                             });
@@ -308,14 +313,14 @@ public class KitchenSinkController {
                         "Hello, my button",
                         Arrays.asList(
                                 new URIAction("Go to line.me",
-                                              "https://line.me"),
+                                        "https://line.me"),
                                 new PostbackAction("Say hello1",
-                                                   "hello こんにちは"),
+                                        "hello こんにちは"),
                                 new PostbackAction("言 hello2",
-                                                   "hello こんにちは",
-                                                   "hello こんにちは"),
+                                        "hello こんにちは",
+                                        "hello こんにちは"),
                                 new MessageAction("Say message",
-                                                  "Rice=米")
+                                        "Rice=米")
                         ));
                 TemplateMessage templateMessage = new TemplateMessage("Button alt text", buttonsTemplate);
                 this.reply(replyToken, templateMessage);
@@ -403,16 +408,16 @@ public class KitchenSinkController {
                 break;
 
             case "18抽":
-                List<String> image18UriSet = new ArrayList<>();
+                /*List<String> image18UriSet = new ArrayList<>();
                 Random randomFor18 = new Random();
                 String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
                         "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
                         "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
-                "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
-                "https://www.plus28.com/rss.php?fid=1286&auth=e4efX98trILBTjq39QV97u8kgp7NDh%2Bmf1lr0QPkxlViv2eth9yChW6CcanpNr6mIZY",
-                "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY",
-                "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
-                "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
+                        "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
+                        "https://www.plus28.com/rss.php?fid=1286&auth=e4efX98trILBTjq39QV97u8kgp7NDh%2Bmf1lr0QPkxlViv2eth9yChW6CcanpNr6mIZY",
+                        "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY",
+                        "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
+                        "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
 
                 System.out.println("18抽 website : " + plus2818Set[randomFor18.nextInt(plus2818Set.length)]);
                 Document plus2818Doc = Jsoup.connect(plus2818Set[randomFor18.nextInt(plus2818Set.length)]).get();
@@ -422,6 +427,48 @@ public class KitchenSinkController {
                 Document plus2818ImgDoc = Jsoup.connect(plus2818Link).get();
                 Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
                 Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
+                for (Element plus28Img : plus2818ImgSet) {
+                    image18UriSet.add(plus28Img.attr("src"));
+                }
+                int image18Number = randomFor18.nextInt(image18UriSet.size());
+
+                String image18Uri = image18UriSet.get(image18Number);
+                if (!image18Uri.contains("https")) {
+                    image18Uri = image18Uri.replaceFirst("http", "https");
+                }*/
+
+                Map<String, String> cookies = loginPlus28();
+
+                String USER_AGENT = "User-Agent";
+                String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+                List<String> image18UriSet = new ArrayList<String>();
+                Random randomFor18 = new Random();
+                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
+                        "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
+                        "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
+                        "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
+                        "https://www.plus28.com/rss.php?fid=1286&auth=e4efX98trILBTjq39QV97u8kgp7NDh%2Bmf1lr0QPkxlViv2eth9yChW6CcanpNr6mIZY",
+                        "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY",
+                        "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
+                        "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
+
+                Document plus2818Doc = Jsoup.connect(plus2818Set[randomFor18.nextInt(plus2818Set.length)]).get();
+                Elements plus2818ItemSet = plus2818Doc.select("item");
+                Elements plus2818LinkSet = plus2818ItemSet.select("link");
+                String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
+
+                Connection con3 = Jsoup.connect(plus2818Link);
+                con3.header(USER_AGENT, USER_AGENT_VALUE);
+                con3.header("origin", "https://plus28.com");
+                con3.header("referer", "https://plus28.com/logging.php?action=login");
+                con3.header("upgrade-insecure-requests", "1");
+                // 设置cookie和post上面的map数据
+                Connection.Response imageResponse = con3.ignoreContentType(true).followRedirects(true).method(Connection.Method.GET)
+                        .cookies(cookies).execute();
+                Document plus2818ImgDoc = imageResponse.parse();
+                Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
+                Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
+
                 for (Element plus28Img : plus2818ImgSet) {
                     image18UriSet.add(plus28Img.attr("src"));
                 }
@@ -450,7 +497,7 @@ public class KitchenSinkController {
                             Elements elements = elementDoc.select("div");
                             for (Element e : elements) {
                                 Elements elements1 = e.select("img");
-                                for(Element e1 : elements1) {
+                                for (Element e1 : elements1) {
                                     imageUriSet.add(e1.attr("src"));
                                 }
                             }
@@ -496,8 +543,8 @@ public class KitchenSinkController {
 
                     default:
                         String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
-                        "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
-                        "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
+                                "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
+                                "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
 
                         Document plus28Doc = Jsoup.connect(plus28Set[random.nextInt(plus28Set.length)]).get();
                         Elements plus28ItemSet = plus28Doc.select("item");
@@ -511,7 +558,7 @@ public class KitchenSinkController {
                         }
                         break;
                 }
-                int imageNumber = random.nextInt(imageUriSet.size()) ;
+                int imageNumber = random.nextInt(imageUriSet.size());
                 String imageUri = imageUriSet.get(imageNumber);
                 if (!imageUri.contains("https")) {
                     imageUri = imageUri.replaceFirst("http", "https");
@@ -553,12 +600,12 @@ public class KitchenSinkController {
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         imageCarouselColumns);
 
-                this.reply(replyToken,new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate));
+                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate));
                 break;
 
             case "!help":
                 this.reply(
-                        replyToken, new TextMessage("[指令]\n"+
+                        replyToken, new TextMessage("[指令]\n" +
                                 "\"妞\" : 妞妞樸克\n" +
                                 "\"發\" : 發一張牌（可玩比大小）\n" +
                                 "\"抓\" : 抓片）\n" +
@@ -614,7 +661,7 @@ public class KitchenSinkController {
             String imagePath = poker.getPath(i);
             String pokerPoint = String.valueOf(poker.getPoint(i));
             imageCarouselColumns.add(
-                    new ImageCarouselColumn(createUri("/static/poker/" + imagePath +".jpeg"),
+                    new ImageCarouselColumn(createUri("/static/poker/" + imagePath + ".jpeg"),
                             new MessageAction(pokerPoint, poker.getResult())));
         }
 
@@ -627,8 +674,8 @@ public class KitchenSinkController {
 
     private static String createUri(String path) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
-                                          .path(path).build()
-                                          .toUriString();
+                .path(path).build()
+                .toUriString();
     }
 
     private void system(String... args) {
@@ -673,4 +720,96 @@ public class KitchenSinkController {
         String uri;
     }
 
+    public static Map<String, String> loginPlus28() {
+        try {
+
+            if (!isRunning && plusCookies != null) {
+                return plusCookies;
+            }
+            Connection.Response login = null;
+            String USER_AGENT = "User-Agent";
+            String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+
+            String plusUserName = "kane750630";
+            String plusPassword = "26892615";
+            Connection con = Jsoup.connect("https://plus28.com/logging.php?action=login");//获取连接
+            con.header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0");//配置模拟浏览器
+            Connection.Response rs = con.execute();//获取响应
+            Document d1 = Jsoup.parse(rs.body());//转换为Dom树
+            List<Element> et = d1.select("form");//获取form表单，可以通过查看页面源码代码得知
+            Map<String, String> datas = new HashMap<String, String>();
+            for (Element e : et.get(0).getAllElements()) {
+                // 设置用户名
+                if (e.attr("name").equals("username")) {
+                    e.attr("value", plusUserName);
+                }
+                // 设置用户密码
+                if (e.attr("name").equals("password")) {
+                    e.attr("value", plusPassword);
+                }
+
+                if (e.attr("name").equals("loginfield") && e.attr("value").equals("uid")) {
+                    continue;
+                }
+
+                if (e.attr("name").equals("cookietime") && !e.attr("value").equals("315360000")) {
+                    continue;
+                }
+
+                // 排除空值表单属性
+                if (e.attr("name").length() > 0) {
+                    System.out.println(e.attr("name") + " / " + e.attr("value"));
+                    datas.put(e.attr("name"), e.attr("value"));
+                }
+            }
+
+            Connection con2 = Jsoup.connect("https://plus28.com/logging.php?action=login");
+            con2.header(USER_AGENT, USER_AGENT_VALUE);
+            con2.header("origin", "https://plus28.com");
+            con2.header("referer", "https://plus28.com/logging.php?action=login");
+            con2.header("upgrade-insecure-requests", "1");
+            // 设置cookie和post上面的map数据
+            login = con2.ignoreContentType(true).followRedirects(true).method(Connection.Method.POST)
+                    .data(datas).cookies(rs.cookies()).execute();
+
+            if (login.cookies().size() > 1) {
+                    loginThread();
+                plusCookies = login.cookies();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return plusCookies;
+    }
+
+    private static Map<String, String> plusCookies;
+    private static boolean isRunning = false;
+
+    static void loginThread() {
+        isRunning = true;
+        new Thread() {
+            @Override
+            public void run() {
+                long plusExpireTime = 0L;
+                long PLUS_EXPIRE_TIME = 2592000;
+                long PLUS_EXPIRE_TIME_THREAD = 300000;
+
+                while (true) {
+                    try {
+                        System.out.println("plus login thread running time -> " + plusExpireTime );
+                        sleep(PLUS_EXPIRE_TIME_THREAD);
+                        plusExpireTime += PLUS_EXPIRE_TIME_THREAD;
+
+                        if (plusExpireTime >= PLUS_EXPIRE_TIME) {
+                            isRunning = false;
+                            plusCookies = null;
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
 }
