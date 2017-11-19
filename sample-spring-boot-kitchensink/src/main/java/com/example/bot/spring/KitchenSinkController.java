@@ -408,35 +408,6 @@ public class KitchenSinkController {
                 break;
 
             case "18抽":
-                /*List<String> image18UriSet = new ArrayList<>();
-                Random randomFor18 = new Random();
-                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
-                        "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
-                        "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
-                        "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
-                        "https://www.plus28.com/rss.php?fid=1286&auth=e4efX98trILBTjq39QV97u8kgp7NDh%2Bmf1lr0QPkxlViv2eth9yChW6CcanpNr6mIZY",
-                        "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY",
-                        "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
-                        "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
-
-                System.out.println("18抽 website : " + plus2818Set[randomFor18.nextInt(plus2818Set.length)]);
-                Document plus2818Doc = Jsoup.connect(plus2818Set[randomFor18.nextInt(plus2818Set.length)]).get();
-                Elements plus2818ItemSet = plus2818Doc.select("item");
-                Elements plus2818LinkSet = plus2818ItemSet.select("link");
-                String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
-                Document plus2818ImgDoc = Jsoup.connect(plus2818Link).get();
-                Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
-                Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
-                for (Element plus28Img : plus2818ImgSet) {
-                    image18UriSet.add(plus28Img.attr("src"));
-                }
-                int image18Number = randomFor18.nextInt(image18UriSet.size());
-
-                String image18Uri = image18UriSet.get(image18Number);
-                if (!image18Uri.contains("https")) {
-                    image18Uri = image18Uri.replaceFirst("http", "https");
-                }*/
-
                 Map<String, String> cookies = loginPlus28();
 
                 String USER_AGENT = "User-Agent";
@@ -723,9 +694,11 @@ public class KitchenSinkController {
     public static Map<String, String> loginPlus28() {
         try {
 
+            System.out.println(isRunning + " / " + plusCookies);
             if (!isRunning && plusCookies != null) {
                 return plusCookies;
             }
+
             Connection.Response login = null;
             String USER_AGENT = "User-Agent";
             String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
@@ -758,7 +731,6 @@ public class KitchenSinkController {
 
                 // 排除空值表单属性
                 if (e.attr("name").length() > 0) {
-                    System.out.println(e.attr("name") + " / " + e.attr("value"));
                     datas.put(e.attr("name"), e.attr("value"));
                 }
             }
