@@ -428,6 +428,7 @@ public class KitchenSinkController {
                 String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA",
                 "https://www.plus28.com/rss.php?fid=1283&auth=077ctBahMudv5MaXQj6F1lBziYn28e6uCblaV6m4JSVLDAiLA3HTNP2aAD5QKS6DZF0"};
                 String plus2818Url =  plus2818Set[0];
+
                 if (text.equals("抽大奶")) {
                     plus2818Url =  plus2818Set[1];
                 }
@@ -543,6 +544,29 @@ public class KitchenSinkController {
                     imageUri = imageUri.replaceFirst("http", "https");
                 }
                 this.reply(replyToken, new ImageMessage(imageUri, imageUri));
+                break;
+
+            case "!av":
+            case "抓av":
+                Random thisAVRandom = new Random();
+
+                Document vocDoc = Jsoup.connect("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=1").get();
+                Elements vocItemSet = vocDoc.select("div[class=video_box]");
+
+                int totalThisAV = 3;
+
+                ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
+                for (int i = 0; i < totalThisAV; i++) {
+                    int randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
+                    thisAVCarouselColumns.add(
+                            new ImageCarouselColumn( vocItemSet.get(randomThisAV).select("img[src]").attr("src"),
+                                    new URIAction("點一下開始播放", vocItemSet.get(randomThisAV).select("a[href]").attr("href"))));
+                }
+
+                ImageCarouselTemplate thisAVCarouselTemplate = new ImageCarouselTemplate(
+                        thisAVCarouselColumns);
+
+                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", thisAVCarouselTemplate));
                 break;
 
             case "抓":
