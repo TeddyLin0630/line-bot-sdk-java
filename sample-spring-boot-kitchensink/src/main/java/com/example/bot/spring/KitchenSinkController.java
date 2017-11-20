@@ -76,6 +76,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -554,14 +555,15 @@ public class KitchenSinkController {
                 Document vocDoc = Jsoup.connect("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=1").get();
                 Elements vocItemSet = vocDoc.select("div[class=video_box]");
 
-                int totalThisAV = 3;
+                int totalThisAV = 1;
 
                 ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < totalThisAV; i++) {
                     int randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAVCarouselColumns.add(
                             new ImageCarouselColumn( "https://cdn.thisav.com/images/grey-pink/logo.png",
-                                    new URIAction("點一下開始播放", vocItemSet.get(randomThisAV).select("a[href]").attr("href"))));
+                                    new URIAction("點一下開始播放",
+                                            URLDecoder.decode(vocItemSet.get(randomThisAV).select("a[href]").attr("href")))));
                 }
 
                 ImageCarouselTemplate thisAVCarouselTemplate = new ImageCarouselTemplate(
