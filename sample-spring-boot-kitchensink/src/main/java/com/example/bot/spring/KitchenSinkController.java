@@ -548,6 +548,7 @@ public class KitchenSinkController {
 
             case "!av":
             case "抓av":
+            case "thisav":
                 Random thisAVRandom = new Random();
 
                 Document vocDoc = Jsoup.connect("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=1").get();
@@ -559,7 +560,7 @@ public class KitchenSinkController {
                 for (int i = 0; i < totalThisAV; i++) {
                     int randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAVCarouselColumns.add(
-                            new ImageCarouselColumn( vocItemSet.get(randomThisAV).select("img[src]").attr("src"),
+                            new ImageCarouselColumn( "https://cdn.thisav.com/images/grey-pink/logo.png",
                                     new URIAction("點一下開始播放", vocItemSet.get(randomThisAV).select("a[href]").attr("href"))));
                 }
 
