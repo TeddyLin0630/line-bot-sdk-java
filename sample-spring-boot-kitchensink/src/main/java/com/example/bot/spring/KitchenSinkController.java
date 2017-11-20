@@ -563,7 +563,7 @@ public class KitchenSinkController {
                     thisAVCarouselColumns.add(
                             new ImageCarouselColumn( "https://cdn.thisav.com/images/grey-pink/logo.png",
                                     new URIAction("點一下開始播放",
-                                            URLDecoder.decode(vocItemSet.get(randomThisAV).select("a[href]").attr("href")))));
+                                            vocItemSet.get(randomThisAV).select("a[href]").attr("href"))));
                 }
 
                 ImageCarouselTemplate thisAVCarouselTemplate = new ImageCarouselTemplate(
@@ -614,6 +614,8 @@ public class KitchenSinkController {
                         replyToken, new TextMessage("[指令]\n" +
                                 "\"妞\" : 妞妞樸克\n" +
                                 "\"發\" : 發一張牌（可玩比大小）\n" +
+                                "\"!av\" :隨機抓thisAV\n" +
+                                "\"18抽\" :抽鹹濕圖\n" +
                                 "\"抓\" : 抓片）\n" +
                                 "\"抽\" : 抽美女圖"));
                 break;
