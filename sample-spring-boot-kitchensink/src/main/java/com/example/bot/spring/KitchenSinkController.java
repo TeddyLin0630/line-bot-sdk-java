@@ -560,7 +560,7 @@ public class KitchenSinkController {
 
                 ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < totalThisAV; i++) {
-                    int randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
+                    randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAVCarouselColumns.add(
                             new ImageCarouselColumn( "https://cdn.thisav.com/images/grey-pink/logo.png",
                                     new URIAction("點一下開始播放",
