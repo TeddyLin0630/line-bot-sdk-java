@@ -550,9 +550,10 @@ public class KitchenSinkController {
             case "!av":
             case "抓av":
             case "thisav":
+            case "看":
                 Random thisAVRandom = new Random();
-
-                Document vocDoc = Jsoup.connect("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=1").get();
+                int randomThisAV = thisAVRandom.nextInt(10);
+                Document vocDoc = Jsoup.connect(String.format("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=%d",randomThisAV)).get();
                 Elements vocItemSet = vocDoc.select("div[class=video_box]");
 
                 int totalThisAV = 1;
@@ -614,7 +615,7 @@ public class KitchenSinkController {
                         replyToken, new TextMessage("[指令]\n" +
                                 "\"妞\" : 妞妞樸克\n" +
                                 "\"發\" : 發一張牌（可玩比大小）\n" +
-                                "\"!av\" :隨機抓thisAV\n" +
+                                "\"看\" :隨機抓AV\n" +
                                 "\"18抽\" :抽鹹濕圖\n" +
                                 "\"抓\" : 抓片）\n" +
                                 "\"抽\" : 抽美女圖"));
