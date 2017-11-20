@@ -407,7 +407,9 @@ public class KitchenSinkController {
                 this.reply(replyToken, createPokerMessage(numberOfPokersForBigOne, bigOne));
                 break;
 
+            case "抽大奶":
             case "18抽":
+            case "抽18":
                 Map<String, String> cookies = loginPlus28();
 
                 String USER_AGENT = "User-Agent";
@@ -423,9 +425,13 @@ public class KitchenSinkController {
                         "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
                         "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
 */
-
-                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA"};
-                Document plus2818Doc = Jsoup.connect(plus2818Set[randomFor18.nextInt(plus2818Set.length)]).get();
+                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA",
+                "https://www.plus28.com/rss.php?fid=1283&auth=077ctBahMudv5MaXQj6F1lBziYn28e6uCblaV6m4JSVLDAiLA3HTNP2aAD5QKS6DZF0"};
+                String plus2818Url =  plus2818Set[0];
+                if (text.equals("抽大奶")) {
+                    plus2818Url =  plus2818Set[1];
+                }
+                Document plus2818Doc = Jsoup.connect(plus2818Url).get();
                 Elements plus2818ItemSet = plus2818Doc.select("item");
                 Elements plus2818LinkSet = plus2818ItemSet.select("link");
                 String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
