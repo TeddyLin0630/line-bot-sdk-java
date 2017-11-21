@@ -255,7 +255,7 @@ public class KitchenSinkController {
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
-
+        text = text.toLowerCase();
         log.info("Got text message from {}: {}", replyToken, text);
         switch (text) {
             case "profile": {
@@ -577,7 +577,7 @@ public class KitchenSinkController {
                 for (int i = 0; i < totalThisAV; i++) {
                     randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAvLink.add(vocItemSet.get(randomThisAV).select("a[href]").attr("href"));
-                    thisAvTitle.add(vocItemSet.get(randomThisAV).select("a[href]").attr("title"));
+                    thisAvTitle.add(vocItemSet.get(randomThisAV).select("img[src]").attr("title"));
                 }
 
                 ButtonsTemplate thisAVCarouselTemplate = new ButtonsTemplate(
