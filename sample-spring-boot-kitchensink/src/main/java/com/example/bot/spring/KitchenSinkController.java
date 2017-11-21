@@ -574,8 +574,17 @@ public class KitchenSinkController {
 
                 ArrayList<String> thisAvLink = new ArrayList<>();
                 ArrayList<String> thisAvTitle = new ArrayList<>();
+                ArrayList<Integer> thisAvRandomNumber = new ArrayList<>();
                 for (int i = 0; i < totalThisAV; i++) {
-                    randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
+                    while (true) {
+                        randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
+                        if (thisAvRandomNumber.contains(randomThisAV)) {
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    thisAvRandomNumber.add(randomThisAV);
                     thisAvLink.add(vocItemSet.get(randomThisAV).select("a[href]").attr("href"));
                     String title = vocItemSet.get(randomThisAV).select("img[src]").attr("title");
                     thisAvTitle.add(title.length() > 20 ? title.substring(0, 19) : title);
@@ -584,7 +593,7 @@ public class KitchenSinkController {
                 ButtonsTemplate thisAVCarouselTemplate = new ButtonsTemplate(
                         "https://cdn.thisav.com/images/grey-pink/logo.png",
                         "AV Link",
-                        "按下連結播放",
+                        "按下面連結播放",
                         Arrays.asList(
                                 new URIAction(thisAvTitle.get(0),
                                         thisAvLink.get(0)),
