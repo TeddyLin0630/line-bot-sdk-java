@@ -556,9 +556,9 @@ public class KitchenSinkController {
                 Document vocDoc = Jsoup.connect(String.format("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=%d",randomThisAV)).get();
                 Elements vocItemSet = vocDoc.select("div[class=video_box]");
 
-                int totalThisAV = 1;
+                int totalThisAV = 4;
 
-                ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
+                /*ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < totalThisAV; i++) {
                     randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAVCarouselColumns.add(
@@ -569,8 +569,33 @@ public class KitchenSinkController {
 
                 ImageCarouselTemplate thisAVCarouselTemplate = new ImageCarouselTemplate(
                         thisAVCarouselColumns);
+                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", thisAVTemplateMessage));*/
 
-                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", thisAVCarouselTemplate));
+
+                ArrayList<String> thisAvLink = new ArrayList<>();
+                ArrayList<String> thisAvTitle = new ArrayList<>();
+                for (int i = 0; i < totalThisAV; i++) {
+                    randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
+                    thisAvLink.add(vocItemSet.get(randomThisAV).select("a[href]").attr("href"));
+                    thisAvTitle.add(vocItemSet.get(randomThisAV).select("a[href]").attr("title"));
+                }
+
+                ButtonsTemplate thisAVCarouselTemplate = new ButtonsTemplate(
+                        "https://cdn.thisav.com/images/grey-pink/logo.png",
+                        "AV Link",
+                        "按下連結播放",
+                        Arrays.asList(
+                                new URIAction(thisAvTitle.get(0),
+                                        thisAvLink.get(0)),
+                                new URIAction(thisAvTitle.get(1),
+                                        thisAvLink.get(1)),
+                                new URIAction(thisAvTitle.get(2),
+                                        thisAvLink.get(2)),
+                                new URIAction(thisAvTitle.get(3),
+                                        thisAvLink.get(3))
+                        ));
+                TemplateMessage thisAVTemplateMessage = new TemplateMessage("Button alt text", thisAVCarouselTemplate);
+                this.reply(replyToken, thisAVTemplateMessage);
                 break;
 
             case "抓":
