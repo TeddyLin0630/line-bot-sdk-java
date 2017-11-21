@@ -577,7 +577,8 @@ public class KitchenSinkController {
                 for (int i = 0; i < totalThisAV; i++) {
                     randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
                     thisAvLink.add(vocItemSet.get(randomThisAV).select("a[href]").attr("href"));
-                    thisAvTitle.add(vocItemSet.get(randomThisAV).select("img[src]").attr("title"));
+                    String title = vocItemSet.get(randomThisAV).select("img[src]").attr("title");
+                    thisAvTitle.add(title.length() > 20 ? title.substring(0, 19) : title);
                 }
 
                 ButtonsTemplate thisAVCarouselTemplate = new ButtonsTemplate(
