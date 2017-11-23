@@ -423,7 +423,6 @@ public class KitchenSinkController {
             case "抽大奶":
             case "18抽":
             case "抽18":
-                List<String> imageUriSet = new ArrayList<>();
                 Random random18 = new Random();
                 String image18Uri;
                 WEB_SITES_18 who18 = WEB_SITES_18.values()[random18.nextInt(WEB_SITES_18.values().length)];
