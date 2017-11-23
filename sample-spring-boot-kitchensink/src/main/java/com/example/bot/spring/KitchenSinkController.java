@@ -105,8 +105,8 @@ public class KitchenSinkController {
         //        voc,
         plus28,
         news_gamme,
-        forum_gamme,
-        beautify_leg
+        forum_gamme
+//        ,beautify_leg
     }
 
     enum WEB_SITES_18 {
@@ -546,10 +546,10 @@ public class KitchenSinkController {
                         break;
 
                     //Beautyleg腿模高清美腿写真套图
-                    case beautify_leg:
+                    /*case beautify_leg:
                         String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451213116&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(beautyLeg));
-                    break;
+                    break;*/
                     /*case voc:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
