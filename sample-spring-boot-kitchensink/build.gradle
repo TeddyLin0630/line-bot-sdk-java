@@ -19,4 +19,5 @@ apply plugin: 'org.springframework.boot'
 dependencies {
     compile project(':line-bot-spring-boot')
     compile 'org.jsoup:jsoup:1.11.1'
+    compile 'com.google.code.gson:gson:2.8.2'
 }

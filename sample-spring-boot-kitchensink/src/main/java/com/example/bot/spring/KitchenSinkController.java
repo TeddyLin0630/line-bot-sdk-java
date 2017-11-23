@@ -20,6 +20,10 @@ import com.example.bot.spring.poker.BigOne;
 import com.example.bot.spring.poker.Niuniu;
 import com.example.bot.spring.poker.Poker;
 import com.google.common.io.ByteStreams;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.ReplyMessage;
@@ -99,7 +103,8 @@ public class KitchenSinkController {
         jpBeautifyHouse,
         ck101,
         //        voc,
-        plus28
+        plus28,
+        gamme
     }
 
     @Autowired
@@ -505,6 +510,18 @@ public class KitchenSinkController {
                                     imageUriSet.add(e1.attr("file"));
                                 }
                             }
+                        }
+                        break;
+
+                    case gamme: //gamme 卡卡洛普
+                        String gammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511446498742&ct=feedly.desktop&cv=30.0.1403";
+                        String json = Jsoup.connect(gammeUrl).ignoreContentType(true).execute().body();
+                        JsonElement gammeJsonElement = new JsonParser().parse(json);
+                        JsonObject gammeJobject = gammeJsonElement.getAsJsonObject();
+                        JsonArray gammeJsonArray = gammeJobject.getAsJsonArray("items");
+                        for (JsonElement gammeElement : gammeJsonArray) {
+                            String gammeImageUrl = gammeJsonArray.get(0).getAsJsonObject().getAsJsonObject("visual").get("url").toString();
+                            imageUriSet.add(gammeImageUrl);
                         }
                         break;
 
