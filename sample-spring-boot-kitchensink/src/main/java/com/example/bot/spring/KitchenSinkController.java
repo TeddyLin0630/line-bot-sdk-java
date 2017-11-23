@@ -109,6 +109,11 @@ public class KitchenSinkController {
         beautify_leg
     }
 
+    enum WEB_SITES_18 {
+        plus28,
+        rosiyy
+    }
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -418,12 +423,26 @@ public class KitchenSinkController {
             case "抽大奶":
             case "18抽":
             case "抽18":
-                Map<String, String> cookies = loginPlus28();
+                List<String> imageUriSet = new ArrayList<>();
+                Random random18 = new Random();
+                String image18Uri;
+                WEB_SITES_18 who18 = WEB_SITES_18.values()[random18.nextInt(WEB_SITES_18.values().length)];
+                System.out.println("抽 website 18 : " + who18.name());
+                switch (who18) {
+                    case rosiyy:
+                        String rosiyy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.rosiyy.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451456578&ct=feedly.desktop&cv=30.0.1403";
+                        List<String> rosiYYSet = runCommonFeedParser(rosiyy);
+                        image18Uri = rosiYYSet.get(random18.nextInt(rosiYYSet.size()));
+                        break;
 
-                String USER_AGENT = "User-Agent";
-                String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
-                List<String> image18UriSet = new ArrayList<String>();
-                Random randomFor18 = new Random();
+                    case plus28:
+                    default:
+                        Map<String, String> cookies = loginPlus28();
+
+                        String USER_AGENT = "User-Agent";
+                        String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+                        List<String> image18UriSet = new ArrayList<String>();
+                        Random randomFor18 = new Random();
                 /*String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
                         "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
                         "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
@@ -433,38 +452,40 @@ public class KitchenSinkController {
                         "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
                         "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
 */
-                String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA",
-                "https://www.plus28.com/rss.php?fid=1283&auth=077ctBahMudv5MaXQj6F1lBziYn28e6uCblaV6m4JSVLDAiLA3HTNP2aAD5QKS6DZF0"};
-                String plus2818Url =  plus2818Set[0];
+                        String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA",
+                                "https://www.plus28.com/rss.php?fid=1283&auth=077ctBahMudv5MaXQj6F1lBziYn28e6uCblaV6m4JSVLDAiLA3HTNP2aAD5QKS6DZF0"};
+                        String plus2818Url =  plus2818Set[0];
 
-                if (text.equals("抽大奶")) {
-                    plus2818Url =  plus2818Set[1];
-                }
-                Document plus2818Doc = Jsoup.connect(plus2818Url).get();
-                Elements plus2818ItemSet = plus2818Doc.select("item");
-                Elements plus2818LinkSet = plus2818ItemSet.select("link");
-                String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
+                        if (text.equals("抽大奶")) {
+                            plus2818Url =  plus2818Set[1];
+                        }
+                        Document plus2818Doc = Jsoup.connect(plus2818Url).get();
+                        Elements plus2818ItemSet = plus2818Doc.select("item");
+                        Elements plus2818LinkSet = plus2818ItemSet.select("link");
+                        String plus2818Link = plus2818LinkSet.get(randomFor18.nextInt(plus2818LinkSet.size())).text();
 
-                Connection con3 = Jsoup.connect(plus2818Link);
-                con3.header(USER_AGENT, USER_AGENT_VALUE);
-                con3.header("origin", "https://plus28.com");
-                con3.header("referer", "https://plus28.com/logging.php?action=login");
-                con3.header("upgrade-insecure-requests", "1");
-                // 设置cookie和post上面的map数据
-                Connection.Response imageResponse = con3.ignoreContentType(true).followRedirects(true).method(Connection.Method.GET)
-                        .cookies(cookies).execute();
-                Document plus2818ImgDoc = imageResponse.parse();
-                Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
-                Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
+                        Connection con3 = Jsoup.connect(plus2818Link);
+                        con3.header(USER_AGENT, USER_AGENT_VALUE);
+                        con3.header("origin", "https://plus28.com");
+                        con3.header("referer", "https://plus28.com/logging.php?action=login");
+                        con3.header("upgrade-insecure-requests", "1");
+                        // 设置cookie和post上面的map数据
+                        Connection.Response imageResponse = con3.ignoreContentType(true).followRedirects(true).method(Connection.Method.GET)
+                                .cookies(cookies).execute();
+                        Document plus2818ImgDoc = imageResponse.parse();
+                        Elements plus2818ImgDivSet = plus2818ImgDoc.select("div[class=t_msgfont]");
+                        Elements plus2818ImgSet = plus2818ImgDivSet.get(0).select("img[src$=.jpg]");
 
-                for (Element plus28Img : plus2818ImgSet) {
-                    image18UriSet.add(plus28Img.attr("src"));
-                }
-                int image18Number = randomFor18.nextInt(image18UriSet.size()) ;
+                        for (Element plus28Img : plus2818ImgSet) {
+                            image18UriSet.add(plus28Img.attr("src"));
+                        }
+                        int image18Number = randomFor18.nextInt(image18UriSet.size()) ;
 
-                String image18Uri = image18UriSet.get(image18Number);
-                if (!image18Uri.contains("https")) {
-                    image18Uri = image18Uri.replaceFirst("http", "https");
+                        image18Uri = image18UriSet.get(image18Number);
+                        if (!image18Uri.contains("https")) {
+                            image18Uri = image18Uri.replaceFirst("http", "https");
+                        }
+                        break;
                 }
                 this.reply(replyToken, new ImageMessage(image18Uri, image18Uri));
                 break;
