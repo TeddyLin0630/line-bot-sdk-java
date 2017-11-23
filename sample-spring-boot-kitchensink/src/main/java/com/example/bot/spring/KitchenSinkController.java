@@ -105,8 +105,8 @@ public class KitchenSinkController {
         //        voc,
         plus28,
         news_gamme,
-        forum_gamme
-//        ,beautify_leg
+        forum_gamme,
+        beautify_leg
     }
 
     enum WEB_SITES_18 {
@@ -423,6 +423,7 @@ public class KitchenSinkController {
             case "抽大奶":
             case "18抽":
             case "抽18":
+            case "脫":
                 Random random18 = new Random();
                 String image18Uri;
                 WEB_SITES_18 who18 = WEB_SITES_18.values()[random18.nextInt(WEB_SITES_18.values().length)];
@@ -430,7 +431,7 @@ public class KitchenSinkController {
                 switch (who18) {
                     case rosiyy:
                         String rosiyy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.rosiyy.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451456578&ct=feedly.desktop&cv=30.0.1403";
-                        List<String> rosiYYSet = runCommonFeedParser(rosiyy);
+                        List<String> rosiYYSet = runCommonFeedParser(rosiyy, 2);
                         image18Uri = rosiYYSet.get(random18.nextInt(rosiYYSet.size()));
                         break;
 
@@ -537,19 +538,19 @@ public class KitchenSinkController {
 
                     case news_gamme: //news.gamme 卡卡洛普
                         String newsGammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511446498742&ct=feedly.desktop&cv=30.0.1403";
-                        imageUriSet.addAll(runCommonFeedParser(newsGammeUrl));
+                        imageUriSet.addAll(runCommonFeedParser(newsGammeUrl, 1));
                         break;
 
                     case forum_gamme: //forum 聊天事 - 正妹研究所
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck=1511450338373&ct=feedly.desktop&cv=30.0.1403";
-                        imageUriSet.addAll(runCommonFeedParser(forumGammeUrl));
+                        imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
                         break;
 
                     //Beautyleg腿模高清美腿写真套图
-                    /*case beautify_leg:
+                    case beautify_leg:
                         String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451213116&ct=feedly.desktop&cv=30.0.1403";
-                        imageUriSet.addAll(runCommonFeedParser(beautyLeg));
-                    break;*/
+                        imageUriSet.addAll(runCommonFeedParser(beautyLeg, 2));
+                    break;
                     /*case voc:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
@@ -741,7 +742,7 @@ public class KitchenSinkController {
         }
     }
 
-    private static List<String> runCommonFeedParser(String gammeUrl) throws IOException{
+    private static List<String> runCommonFeedParser(String gammeUrl, int type) throws IOException{
         List<String> imageUriSet = new ArrayList<>();
         String json = null;
         json = Jsoup.connect(gammeUrl).ignoreContentType(true).execute().body();
@@ -749,7 +750,17 @@ public class KitchenSinkController {
         JsonObject gammeJobject = gammeJsonElement.getAsJsonObject();
         JsonArray gammeJsonArray = gammeJobject.getAsJsonArray("items");
         for (JsonElement gammeElement : gammeJsonArray) {
-            String gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
+            String gammeImageUrl;
+            if (type == 1) {
+                gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
+            } else {
+                gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("edgeCacheUrl").toString().replaceAll("\"","");
+            }
+
+            if (!gammeImageUrl.contains("https")) {
+                gammeImageUrl = gammeImageUrl.replace("http", "https");
+            }
+
             if (gammeImageUrl.equalsIgnoreCase("none")) {
                 continue;
             }
