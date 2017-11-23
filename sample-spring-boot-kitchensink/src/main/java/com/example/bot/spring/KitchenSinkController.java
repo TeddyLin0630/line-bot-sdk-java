@@ -105,7 +105,8 @@ public class KitchenSinkController {
         //        voc,
         plus28,
         news_gamme,
-        forum_gamme
+        forum_gamme,
+        beautify_leg
     }
 
     @Autowired
@@ -524,6 +525,11 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl));
                         break;
 
+                    //Beautyleg腿模高清美腿写真套图
+                    case beautify_leg:
+                        String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451213116&ct=feedly.desktop&cv=30.0.1403";
+                        imageUriSet.addAll(runCommonFeedParser(beautyLeg));
+                    break;
                     /*case voc:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
@@ -729,6 +735,7 @@ public class KitchenSinkController {
             }
             imageUriSet.add(gammeImageUrl);
         }
+        return imageUriSet;
     }
 
     private static TemplateMessage createPokerMessage(int numberOfPokers, Poker poker) {
