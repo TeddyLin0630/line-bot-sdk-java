@@ -104,7 +104,8 @@ public class KitchenSinkController {
         ck101,
         //        voc,
         plus28,
-        gamme
+        news_gamme,
+        forum_gamme
     }
 
     @Autowired
@@ -513,16 +514,14 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    case gamme: //gamme 卡卡洛普
-                        String gammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511446498742&ct=feedly.desktop&cv=30.0.1403";
-                        String json = Jsoup.connect(gammeUrl).ignoreContentType(true).execute().body();
-                        JsonElement gammeJsonElement = new JsonParser().parse(json);
-                        JsonObject gammeJobject = gammeJsonElement.getAsJsonObject();
-                        JsonArray gammeJsonArray = gammeJobject.getAsJsonArray("items");
-                        for (JsonElement gammeElement : gammeJsonArray) {
-                            String gammeImageUrl = gammeJsonArray.get(0).getAsJsonObject().getAsJsonObject("visual").get("url").toString();
-                            imageUriSet.add(gammeImageUrl);
-                        }
+                    case news_gamme: //news.gamme 卡卡洛普
+                        String newsGammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511446498742&ct=feedly.desktop&cv=30.0.1403";
+                        imageUriSet.addAll(runCommonFeedParser(newsGammeUrl));
+                        break;
+
+                    case forum_gamme: //forum 聊天事 - 正妹研究所
+                        String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck=1511450338373&ct=feedly.desktop&cv=30.0.1403";
+                        imageUriSet.addAll(runCommonFeedParser(forumGammeUrl));
                         break;
 
                     /*case voc:
@@ -538,7 +537,7 @@ public class KitchenSinkController {
                             imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
                         }
                         break;*/
-
+                    case plus28:
                     default:
                         String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
                                 "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
@@ -713,6 +712,22 @@ public class KitchenSinkController {
                         text
                 );*/
                 break;
+        }
+    }
+
+    private static List<String> runCommonFeedParser(String gammeUrl) throws IOException{
+        List<String> imageUriSet = new ArrayList<>();
+        String json = null;
+        json = Jsoup.connect(gammeUrl).ignoreContentType(true).execute().body();
+        JsonElement gammeJsonElement = new JsonParser().parse(json);
+        JsonObject gammeJobject = gammeJsonElement.getAsJsonObject();
+        JsonArray gammeJsonArray = gammeJobject.getAsJsonArray("items");
+        for (JsonElement gammeElement : gammeJsonArray) {
+            String gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
+            if (gammeImageUrl.equalsIgnoreCase("none")) {
+                continue;
+            }
+            imageUriSet.add(gammeImageUrl);
         }
     }
 
