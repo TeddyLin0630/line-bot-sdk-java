@@ -103,14 +103,14 @@ public class KitchenSinkController {
         jpBeautifyHouse,
 //        ck101,
         //        voc,
-        plus28,
+//        plus28,
         news_gamme,
         forum_gamme,
         beautify_leg
     }
 
     enum WEB_SITES_18 {
-        plus28,
+//        plus28,
         rosiyy,
         k163k163,
         bbs_tw
@@ -437,13 +437,6 @@ public class KitchenSinkController {
                         image18Uri = rosiYYSet.get(random18.nextInt(rosiYYSet.size()));
                         break;
 
-                    case k163k163:
-                        //美女画像
-                        String k163k163 = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fk163k163.tumblr.com%2Frss&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
-                        List<String> k163k163Set = runCommonFeedParser(k163k163, 2);
-                        image18Uri = k163k163Set.get(random18.nextInt(k163k163Set.size()));
-                        break;
-
                     case bbs_tw:
                         //自拍寫真區｜洪爺色情網
                         String bbs_tw = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fbbs.bbs-tw.com%2Frss-4_people.xml&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
@@ -451,15 +444,22 @@ public class KitchenSinkController {
                         image18Uri = bbs_twSet.get(random18.nextInt(bbs_twSet.size()));
                         break;
 
-                    case plus28:
+                    case k163k163:
                     default:
+                        //美女画像
+                        String k163k163 = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fk163k163.tumblr.com%2Frss&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        List<String> k163k163Set = runCommonFeedParser(k163k163, 2);
+                        image18Uri = k163k163Set.get(random18.nextInt(k163k163Set.size()));
+                        break;
+
+                    /*case plus28:
                         Map<String, String> cookies = loginPlus28();
 
                         String USER_AGENT = "User-Agent";
                         String USER_AGENT_VALUE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
                         List<String> image18UriSet = new ArrayList<String>();
                         Random randomFor18 = new Random();
-                /*String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
+                *//*String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=826&auth=119dpFYXjLHpaDPhkFevCnMAtbvt2tbDppWqDMuJBzTIXHsF7IEvzUXaWJBBUtkoVw",
                         "https://www.plus28.com/rss.php?fid=1188&auth=bc9fR%2FT59V6zEoU%2BjUzx6dY3XnAFe981p%2FrQe8mTKyTnUZ2qR1HxB4P6Zpq5p3ueCTo",
                         "https://www.plus28.com/rss.php?fid=445&auth=ffc5a6AxTTHvL7EUpuQL34NX%2FgOdDivSBRZb9TEdLBoOGiT5OJ8JWQG0t4gPL9S5CQ",
                         "https://www.plus28.com/rss.php?fid=1283&auth=2d271zg5CEehb1q9aRu5osAQx45Ogw1dIRhmF7qI3hgPWwLXGv%2FZ9BQnWixVFy1HR4o",
@@ -467,7 +467,7 @@ public class KitchenSinkController {
                         "https://www.plus28.com/rss.php?fid=1074&auth=50f1BzHQrQB2P5MRqeph77zsy%2F5UU2t9bdz1bXV%2Blk3pBuVu02iSOBlGK0w%2B6%2FFz3%2BY",
                         "https://www.plus28.com/rss.php?fid=250&auth=6fe9vJm9oH7ZzqEsl8wQ3ogeRKfmIh00QKT4Kwom%2Bv0v4D3xFM%2BnTSTakhasqCS4cA",
                         "https://www.plus28.com/rss.php?fid=249&auth=9a80polbblwzR1snvpSz6TB3kvPMic9aHfIsxyPJ3jSz0v%2FKEyCgbzbNzFoFA8WqXA"};
-*/
+*//*
                         String[] plus2818Set = {"https://www.plus28.com/rss.php?fid=250&auth=ee83PM4DVkRVHxYG4Zvc6EbUdI4gdEjiSC4tQ1QgWekeXXaEG%2Bu5wZntnjcg5JxpLA",
                                 "https://www.plus28.com/rss.php?fid=1283&auth=077ctBahMudv5MaXQj6F1lBziYn28e6uCblaV6m4JSVLDAiLA3HTNP2aAD5QKS6DZF0"};
                         String plus2818Url =  plus2818Set[0];
@@ -501,7 +501,7 @@ public class KitchenSinkController {
                         if (!image18Uri.contains("https")) {
                             image18Uri = image18Uri.replaceFirst("http", "https");
                         }
-                        break;
+                        break;*/
                 }
                 this.reply(replyToken, new ImageMessage(image18Uri, image18Uri));
                 break;
@@ -557,16 +557,17 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(newsGammeUrl, 1));
                         break;
 
-                    case forum_gamme: //forum 聊天事 - 正妹研究所
-                        String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
-                        imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
-                        break;
-
                     //Beautyleg腿模高清美腿写真套图
                     case beautify_leg:
                         String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(beautyLeg, 2));
                     break;
+
+                    case forum_gamme: //forum 聊天事 - 正妹研究所
+                    default:
+                        String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
+                        imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
+                        break;
                     /*case voc:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
@@ -580,8 +581,8 @@ public class KitchenSinkController {
                             imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
                         }
                         break;*/
-                    case plus28:
-                    default:
+
+                    /*case plus28:
                         String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
                                 "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
                                 "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
@@ -596,7 +597,7 @@ public class KitchenSinkController {
                         for (Element plus28Img : plus28ImgSet) {
                             imageUriSet.add(plus28Img.attr("src"));
                         }
-                        break;
+                        break;*/
                 }
                 int imageNumber = random.nextInt(imageUriSet.size());
                 String imageUri = imageUriSet.get(imageNumber);
@@ -774,6 +775,11 @@ public class KitchenSinkController {
             if (type == 1) {
                 gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
             } else {
+
+                if (!gammeElement.getAsJsonObject().getAsJsonObject("visual").has("edgeCacheUrl")) {
+                    continue;
+                }
+
                 gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("edgeCacheUrl").toString().replaceAll("\"","");
             }
 
