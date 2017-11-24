@@ -860,7 +860,7 @@ public class KitchenSinkController {
                 Elements constellationElements = constellationDoc.select("div[class=TODAY_CONTENT]");
                 if (constellationElements.size() > 0) {
                     Element constellationElement = constellationElements.get(0);
-                    String constellationResult = constellationElement.text().replaceAll(" ", "\n").toString();
+                    String constellationResult = constellationElement.text().replaceAll(" ", "\n\n").toString();
                     this.reply(replyToken, new TextMessage(constellationResult));
                 }
                 break;
