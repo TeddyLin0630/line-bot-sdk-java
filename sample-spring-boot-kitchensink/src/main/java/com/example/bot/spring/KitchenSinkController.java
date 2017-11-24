@@ -124,6 +124,9 @@ public class KitchenSinkController {
         canadaMoto
     }
 
+    enum WEB_SITES_CAR {
+        autoblog,
+    }
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -705,7 +708,7 @@ public class KitchenSinkController {
 
             case "moto":
             case "機車":
-            case "":
+            case "騎":
                 List<String> imageUriMotoSet = new ArrayList<>();
                 Random motoRandom = new Random();
 
@@ -741,6 +744,44 @@ public class KitchenSinkController {
                 }
                 this.reply(replyToken, new ImageMessage(motoImageUri, motoImageUri));
                 break;
+
+            case "car":
+            case "汽車":
+            case "開":
+                List<String> imageUriCarSet = new ArrayList<>();
+                Random carRandom = new Random();
+
+                WEB_SITES_CAR whoCar = WEB_SITES_CAR.values()[carRandom.nextInt(WEB_SITES_CAR.values().length)];
+
+                System.out.println("moto website : " + whoCar.name());
+                switch (whoCar) {
+                    case autoblog://Autoblog
+                        String cafeRacers = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autoblog.com%2Frss.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(cafeRacers, 1));
+                        break;
+
+                    /*case canadaMoto://Canada Moto Guide
+                        String canadaMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fcanadamotoguide.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=FALSE&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(canadaMotoGP, 1));
+                        break;
+
+                    case newMotoGP://news RSS on motogp.com
+                        String newMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.motogp.com%2Fen%2Fnews%2Frss&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(newMotoGP, 2));
+                        break;
+
+                    case motoGP://MotoGP
+                    default:
+                        String motoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autosport.com%2Frss%2Fmotogpnews.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=" + getTimestamp() + "&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(motoGP, 1));
+                        break;*/
+                }
+                int imageCarNumber = carRandom.nextInt(imageUriCarSet.size());
+                String carImageUri = imageUriCarSet.get(imageCarNumber);
+                if (!carImageUri.contains("https")) {
+                    carImageUri = carImageUri.replaceFirst("http", "https");
+                }
+                this.reply(replyToken, new ImageMessage(carImageUri, carImageUri));
                 break;
 
             case "!help":
@@ -995,6 +1036,7 @@ public class KitchenSinkController {
                 "[指令]\n" +
                 "\"妞\" : 妞妞樸克\n" +
                 "\"發\" : 發一張牌（可玩比大小）\n" +
+                "\"騎\" : 機車\n" +
                 "\"看\" : 隨機看AV\n" +
                 "\"脫\" : 抽鹹濕圖\n" +
                 "\"抓\" : 抓片）\n" +
