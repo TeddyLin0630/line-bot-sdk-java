@@ -101,7 +101,7 @@ public class KitchenSinkController {
 
     enum WEB_SITES {
         jpBeautifyHouse,
-        ck101,
+//        ck101,
         //        voc,
         plus28,
         news_gamme,
@@ -111,7 +111,9 @@ public class KitchenSinkController {
 
     enum WEB_SITES_18 {
         plus28,
-        rosiyy
+        rosiyy,
+        k163k163,
+        bbs_tw
     }
 
     @Autowired
@@ -430,9 +432,23 @@ public class KitchenSinkController {
                 System.out.println("抽 website 18 : " + who18.name());
                 switch (who18) {
                     case rosiyy:
-                        String rosiyy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.rosiyy.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451456578&ct=feedly.desktop&cv=30.0.1403";
+                        String rosiyy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.rosiyy.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         List<String> rosiYYSet = runCommonFeedParser(rosiyy, 2);
                         image18Uri = rosiYYSet.get(random18.nextInt(rosiYYSet.size()));
+                        break;
+
+                    case k163k163:
+                        //美女画像
+                        String k163k163 = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fk163k163.tumblr.com%2Frss&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        List<String> k163k163Set = runCommonFeedParser(k163k163, 2);
+                        image18Uri = k163k163Set.get(random18.nextInt(k163k163Set.size()));
+                        break;
+
+                    case bbs_tw:
+                        //自拍寫真區｜洪爺色情網
+                        String bbs_tw = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fbbs.bbs-tw.com%2Frss-4_people.xml&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        List<String> bbs_twSet = runCommonFeedParser(bbs_tw, 2);
+                        image18Uri = bbs_twSet.get(random18.nextInt(bbs_twSet.size()));
                         break;
 
                     case plus28:
@@ -513,7 +529,7 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    case ck101:
+                    /*case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
                         Elements ck101LinkSet = ck101Doc.select("item");
@@ -534,21 +550,21 @@ public class KitchenSinkController {
                                 }
                             }
                         }
-                        break;
+                        break;*/
 
                     case news_gamme: //news.gamme 卡卡洛普
-                        String newsGammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511446498742&ct=feedly.desktop&cv=30.0.1403";
+                        String newsGammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(newsGammeUrl, 1));
                         break;
 
                     case forum_gamme: //forum 聊天事 - 正妹研究所
-                        String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck=1511450338373&ct=feedly.desktop&cv=30.0.1403";
+                        String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
                         break;
 
                     //Beautyleg腿模高清美腿写真套图
                     case beautify_leg:
-                        String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=1511451213116&ct=feedly.desktop&cv=30.0.1403";
+                        String beautyLeg = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.beautylegmm.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(beautyLeg, 2));
                     break;
                     /*case voc:
@@ -926,5 +942,9 @@ public class KitchenSinkController {
                 }
             }
         }.start();
+    }
+
+    public static String getTimestamp() {
+        return System.currentTimeMillis() + "000";
     }
 }
