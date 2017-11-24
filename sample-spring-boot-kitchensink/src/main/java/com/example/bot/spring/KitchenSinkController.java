@@ -133,6 +133,43 @@ public class KitchenSinkController {
         latest,
         truth_car
     }
+
+    enum CONSTELLATION {
+        Aries(0, "牡羊"),
+        Taurus(1, "金牛"),
+        Gemini(2, "雙子"),
+        Cancer(3, "巨蟹"),
+        Leo(4, "獅子"),
+        Virgo(5, "處女"),
+        Libra(6, "天秤"),
+        Scorpio(7, "天蠍"),
+        Sagittarius(8, "射手"),
+        Capricorn(9, "摩羯"),
+        Aquarius(10, "水瓶"),
+        Pisces(11, "雙魚");
+
+        int number;
+        String name;
+
+        CONSTELLATION(int num, String text) {
+            number = num;
+            name = text;
+        }
+
+        private int getNumber() {
+            return number;
+        }
+
+        public static int value (String con) {
+            for (CONSTELLATION constellation : CONSTELLATION.values()) {
+                if (con.equalsIgnoreCase(constellation.name)) {
+                    return constellation.getNumber();
+                }
+            }
+            return 0;
+        }
+    }
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -805,6 +842,29 @@ public class KitchenSinkController {
                 this.reply(replyToken, new ImageMessage(carImageUri, carImageUri));
                 break;
 
+            case "摩羯":
+            case "射手":
+            case "天蠍":
+            case "天秤":
+            case "處女":
+            case "獅子":
+            case "巨蟹":
+            case "雙子":
+            case "金牛":
+            case "牡羊":
+            case "雙魚":
+            case "水瓶"://星座
+                int constellationNum = CONSTELLATION.value(text);
+                String whichConstellation = String.format("http://astro.click108.com.tw/daily_%d.php?iAstro=%d",constellationNum, constellationNum);
+                Document constellationDoc = Jsoup.connect(whichConstellation).get();
+                Elements constellationElements = constellationDoc.select("div[class=TODAY_CONTENT]");
+                if (constellationElements.size() > 0) {
+                    Element constellationElement = constellationElements.get(0);
+                    String constellationResult = constellationElement.text().replaceAll(" ", "\n").toString();
+                    this.reply(replyToken, new TextMessage(constellationResult));
+                }
+                break;
+
             case "!help":
                 this.reply(replyToken, getHelpMessage());
                 break;
@@ -1057,6 +1117,7 @@ public class KitchenSinkController {
                 "[指令]\n" +
                 "\"妞\" : 妞妞樸克\n" +
                 "\"發\" : 發一張牌（可玩比大小）\n" +
+                "\"星座(ex:\"金牛\" or \"巨蟹\"...)\" : 每天星座運勢\n" +
                 "\"騎\" : 機車圖\n" +
                 "\"開\" : 汽車圖\n" +
                 "\"看\" : 隨機看AV\n" +
