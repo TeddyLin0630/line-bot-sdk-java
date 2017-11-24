@@ -106,7 +106,8 @@ public class KitchenSinkController {
 //        plus28,
         news_gamme,
         forum_gamme,
-        beautify_leg
+        beautify_leg,
+        ookkk
     }
 
     enum WEB_SITES_18 {
@@ -114,6 +115,13 @@ public class KitchenSinkController {
         rosiyy,
         k163k163,
         bbs_tw
+    }
+
+    enum WEB_SITES_MOTO {
+        cafeRacers,
+        motoGP,
+        newMotoGP,
+        canadaMoto
     }
 
     @Autowired
@@ -564,6 +572,11 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(beautyLeg, 2));
                     break;
 
+                    case ookkk: //"正妹星球!! ♥ 就是愛正妹"
+                        String ookkk = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2Fookkk&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriSet.addAll(runCommonFeedParser(ookkk, 2));
+                        break;
+
                     case forum_gamme: //forum 聊天事 - 正妹研究所
                     default:
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
@@ -690,10 +703,51 @@ public class KitchenSinkController {
                 this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate));
                 break;
 
+            case "moto":
+            case "機車":
+            case "":
+                List<String> imageUriMotoSet = new ArrayList<>();
+                Random motoRandom = new Random();
+
+                WEB_SITES_MOTO whoMoto = WEB_SITES_MOTO.values()[motoRandom.nextInt(WEB_SITES_MOTO.values().length)];
+
+                System.out.println("moto website : " + whoMoto.name());
+                switch (whoMoto) {
+                    case cafeRacers://Return of the Cafe Racers
+                        String cafeRacers = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fcaferacersreturn.blogspot.com%2Ffeeds%2Fposts%2Fdefault&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(cafeRacers, 1));
+                        break;
+
+                    case canadaMoto://Canada Moto Guide
+                        String canadaMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fcanadamotoguide.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=FALSE&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(canadaMotoGP, 1));
+                        break;
+
+                    case newMotoGP://news RSS on motogp.com
+                        String newMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.motogp.com%2Fen%2Fnews%2Frss&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(newMotoGP, 2));
+                        break;
+
+                    case motoGP://MotoGP
+                    default:
+                        String motoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autosport.com%2Frss%2Fmotogpnews.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=" + getTimestamp() + "&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriMotoSet.addAll(runCommonFeedParser(motoGP, 1));
+                        break;
+                }
+                int imageMotoNumber = motoRandom.nextInt(imageUriMotoSet.size());
+                String motoImageUri = imageUriMotoSet.get(imageMotoNumber);
+                if (!motoImageUri.contains("https")) {
+                    motoImageUri = motoImageUri.replaceFirst("http", "https");
+                }
+                this.reply(replyToken, new ImageMessage(motoImageUri, motoImageUri));
+                break;
+                break;
+
             case "!help":
                 this.reply(replyToken, getHelpMessage());
                 break;
-            case "imagemap":
+
+            /*case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
                         "This is alt text",
@@ -726,7 +780,7 @@ public class KitchenSinkController {
                                 )
                         )
                 ));
-                break;
+                break;*/
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
                 /*this.replyText(
