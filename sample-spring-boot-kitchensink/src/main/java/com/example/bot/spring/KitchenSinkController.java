@@ -162,19 +162,19 @@ public class KitchenSinkController {
 
     @EventMapping
     public void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) throws IOException {
-        handleHeavyContent(
+       /* handleHeavyContent(
                 event.getReplyToken(),
                 event.getMessage().getId(),
                 responseBody -> {
                     DownloadedContent mp4 = saveContent("mp4", responseBody);
                     reply(event.getReplyToken(), new AudioMessage(mp4.getUri(), 100));
-                });
+                });*/
     }
 
     @EventMapping
     public void handleVideoMessageEvent(MessageEvent<VideoMessageContent> event) throws IOException {
         // You need to install ffmpeg and ImageMagick.
-        handleHeavyContent(
+        /*handleHeavyContent(
                 event.getReplyToken(),
                 event.getMessage().getId(),
                 responseBody -> {
@@ -185,7 +185,7 @@ public class KitchenSinkController {
                             previewImg.path.toString());
                     reply(((MessageEvent) event).getReplyToken(),
                             new VideoMessage(mp4.getUri(), previewImg.uri));
-                });
+                });*/
     }
 
     @EventMapping
@@ -202,7 +202,8 @@ public class KitchenSinkController {
     @EventMapping
     public void handleJoinEvent(JoinEvent event) {
         String replyToken = event.getReplyToken();
-        this.replyText(replyToken, "Joined " + event.getSource());
+//        this.replyText(replyToken, "Joined " + event.getSource());
+        this.reply(replyToken, getHelpMessage());
     }
 
     @EventMapping
@@ -615,23 +616,7 @@ public class KitchenSinkController {
                 int randomThisAV = thisAVRandom.nextInt(10);
                 Document vocDoc = Jsoup.connect(String.format("http://www.thisav.com/videos?o=mr&type=&c=0&t=a&page=%d",randomThisAV)).get();
                 Elements vocItemSet = vocDoc.select("div[class=video_box]");
-
                 int totalThisAV = 4;
-
-                /*ArrayList<ImageCarouselColumn> thisAVCarouselColumns = new ArrayList<>();
-                for (int i = 0; i < totalThisAV; i++) {
-                    randomThisAV = thisAVRandom.nextInt(vocItemSet.size());
-                    thisAVCarouselColumns.add(
-                            new ImageCarouselColumn( "https://cdn.thisav.com/images/grey-pink/logo.png",
-                                    new URIAction("點一下開始播放",
-                                            vocItemSet.get(randomThisAV).select("a[href]").attr("href"))));
-                }
-
-                ImageCarouselTemplate thisAVCarouselTemplate = new ImageCarouselTemplate(
-                        thisAVCarouselColumns);
-                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", thisAVTemplateMessage));*/
-
-
                 ArrayList<String> thisAvLink = new ArrayList<>();
                 ArrayList<String> thisAvTitle = new ArrayList<>();
                 ArrayList<Integer> thisAvRandomNumber = new ArrayList<>();
@@ -706,14 +691,7 @@ public class KitchenSinkController {
                 break;
 
             case "!help":
-                this.reply(
-                        replyToken, new TextMessage("[指令]\n" +
-                                "\"妞\" : 妞妞樸克\n" +
-                                "\"發\" : 發一張牌（可玩比大小）\n" +
-                                "\"看\" : 隨機看AV\n" +
-                                "\"脫\" : 抽鹹濕圖\n" +
-                                "\"抓\" : 抓片）\n" +
-                                "\"抽\" : 抽美女圖"));
+                this.reply(replyToken, getHelpMessage());
                 break;
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
@@ -956,5 +934,16 @@ public class KitchenSinkController {
 
     public static String getTimestamp() {
         return System.currentTimeMillis() + "000";
+    }
+
+    public static TextMessage getHelpMessage() {
+        return new TextMessage("感謝您的加入，以下功能希望您會喜歡！\n" +
+                "[指令]\n" +
+                "\"妞\" : 妞妞樸克\n" +
+                "\"發\" : 發一張牌（可玩比大小）\n" +
+                "\"看\" : 隨機看AV\n" +
+                "\"脫\" : 抽鹹濕圖\n" +
+                "\"抓\" : 抓片）\n" +
+                "\"抽\" : 抽美女圖");
     }
 }
