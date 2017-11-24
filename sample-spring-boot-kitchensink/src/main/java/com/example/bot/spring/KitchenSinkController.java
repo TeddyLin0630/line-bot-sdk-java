@@ -766,6 +766,10 @@ public class KitchenSinkController {
         JsonObject gammeJobject = gammeJsonElement.getAsJsonObject();
         JsonArray gammeJsonArray = gammeJobject.getAsJsonArray("items");
         for (JsonElement gammeElement : gammeJsonArray) {
+            if (!gammeElement.getAsJsonObject().has("visual")) {
+                continue;
+            }
+
             String gammeImageUrl;
             if (type == 1) {
                 gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
