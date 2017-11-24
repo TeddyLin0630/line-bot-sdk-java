@@ -126,6 +126,12 @@ public class KitchenSinkController {
 
     enum WEB_SITES_CAR {
         autoblog,
+        autocar_rss,
+        bmw_blog,
+        driver_blog,
+        high_gear_media,
+        latest,
+        truth_car
     }
     @Autowired
     private LineMessagingClient lineMessagingClient;
@@ -756,25 +762,40 @@ public class KitchenSinkController {
                 System.out.println("moto website : " + whoCar.name());
                 switch (whoCar) {
                     case autoblog://Autoblog
-                        String cafeRacers = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autoblog.com%2Frss.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
-                        imageUriCarSet.addAll(runCommonFeedParser(cafeRacers, 1));
+                        String autoblog = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autoblog.com%2Frss.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(autoblog, 1));
                         break;
 
-                    /*case canadaMoto://Canada Moto Guide
-                        String canadaMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fcanadamotoguide.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=FALSE&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
-                        imageUriMotoSet.addAll(runCommonFeedParser(canadaMotoGP, 1));
+                    case autocar_rss://Autocar RSS Feed
+                        String autocarrss = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autocar.co.uk%2Frss%2Flatestnews%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=true&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(autocarrss, 1));
                         break;
 
-                    case newMotoGP://news RSS on motogp.com
-                        String newMotoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.motogp.com%2Fen%2Fnews%2Frss&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
-                        imageUriMotoSet.addAll(runCommonFeedParser(newMotoGP, 2));
+                    case bmw_blog://BMW BLOG
+                        String bmw_blog = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2FBmwBlog&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(bmw_blog, 2));
                         break;
 
-                    case motoGP://MotoGP
+                    case high_gear_media://High Gear Media Network Feed
+                        String high_gear_media = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2FMotorAuthority2&count=20&hours=0&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(high_gear_media, 1));
+                        break;
+
+                    case latest://Latest
+                        String latest = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autoexpress.co.uk%2Frss%2Fnews%2F&count=20&hours=0&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(latest, 2));
+                        break;
+
+                    case truth_car://The Truth About Cars
+                        String truth_car = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.thetruthaboutcars.com%2F%3Ffeed%3Drss2&count=20&hours=0&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(truth_car, 2));
+                        break;
+
+                    case driver_blog://Car and Driver BlogCar and Driver Blog
                     default:
-                        String motoGP = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.autosport.com%2Frss%2Fmotogpnews.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck=" + getTimestamp() + "&ct=feedly.desktop&cv=30.0.1408";
-                        imageUriMotoSet.addAll(runCommonFeedParser(motoGP, 1));
-                        break;*/
+                        String driver_blog = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Ffeeds.feedburner.com%2Fcaranddriver%2Fblog&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+ getTimestamp() +"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriCarSet.addAll(runCommonFeedParser(driver_blog, 1));
+                        break;
                 }
                 int imageCarNumber = carRandom.nextInt(imageUriCarSet.size());
                 String carImageUri = imageUriCarSet.get(imageCarNumber);
