@@ -693,8 +693,8 @@ public class KitchenSinkController {
                         replyToken, new TextMessage("[指令]\n" +
                                 "\"妞\" : 妞妞樸克\n" +
                                 "\"發\" : 發一張牌（可玩比大小）\n" +
-                                "\"看\" :隨機抓AV\n" +
-                                "\"脫\" :抽鹹濕圖\n" +
+                                "\"看\" : 隨機看AV\n" +
+                                "\"脫\" : 抽鹹濕圖\n" +
                                 "\"抓\" : 抓片）\n" +
                                 "\"抽\" : 抽美女圖"));
                 break;
