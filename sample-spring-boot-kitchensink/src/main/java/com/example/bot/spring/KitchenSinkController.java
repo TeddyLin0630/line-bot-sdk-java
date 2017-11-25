@@ -104,6 +104,7 @@ public class KitchenSinkController {
 //        ck101,
         //        voc,
         plus28,
+        hkCom,
 //        news_gamme,
         forum_gamme,
         beautify_leg,
@@ -602,6 +603,38 @@ public class KitchenSinkController {
                         }
                         break;
 
+                    case hkCom://discuss.com.hk
+                        Document hkDoc = Jsoup.connect("http://www.discuss.com.hk/archiver/?fid-140.html").get();
+                        Elements hkElements = hkDoc.select("li").select("a");
+                        Random hkRandom = new Random();
+                        List<String> hkUrlSet = new ArrayList<String>();
+                        for (int i = 0; i < hkElements.size(); i++) {
+                            if (i <= 6) {
+                                continue;
+                            }
+                            String hkUrl = hkElements.get(i).attr("href");
+                            String hkId = hkUrl.substring(hkUrl.indexOf("-") + 1, hkUrl.lastIndexOf("."));
+
+                            hkUrlSet.add("http://www.discuss.com.hk/viewthread.php?tid="+hkId+"&extra=page%3D1");
+                        }
+                        String visitHKUrl = hkUrlSet.get(hkRandom.nextInt(hkUrlSet.size()));
+                        System.out.println(visitHKUrl + "\n\n");
+                        hkDoc = Jsoup.connect(visitHKUrl).get();
+                        hkElements = hkDoc.select("div[class=post-img-container]");
+
+                        for (Element hkElement : hkElements) {
+                            String hkElementContent = hkElement.html();
+                            hkElementContent = hkElementContent.substring(hkElementContent.indexOf("<img src="));
+                            hkElementContent = hkElementContent.substring(hkElementContent.indexOf("\"") + 1);
+                            hkElementContent = hkElementContent.substring(0, hkElementContent.indexOf("\""));
+
+                            if (!hkElementContent.contains("https")) {
+                                hkElementContent = hkElementContent.replace("http", "https");
+                            }
+                            imageUriSet.add(hkElementContent);
+                        }
+                        break;
+
                     /*case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
@@ -716,6 +749,25 @@ public class KitchenSinkController {
                         ));
                 TemplateMessage thisAVTemplateMessage = new TemplateMessage("Button alt text", thisAVCarouselTemplate);
                 this.reply(replyToken, thisAVTemplateMessage);
+                break;
+
+            case "洋妞":
+                //pexels.com
+                List<String> pexelsImageUriSet = new ArrayList<>();
+                Random pexelsRandom = new Random();
+                String pexelsPageNum = String.format("page=%d", pexelsRandom.nextInt(100));
+                Document pexelsDoc = Jsoup.connect("https://www.pexels.com/search/beautiful%20girl/?"+pexelsPageNum).get();
+                System.out.println( "https://www.pexels.com/search/beautiful%20girl/?"+pexelsPageNum + "\n\n");
+                Elements pexelsElements = pexelsDoc.select("div[class=photos]").select("a");
+                for (Element pexelElement : pexelsElements) {
+                    pexelsImageUriSet.add(pexelElement.select("img").attr("src"));
+                }
+                int pexelsImageNumber = pexelsRandom.nextInt(pexelsImageUriSet.size());
+                String pexelsImageUri = pexelsImageUriSet.get(pexelsImageNumber);
+                if (!pexelsImageUri.contains("https")) {
+                    imageUri = pexelsImageUri.replaceFirst("http", "https");
+                }
+                this.reply(replyToken, new ImageMessage(pexelsImageUri, pexelsImageUri));
                 break;
 
             case "抓":
@@ -886,6 +938,10 @@ public class KitchenSinkController {
                 break;
 
             case "!help":
+            case "小白":
+            case "汪汪":
+            case "汪":
+            case "說明":
                 this.reply(replyToken, getHelpMessage());
                 break;
 
@@ -1162,6 +1218,7 @@ public class KitchenSinkController {
                 "\"看\" : 隨機看AV\n" +
                 "\"脫\" : 抽鹹濕圖\n" +
                 "\"抓\" : 抓片）\n" +
-                "\"抽\" : 抽美女圖");
+                "\"抽\" : 抽美女圖" +
+                "\"洋妞\" : 抽洋妞圖）\n" );
     }
 }
