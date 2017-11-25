@@ -871,17 +871,20 @@ public class KitchenSinkController {
                     this.reply(replyToken, new TextMessage(constellationResult));
                 }
                 break;
+
             case "一日":
-                String muyao4chaowanUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCLW_SzI9txZvtOFTPDswxqg";
-                Document muyao4chaowanDoc = Jsoup.connect(muyao4chaowanUrl).get();
-                Elements muyao4chaowanElements = muyao4chaowanDoc.select("entry");
-                String muyao4chaowan = "";
-                for (Element muyao4chaowanElement : muyao4chaowanElements) {
-                    muyao4chaowan += muyao4chaowanElement.select("title").text();
-                    muyao4chaowan += muyao4chaowanElement.select("link[href]").attr("href")+"\n\n";
-                }
-                this.reply(replyToken, new TextMessage(muyao4chaowan));
+            case "木曜4超玩":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCLW_SzI9txZvtOFTPDswxqg")));
                 break;
+
+            case "行車紀錄趣":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCeV8mGk7CodtelsRNjgfg3w")));
+                break;
+
+            case "buycartv":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UC-MByr5LRnWmVN94Ija4XJg")));
+                break;
+
             case "!help":
                 this.reply(replyToken, getHelpMessage());
                 break;
@@ -928,6 +931,17 @@ public class KitchenSinkController {
                 );*/
                 break;
         }
+    }
+
+    private static String fetchYoutubeRss(String youtubeUrl) throws IOException {
+        Document youtubeDoc = Jsoup.connect(youtubeUrl).get();
+        Elements youtubeElements = youtubeDoc.select("entry");
+        StringBuffer youtubeContent = new StringBuffer();
+        for (Element youtubeElement : youtubeElements) {
+            youtubeContent.append(youtubeElement.select("title").text());
+            youtubeContent.append(youtubeElement.select("link[href]").attr("href")+"\n\n");
+        }
+        return youtubeContent.toString();
     }
 
     private static List<String> runCommonFeedParser(String gammeUrl, int type) throws IOException{
