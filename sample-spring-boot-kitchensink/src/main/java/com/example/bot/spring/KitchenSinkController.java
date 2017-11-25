@@ -107,7 +107,8 @@ public class KitchenSinkController {
 //        news_gamme,
         forum_gamme,
         beautify_leg,
-        ookkk
+        ookkk,
+        sina_poppy
     }
 
     enum WEB_SITES_18 {
@@ -640,6 +641,11 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(ookkk, 2));
                         break;
 
+                    case sina_poppy: //□■□□妖色
+                        String sina_poppy = "view-source:https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=30&hours=8&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
+                        break;
+
                     case forum_gamme: //forum 聊天事 - 正妹研究所
                     default:
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
@@ -929,13 +935,21 @@ public class KitchenSinkController {
             String gammeImageUrl;
             if (type == 1) {
                 gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("url").toString().replaceAll("\"","");
-            } else {
+
+            } else if (type == 2){
 
                 if (!gammeElement.getAsJsonObject().getAsJsonObject("visual").has("edgeCacheUrl")) {
                     continue;
                 }
 
                 gammeImageUrl = gammeElement.getAsJsonObject().getAsJsonObject("visual").get("edgeCacheUrl").toString().replaceAll("\"","");
+            } else {
+                Document gammeDoc = Jsoup.parse(gammeElement.getAsJsonObject().getAsJsonObject("summary").get("content").toString());
+                gammeImageUrl = gammeDoc.select("p").select("a[target]").select("img").attr("src").replaceAll("\\\\\"","");
+
+                if (gammeImageUrl.isEmpty()) {
+                    continue;
+                }
             }
 
             if (!gammeImageUrl.contains("https")) {
