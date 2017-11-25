@@ -642,7 +642,7 @@ public class KitchenSinkController {
                         break;
 
                     case sina_poppy: //□■□□妖色
-                        String sina_poppy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=30&hours=8&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        String sina_poppy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
                         imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
                         break;
 
@@ -871,7 +871,17 @@ public class KitchenSinkController {
                     this.reply(replyToken, new TextMessage(constellationResult));
                 }
                 break;
-
+            case "一日":
+                String muyao4chaowanUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCLW_SzI9txZvtOFTPDswxqg";
+                Document muyao4chaowanDoc = Jsoup.connect(muyao4chaowanUrl).get();
+                Elements muyao4chaowanElements = muyao4chaowanDoc.select("entry");
+                String muyao4chaowan = "";
+                for (Element muyao4chaowanElement : muyao4chaowanElements) {
+                    muyao4chaowan += muyao4chaowanElement.select("title").text();
+                    muyao4chaowan += muyao4chaowanElement.select("link[href]").attr("href")+"\n\n";
+                }
+                this.reply(replyToken, new TextMessage(muyao4chaowan));
+                break;
             case "!help":
                 this.reply(replyToken, getHelpMessage());
                 break;
