@@ -103,8 +103,8 @@ public class KitchenSinkController {
         jpBeautifyHouse,
 //        ck101,
         //        voc,
-//        plus28,
-        news_gamme,
+        plus28,
+//        news_gamme,
         forum_gamme,
         beautify_leg,
         ookkk
@@ -584,6 +584,23 @@ public class KitchenSinkController {
                         }
                         break;
 
+                    case plus28:
+                        String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
+                                "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
+                                "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
+
+                        Document plus28Doc = Jsoup.connect(plus28Set[random.nextInt(plus28Set.length)]).get();
+                        Elements plus28ItemSet = plus28Doc.select("item");
+                        Elements plus28LinkSet = plus28ItemSet.select("link");
+                        String plus28Link = plus28LinkSet.get(random.nextInt(plus28LinkSet.size())).text();
+                        Document plus28ImgDoc = Jsoup.connect(plus28Link).get();
+                        Elements plus28ImgDivSet = plus28ImgDoc.select("div[class=t_msgfont]");
+                        Elements plus28ImgSet = plus28ImgDivSet.get(0).select("img[src$=.jpg]");
+                        for (Element plus28Img : plus28ImgSet) {
+                            imageUriSet.add(plus28Img.attr("src"));
+                        }
+                        break;
+
                     /*case ck101:
                         //ck101
                         Document ck101Doc = Jsoup.connect("https://ck101.com/forum.php?mod=rss&fid=1345&auth=0").get();
@@ -607,10 +624,10 @@ public class KitchenSinkController {
                         }
                         break;*/
 
-                    case news_gamme: //news.gamme 卡卡洛普
+                    /*case news_gamme: //news.gamme 卡卡洛普
                         String newsGammeUrl = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fnews.gamme.com.tw%2Fcategory%2Fhotchick%2Ffeed&count=20&hours=22&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(newsGammeUrl, 1));
-                        break;
+                        break;*/
 
                     //Beautyleg腿模高清美腿写真套图
                     case beautify_leg:
@@ -639,23 +656,6 @@ public class KitchenSinkController {
                         Elements vocImgDivSet = vocImgDoc.select("div[class=t_msgfont BSHARE_POP BSHARE_IMAGE_CLASS]");
                         for (Element vocImg : vocImgDivSet) {
                             imageUriSet.add(vocImg.select("img[src$=.jpg]").attr("src").replaceFirst("http", "https"));
-                        }
-                        break;*/
-
-                    /*case plus28:
-                        String[] plus28Set = {"https://www.plus28.com/rss.php?fid=1112&auth=d84eSWET9kKraQGfHm9F2shgsTffgV2RR7LcVr83KC3eqYqL30YXrufJ7vCwVj9VXhk",
-                                "https://www.plus28.com/rss.php?fid=52&auth=f084bqckg3mcy1DtaSopQh3lTbYVJ1tymAx%2FiOMy%2BT0Jks1BtSsw8IAa2INJ5OhD",
-                                "https://www.plus28.com/rss.php?fid=165&auth=7359GpiGkkIW8y2Hzu2Fx7Gs4RbJSXcLRlnok3jxI2oeKr2gvmGhuXpIvKJI84kx5A"};
-
-                        Document plus28Doc = Jsoup.connect(plus28Set[random.nextInt(plus28Set.length)]).get();
-                        Elements plus28ItemSet = plus28Doc.select("item");
-                        Elements plus28LinkSet = plus28ItemSet.select("link");
-                        String plus28Link = plus28LinkSet.get(random.nextInt(plus28LinkSet.size())).text();
-                        Document plus28ImgDoc = Jsoup.connect(plus28Link).get();
-                        Elements plus28ImgDivSet = plus28ImgDoc.select("div[class=t_msgfont]");
-                        Elements plus28ImgSet = plus28ImgDivSet.get(0).select("img[src$=.jpg]");
-                        for (Element plus28Img : plus28ImgSet) {
-                            imageUriSet.add(plus28Img.attr("src"));
                         }
                         break;*/
                 }
@@ -842,6 +842,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, new ImageMessage(carImageUri, carImageUri));
                 break;
 
+            case "魔羯":
             case "摩羯":
             case "射手":
             case "天蠍":
