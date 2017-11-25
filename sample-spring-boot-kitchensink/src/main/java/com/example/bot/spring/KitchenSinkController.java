@@ -642,7 +642,7 @@ public class KitchenSinkController {
                         break;
 
                     case sina_poppy: //□■□□妖色
-                        String sina_poppy = "view-source:https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=30&hours=8&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
+                        String sina_poppy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=30&hours=8&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
                         imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
                         break;
 
