@@ -965,7 +965,7 @@ public class KitchenSinkController {
 
             case "!youtube":
                 StringBuffer youtubeList = new StringBuffer();
-                youtubeList.append("[Youtube 清單]\n\n");
+                youtubeList.append("[Youtube 清單]\n");
                 for (YOUTUBE_LIST youtube : YOUTUBE_LIST.values()) {
                     youtubeList.append(youtube.name() + "\n");
                 }
@@ -1244,7 +1244,7 @@ public class KitchenSinkController {
 
     public static TextMessage getHelpMessage() {
         return new TextMessage("感謝您的加入，以下功能希望您會喜歡！\n" +
-                "[指令]\n\n" +
+                "[指令]\n" +
                 "\"!help\" : 查詢指令\n" +
                 "\"!youtube\" : 查詢支援的youtube清單\n" +
                 "\"妞\" : 妞妞樸克\n" +
