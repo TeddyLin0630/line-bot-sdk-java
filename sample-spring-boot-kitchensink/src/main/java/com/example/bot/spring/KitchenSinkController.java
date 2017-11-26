@@ -100,12 +100,11 @@ import java.util.function.Consumer;
 public class KitchenSinkController {
 
     enum YOUTUBE_LIST {
+        android,
+        buycartv,
         行車紀錄趣,
         木曜4超玩,
         一日,
-        行車紀錄趣,
-        buycartv,
-        android,
         蔡阿嘎,
         國光幫幫忙,
         這群人
