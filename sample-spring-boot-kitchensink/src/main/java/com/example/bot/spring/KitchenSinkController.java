@@ -970,7 +970,7 @@ public class KitchenSinkController {
                 for (YOUTUBE_LIST youtube : YOUTUBE_LIST.values()) {
                     youtubeList.append(youtube.name() + "\n");
                 }
-                this.reply(replyToken, new TextMessage(youtubeList.toString());
+                this.reply(replyToken, new TextMessage(youtubeList.toString()));
                 break;
 
             case "!help":
@@ -1030,7 +1030,7 @@ public class KitchenSinkController {
         Elements youtubeElements = youtubeDoc.select("entry");
         StringBuffer youtubeContent = new StringBuffer();
         for (Element youtubeElement : youtubeElements) {
-            youtubeContent.append(youtubeElement.select("title").text());
+            youtubeContent.append(youtubeElement.select("title").text()+"\n");
             youtubeContent.append(youtubeElement.select("link[href]").attr("href")+"\n\n");
         }
         return youtubeContent.toString();
