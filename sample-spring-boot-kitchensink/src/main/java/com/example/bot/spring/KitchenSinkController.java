@@ -935,8 +935,8 @@ public class KitchenSinkController {
                 this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UC-MByr5LRnWmVN94Ija4XJg")));
                 break;
 
-            case "Android":
-            case "Android Developer":
+            case "android":
+            case "android developer":
                 this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCVHFbqXqoYvEWM1Ddxl0QDg")));
                 break;
 
