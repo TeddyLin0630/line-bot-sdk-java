@@ -99,6 +99,18 @@ import java.util.function.Consumer;
 @LineMessageHandler
 public class KitchenSinkController {
 
+    enum YOUTUBE_LIST {
+        行車紀錄趣,
+        木曜4超玩,
+        一日,
+        行車紀錄趣,
+        buycartv,
+        android,
+        蔡阿嘎,
+        國光幫幫忙,
+        這群人
+    }
+
     enum WEB_SITES {
         jpBeautifyHouse,
 //        ck101,
@@ -951,6 +963,16 @@ public class KitchenSinkController {
             case "這群人":
                 this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UC6FcYHEm7SO1jpu5TKjNXEA")));
                 break;
+
+            case "!youtube":
+                StringBuffer youtubeList = new StringBuffer();
+                youtubeList.append("[Youtube 清單]\n\n");
+                for (YOUTUBE_LIST youtube : YOUTUBE_LIST.values()) {
+                    youtubeList.append(youtube.name() + "\n");
+                }
+                this.reply(replyToken, new TextMessage(youtubeList.toString());
+                break;
+
             case "!help":
             case "小白":
             case "汪汪":
@@ -1223,7 +1245,9 @@ public class KitchenSinkController {
 
     public static TextMessage getHelpMessage() {
         return new TextMessage("感謝您的加入，以下功能希望您會喜歡！\n" +
-                "[指令]\n" +
+                "[指令]\n\n" +
+                "\"!help\" : 查詢指令\n" +
+                "\"!youtube\" : 查詢支援的youtube清單\n" +
                 "\"妞\" : 妞妞樸克\n" +
                 "\"發\" : 發一張牌（可玩比大小）\n" +
                 "\"星座(ex:\"金牛\" or \"巨蟹\"...)\" : 每天星座運勢\n" +
