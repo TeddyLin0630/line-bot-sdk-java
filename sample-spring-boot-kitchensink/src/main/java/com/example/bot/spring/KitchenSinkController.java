@@ -935,6 +935,22 @@ public class KitchenSinkController {
                 this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UC-MByr5LRnWmVN94Ija4XJg")));
                 break;
 
+            case "Android":
+            case "Android Developer":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCVHFbqXqoYvEWM1Ddxl0QDg")));
+                break;
+
+            case "蔡阿嘎":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCPwxSX0DYDMQxCvgfeVDv_g")));
+                break;
+
+            case "國光幫幫忙":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCNz2YbRPdGvyBq5qq7iqNwQ")));
+                break;
+
+            case "這群人":
+                this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UC6FcYHEm7SO1jpu5TKjNXEA")));
+                break;
             case "!help":
             case "小白":
             case "汪汪":
