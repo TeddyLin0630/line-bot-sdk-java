@@ -122,7 +122,8 @@ public class KitchenSinkController {
         ookkk,
         rosiyy,
         k163k163,
-        sina_poppy
+        sina_poppy,
+        ptt_beauty
     }
 
     enum WEB_SITES_18 {
@@ -689,9 +690,17 @@ public class KitchenSinkController {
                         break;
 
                     case forum_gamme: //forum 聊天事 - 正妹研究所
-                    default:
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
+                        break;
+
+                    case ptt_beauty: //PTT BEAUTIFY
+                    default:
+                        Document ptt_beautify = Jsoup.connect("http://feed43.com/7337824588108211.xml").get();
+                        Elements ptt_beautifyElements = ptt_beautify.select("item");
+                        for (Element ptt_beautifyElement : ptt_beautifyElements) {
+                            imageUriSet.add(ptt_beautifyElement.select("link").text()+".jpg");
+                        }
                         break;
                     /*case voc:
                         //http://bbs.voc.com.cn/
