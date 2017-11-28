@@ -960,6 +960,13 @@ public class KitchenSinkController {
                 this.reply(replyToken, new TextMessage(sgURL));
                 break;
 
+            case "運動":
+            case "健身": //美女健身聯盟
+                ArrayList<String> exerciseList = fetchYoutubeIDList("https://www.youtube.com/feeds/videos.xml?channel_id=UC_rifxahjOOKTOBsyT9ZPSA");
+                String exerciseURL = "https://youtu.be/" + exerciseList.get(new Random().nextInt(exerciseList.size()));
+                this.reply(replyToken, new TextMessage(exerciseURL));
+                break;
+
             case "一日":
             case "木曜4超玩":
                 this.reply(replyToken, new TextMessage(fetchYoutubeRss("https://www.youtube.com/feeds/videos.xml?channel_id=UCLW_SzI9txZvtOFTPDswxqg")));
