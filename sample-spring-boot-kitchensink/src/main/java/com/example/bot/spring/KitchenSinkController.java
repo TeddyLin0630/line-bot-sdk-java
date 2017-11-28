@@ -770,7 +770,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, thisAVTemplateMessage);
                 break;
 
-            case "洋妞":
+            /*case "洋妞":
                 //pexels.com
                 List<String> pexelsImageUriSet = new ArrayList<>();
                 Random pexelsRandom = new Random();
@@ -787,7 +787,7 @@ public class KitchenSinkController {
                     imageUri = pexelsImageUri.replaceFirst("http", "https");
                 }
                 this.reply(replyToken, new ImageMessage(pexelsImageUri, pexelsImageUri));
-                break;
+                break;*/
 
             case "抓":
                 Document xvideosDoc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
@@ -1297,20 +1297,19 @@ public class KitchenSinkController {
         return new TextMessage("感謝您的加入，以下功能希望您會喜歡！\n" +
                 "[指令]\n" +
                 "\"!help\" : 查詢指令\n" +
-                "\"!youtube\" : 查詢支援的youtube清單\n" +
+                "\"!youtube\" : 支援的youtube清單\n" +
                 "\"妞\" : 妞妞樸克\n" +
                 "\"發\" : 發一張牌（可玩比大小）\n" +
                 "\"星座(ex:\"金牛\" or \"巨蟹\"...)\" : 每天星座運勢\n" +
                 "\"騎\" : 機車圖\n" +
                 "\"開\" : 汽車圖\n" +
-                "\"sg\" : show girl\n" +
-                "\"健身\" : 健身影片\n" +
-                "\"動\" : 正妹影片\n" +
                 "\"抓寶\" : 隨機抓神奇寶貝\n" +
                 "\"看\" : 隨機看AV\n" +
                 "\"脫\" : 抽鹹濕圖\n" +
                 "\"抓\" : 抓片 \n" +
                 "\"抽\" : 抽美女圖\n" +
-                "\"洋妞\" : 抽洋妞圖 \n" );
+                "\"sg\" : show girl\n" +
+                "\"健身\" : 健身影片\n" +
+                "\"動\" : 正妹影片\n" );
     }
 }
