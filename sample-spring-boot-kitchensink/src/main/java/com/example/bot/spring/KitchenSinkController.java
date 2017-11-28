@@ -943,9 +943,21 @@ public class KitchenSinkController {
                 }
                 break;
             case "動":
-                ArrayList<String> VGP8PQURLList = fetchYoutubeIDList("https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ");
+                String[] youtubeChannelList = {
+                        "https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ", //正妹直播福利站
+                        "https://www.youtube.com/feeds/videos.xml?channel_id=UCWyKul9xGolA956GUbN-5PQ" ,//正妹本舖
+                        "https://www.youtube.com/feeds/videos.xml?channel_id=UCKpk92zYWMgGavWbSIHi-HQ" ,//正妹珍藏網
+                        "https://www.youtube.com/feeds/videos.xml?channel_id=UCXRzp3nMjrUmAqWFCHl4S_Q"//extrating
+                };
+                ArrayList<String> VGP8PQURLList = fetchYoutubeIDList(youtubeChannelList[new Random().nextInt(youtubeChannelList.length)]);
                 String VGP8PQURL = "https://youtu.be/" + VGP8PQURLList.get(new Random().nextInt(VGP8PQURLList.size()));
                 this.reply(replyToken, new TextMessage(VGP8PQURL));
+                break;
+
+            case "sg": //百大SG 頻道
+                ArrayList<String> sgList = fetchYoutubeIDList("https://www.youtube.com/feeds/videos.xml?channel_id=UCD0RVDhw9LbLy2RB36DWvbA");
+                String sgURL = "https://youtu.be/" + sgList.get(new Random().nextInt(sgList.size()));
+                this.reply(replyToken, new TextMessage(sgURL));
                 break;
 
             case "一日":
@@ -1058,7 +1070,7 @@ public class KitchenSinkController {
     }
 
     private static ArrayList<String> fetchYoutubeIDList(String youtubeUrl) throws IOException {
-        Document youtubeDoc = Jsoup.connect("https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ").get();
+        Document youtubeDoc = Jsoup.connect(youtubeUrl).get();
         Elements youtubeElements = youtubeDoc.select("entry");
         ArrayList<String> youtubeVideoList = new ArrayList<>();
         for (Element youtubeElement : youtubeElements) {
@@ -1284,6 +1296,8 @@ public class KitchenSinkController {
                 "\"星座(ex:\"金牛\" or \"巨蟹\"...)\" : 每天星座運勢\n" +
                 "\"騎\" : 機車圖\n" +
                 "\"開\" : 汽車圖\n" +
+                "\"sg\" : show girl\n" +
+                "\"動\" : 正妹影片\n" +
                 "\"抓寶\" : 隨機抓神奇寶貝\n" +
                 "\"看\" : 隨機看AV\n" +
                 "\"脫\" : 抽鹹濕圖\n" +
