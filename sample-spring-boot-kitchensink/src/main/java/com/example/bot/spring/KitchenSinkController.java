@@ -989,8 +989,10 @@ public class KitchenSinkController {
                 }
                 this.reply(replyToken, new TextMessage(youtubeList.toString()));
                 break;
-            case "抓寶":
+            case "抓寶"://pockmon go pic
                 String pockmonUrl = String.format("http://www.otaku-hk.com/pkmgo/pokemon/%d", new Random().nextInt(250) + 1);
+                Document ptt_beautify_doc = Jsoup.connect(pockmonUrl).get();
+                pockmonUrl = ptt_beautify_doc.select("div[y=1]").select("img").attr("src").replaceFirst("http","https");
                 this.reply(replyToken, new ImageMessage(pockmonUrl, pockmonUrl));
                 break;
 
