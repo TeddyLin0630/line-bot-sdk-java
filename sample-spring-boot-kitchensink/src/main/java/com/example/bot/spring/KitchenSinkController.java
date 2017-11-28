@@ -46,19 +46,12 @@ import com.linecorp.bot.model.event.message.VideoMessageContent;
 import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.event.source.RoomSource;
 import com.linecorp.bot.model.event.source.Source;
-import com.linecorp.bot.model.message.AudioMessage;
 import com.linecorp.bot.model.message.ImageMessage;
-import com.linecorp.bot.model.message.ImagemapMessage;
 import com.linecorp.bot.model.message.LocationMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.message.VideoMessage;
-import com.linecorp.bot.model.message.imagemap.ImagemapArea;
-import com.linecorp.bot.model.message.imagemap.ImagemapBaseSize;
-import com.linecorp.bot.model.message.imagemap.MessageImagemapAction;
-import com.linecorp.bot.model.message.imagemap.URIImagemapAction;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.linecorp.bot.model.message.template.ImageCarouselColumn;
@@ -80,7 +73,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
-import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -950,6 +942,11 @@ public class KitchenSinkController {
                     this.reply(replyToken, new TextMessage(constellationResult));
                 }
                 break;
+            case "動":
+                ArrayList<String> VGP8PQURLList = fetchYoutubeIDList("https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ");
+                String VGP8PQURL = "https://youtu.be/" + VGP8PQURLList.get(new Random().nextInt(VGP8PQURLList.size()));
+                this.reply(replyToken, new TextMessage(VGP8PQURL));
+                break;
 
             case "一日":
             case "木曜4超玩":
@@ -989,6 +986,7 @@ public class KitchenSinkController {
                 }
                 this.reply(replyToken, new TextMessage(youtubeList.toString()));
                 break;
+
             case "抓寶"://pockmon go pic
                 String pockmonUrl = String.format("http://www.otaku-hk.com/pkmgo/pokemon/%d", new Random().nextInt(250) + 1);
                 Document ptt_beautify_doc = Jsoup.connect(pockmonUrl).get();
@@ -1057,6 +1055,16 @@ public class KitchenSinkController {
             youtubeContent.append(youtubeElement.select("link[href]").attr("href")+"\n\n");
         }
         return youtubeContent.toString();
+    }
+
+    private static ArrayList<String> fetchYoutubeIDList(String youtubeUrl) throws IOException {
+        Document youtubeDoc = Jsoup.connect("https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ").get();
+        Elements youtubeElements = youtubeDoc.select("entry");
+        ArrayList<String> youtubeVideoList = new ArrayList();
+        for (Element youtubeElement : youtubeElements) {
+            youtubeVideoList.add(youtubeElement.select("id").text().split(":")[2]);
+        }
+        return youtubeVideoList;
     }
 
     private static List<String> runCommonFeedParser(String gammeUrl, int type) throws IOException{
