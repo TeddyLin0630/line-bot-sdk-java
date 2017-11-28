@@ -1060,7 +1060,7 @@ public class KitchenSinkController {
     private static ArrayList<String> fetchYoutubeIDList(String youtubeUrl) throws IOException {
         Document youtubeDoc = Jsoup.connect("https://www.youtube.com/feeds/videos.xml?channel_id=UCb8GewmyomdoQiu2-VGP8PQ").get();
         Elements youtubeElements = youtubeDoc.select("entry");
-        ArrayList<String> youtubeVideoList = new ArrayList();
+        ArrayList<String> youtubeVideoList = new ArrayList<>();
         for (Element youtubeElement : youtubeElements) {
             youtubeVideoList.add(youtubeElement.select("id").text().split(":")[2]);
         }
