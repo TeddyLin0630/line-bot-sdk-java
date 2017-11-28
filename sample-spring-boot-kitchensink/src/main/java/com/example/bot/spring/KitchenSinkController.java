@@ -1304,6 +1304,7 @@ public class KitchenSinkController {
                 "\"騎\" : 機車圖\n" +
                 "\"開\" : 汽車圖\n" +
                 "\"sg\" : show girl\n" +
+                "\"健身\" : 健身影片\n" +
                 "\"動\" : 正妹影片\n" +
                 "\"抓寶\" : 隨機抓神奇寶貝\n" +
                 "\"看\" : 隨機看AV\n" +
