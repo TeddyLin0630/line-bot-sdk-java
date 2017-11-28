@@ -971,6 +971,10 @@ public class KitchenSinkController {
                 }
                 this.reply(replyToken, new TextMessage(youtubeList.toString()));
                 break;
+            case "抓寶":
+                String pockmonUrl = String.format("http://www.otaku-hk.com/pkmgo/pokemon/%d", new Random().nextInt(250) + 1);
+                this.reply(replyToken, new ImageMessage(pockmonUrl, pockmonUrl));
+                break;
 
             case "!help":
             case "小白":
@@ -1252,6 +1256,7 @@ public class KitchenSinkController {
                 "\"星座(ex:\"金牛\" or \"巨蟹\"...)\" : 每天星座運勢\n" +
                 "\"騎\" : 機車圖\n" +
                 "\"開\" : 汽車圖\n" +
+                "\"抓寶\" : 隨機抓神奇寶貝\n" +
                 "\"看\" : 隨機看AV\n" +
                 "\"脫\" : 抽鹹濕圖\n" +
                 "\"抓\" : 抓片 \n" +
