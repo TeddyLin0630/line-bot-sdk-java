@@ -696,10 +696,19 @@ public class KitchenSinkController {
 
                     case ptt_beauty: //PTT BEAUTIFY
                     default:
-                        Document ptt_beautify = Jsoup.connect("http://feed43.com/7337824588108211.xml").get();
-                        Elements ptt_beautifyElements = ptt_beautify.select("item");
+                        Document ptt_beautify_doc = Jsoup.connect("http://feed43.com/getbeaktyurl.xml").get();
+                        Elements ptt_beautifyElements = ptt_beautify_doc.select("item");
+                        List<String> ptt_beauty_url_set = new ArrayList<String>();
                         for (Element ptt_beautifyElement : ptt_beautifyElements) {
-                            imageUriSet.add(ptt_beautifyElement.select("link").text()+".jpg");
+                            ptt_beauty_url_set.add(ptt_beautifyElement.select("link").text());
+                        }
+                        String ptt_beauty_pic_url = ptt_beauty_url_set.get(new Random().nextInt(ptt_beauty_url_set.size() - 5));
+                        ptt_beautify_doc = Jsoup.connect(ptt_beauty_pic_url).get();
+                        ptt_beautifyElements = ptt_beautify_doc.select("a[rel=nofollow]");
+                        for (Element ptt_beautifyElement : ptt_beautifyElements) {
+                            if (ptt_beautifyElement.html().contains(".jpg")){
+                                imageUriSet.add(ptt_beautifyElement.html());
+                            }
                         }
                         break;
                     /*case voc:
