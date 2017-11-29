@@ -1012,7 +1012,29 @@ public class KitchenSinkController {
                 pockmonUrl = ptt_beautify_doc.select("div[y=1]").select("img").attr("src").replaceFirst("http","https");
                 this.reply(replyToken, new ImageMessage(pockmonUrl, pockmonUrl));
                 break;
+            case "每日一字":
+                Document wordOfTheDay = Jsoup.connect("http://learnersdictionary.com/word-of-the-day").get();
+                StringBuffer wordOfTheDayResult = new StringBuffer();
+                String date = wordOfTheDay.select("div[class=for_date ld_xs_hidden]").text();
+                String word = wordOfTheDay.select("span[class=hw_txt georgia_font]").text();
+                String partOfSpeech = wordOfTheDay.select("div[class=fl]").get(0).text();
 
+                wordOfTheDayResult.append(date + "\n");
+                wordOfTheDayResult.append(word + "\n");
+                wordOfTheDayResult.append(partOfSpeech + "\n");
+
+                Elements meaning = wordOfTheDay.select("div[class=midbt]");
+                for (int i = 0; i < meaning.size(); i++) {
+                    String[] eArr = meaning.get(i).text().split(":");
+                    if (eArr.length >= 2) {
+                        wordOfTheDayResult.append((i + 1) + "." + eArr[1]+"\n\n");
+                    }
+                }
+                Elements sample = wordOfTheDay.select("li[class=vi]");
+                for (Element e: sample) {
+                    wordOfTheDayResult.append(e.text()+"\n");
+                }
+                break;
             case "!help":
             case "小白":
             case "汪汪":
@@ -1294,7 +1316,7 @@ public class KitchenSinkController {
     }
 
     public static TextMessage getHelpMessage() {
-        return new TextMessage("感謝您的加入，以下功能希望您會喜歡！\n" +
+        return new TextMessage("感謝您的加入，希望您會喜歡以下功能！\n" +
                 "[指令]\n" +
                 "\"!help\" : 查詢指令\n" +
                 "\"!youtube\" : 支援的youtube清單\n" +
