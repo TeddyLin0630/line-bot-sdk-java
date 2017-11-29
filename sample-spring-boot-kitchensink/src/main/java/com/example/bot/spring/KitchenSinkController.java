@@ -1034,6 +1034,7 @@ public class KitchenSinkController {
                 for (Element e: sample) {
                     wordOfTheDayResult.append(e.text()+"\n");
                 }
+                this.reply(replyToken, new TextMessage(wordOfTheDayResult.toString()));
                 break;
             case "!help":
             case "小白":
