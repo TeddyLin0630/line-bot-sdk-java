@@ -472,9 +472,27 @@ public class KitchenSinkController {
                 break;
             }*/
             case "妞":
-                int numberOfPokersForNiuniu = 5;
-                Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
-                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+                String userId = event.getSource().getUserId();
+                if (userId != null) {
+                    lineMessagingClient
+                            .getProfile(userId)
+                            .whenComplete((profile, throwable) -> {
+                                if (throwable != null) {
+                                    this.replyText(replyToken, throwable.getMessage());
+                                    return;
+                                }
+
+                                int numberOfPokersForNiuniu = 5;
+                                Niuniu niuniu = new Niuniu(numberOfPokersForNiuniu);
+//                                this.reply(replyToken, createPokerMessage(numberOfPokersForNiuniu, niuniu));
+
+                                this.reply(replyToken,
+                                        Arrays.asList(createPokerMessage(numberOfPokersForNiuniu, niuniu),
+                                                new TextMessage("Player  \n----------- "+ profile.getDisplayName())+" ---------\n")
+                                );
+
+                            });
+                }
                 break;
 
             case "發":
