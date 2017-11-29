@@ -1019,9 +1019,7 @@ public class KitchenSinkController {
                 String word = wordOfTheDay.select("span[class=hw_txt georgia_font]").text();
                 String partOfSpeech = wordOfTheDay.select("div[class=fl]").get(0).text();
 
-                wordOfTheDayResult.append(date + "\n");
-                wordOfTheDayResult.append(word + "\n");
-                wordOfTheDayResult.append(partOfSpeech + "\n");
+                wordOfTheDayResult.append(word + "  (" + partOfSpeech + ")\n\n" );
 
                 Elements meaning = wordOfTheDay.select("div[class=midbt]");
                 for (int i = 0; i < meaning.size(); i++) {
@@ -1034,6 +1032,7 @@ public class KitchenSinkController {
                 for (Element e: sample) {
                     wordOfTheDayResult.append(e.text()+"\n");
                 }
+                wordOfTheDayResult.append("\n" + date + "\n");
                 this.reply(replyToken, new TextMessage(wordOfTheDayResult.toString()));
                 break;
             case "!help":
