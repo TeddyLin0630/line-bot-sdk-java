@@ -567,7 +567,7 @@ public class KitchenSinkController {
                 }
 
                 int meetAVLuckyNum = new Random().nextInt(20);
-                String patternStr = "var hq_video_file = '(.*)'";
+                String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
                 Pattern pattern = Pattern.compile(patternStr);
                 Matcher matcher = pattern.matcher(Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().html());
                 String meetAVMp4 = matcher.group(1);
