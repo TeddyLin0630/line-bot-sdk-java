@@ -567,13 +567,18 @@ public class KitchenSinkController {
                 }
 
                 int meetAVLuckyNum = new Random().nextInt(20);
-                String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
-                Pattern pattern = Pattern.compile(patternStr);
-                String meetavHtml = Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().html();
-                System.out.println(meetavHtml+"\n\n");
-                Matcher matcher = pattern.matcher(meetavHtml);
-                String meetAVMp4 = matcher.group(1);
-                System.out.println(meetAVTitle.get(meetAVLuckyNum)+"\n\n");
+                String meetAVMp4 = "";
+                meetAvElements = Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().select("script[type=text/javascript]");
+                for (Element e : meetAvElements) {
+                    String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
+                    Pattern pattern = Pattern.compile(patternStr);
+                    Matcher matcher = pattern.matcher(e.toString());
+                    boolean matchFound = matcher.find();
+                    if (matchFound) {
+                        meetAVMp4 = matcher.group(1);
+                        break;
+                    }
+                }
                 this.reply(replyToken, Arrays.asList(new TextMessage(meetAVTitle.get(meetAVLuckyNum)), new TextMessage(meetAVMp4)));
                 break;
 
