@@ -588,8 +588,8 @@ public class KitchenSinkController {
                         boolean matchFound = matcher.find();
                         if (matchFound) {
                             realMeetAVLink.add(matcher.group(1));
-                            realMeetAVTitle.add(meetAVTitle.get(meetAVLuckyNum).length() >= 20 ?
-                                    meetAVTitle.get(meetAVLuckyNum).substring(0,19) : meetAVTitle.get(meetAVLuckyNum));
+                            realMeetAVTitle.add(meetAVTitle.get(meetAVLuckyNum).length() >= 12 ?
+                                    meetAVTitle.get(meetAVLuckyNum).substring(0,11) : meetAVTitle.get(meetAVLuckyNum));
                             realMeetAVImage.add(meetAVImage.get(meetAVLuckyNum));
                             break;
                         }
