@@ -571,7 +571,7 @@ public class KitchenSinkController {
                 Pattern pattern = Pattern.compile(patternStr);
                 Matcher matcher = pattern.matcher(Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().html());
                 String meetAVMp4 = matcher.group(1);
-                this.reply(replyToken, new TextMessage(meetAVMp4, meetAVMp4));
+                this.reply(replyToken, Arrays.asList(new TextMessage(meetAVTitle.get(meetAVLuckyNum)), new TextMessage(meetAVMp4)));
                 break;
 
             case "抽":
