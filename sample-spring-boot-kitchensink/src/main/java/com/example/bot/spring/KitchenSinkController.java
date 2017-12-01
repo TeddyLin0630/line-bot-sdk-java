@@ -556,30 +556,70 @@ public class KitchenSinkController {
 
                 this.reply(replyToken, new ImageMessage(image18Uri, image18Uri));
                 break;
-            case "test":
+            case "抓":
                 Document meetAvDoc = Jsoup.connect(String.format("http://www.meetav.com/?page=%d", new Random().nextInt(2000))).get();
                 Elements meetAvElements = meetAvDoc.select("h2[class=title fulltitle]");
                 List<String> meetAVUrl = new ArrayList<String>();
                 List<String> meetAVTitle = new ArrayList<String>();
+                List<String> meetAVImage = new ArrayList<String>();
+
                 for (Element e: meetAvElements) {
                     meetAVTitle.add(e.text());
                     meetAVUrl.add(e.select("a[lang=zh-Hant]").attr("href"));
                 }
 
-                int meetAVLuckyNum = new Random().nextInt(20);
-                String meetAVMp4 = "";
-                meetAvElements = Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().select("script[type=text/javascript]");
+                meetAvElements = meetAvDoc.select("div[style=display:none;]");
                 for (Element e : meetAvElements) {
-                    String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
-                    Pattern pattern = Pattern.compile(patternStr);
-                    Matcher matcher = pattern.matcher(e.toString());
-                    boolean matchFound = matcher.find();
-                    if (matchFound) {
-                        meetAVMp4 = matcher.group(1);
-                        break;
+                    meetAVImage.add("https://" + e.select("span").get(0).text());
+                }
+
+                int numberOfMeetAV = 5;
+                List<String> realMeetAVLink = new ArrayList<String>();
+                List<String> realMeetAVTitle = new ArrayList<String>();
+                List<String> realMeetAVImage = new ArrayList<String>();
+
+                for (int i = 0; i < numberOfMeetAV; i++) {
+                    int meetAVLuckyNum = new Random().nextInt(20);
+                    meetAvElements = Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().select("script[type=text/javascript]");
+                    for (Element e : meetAvElements) {
+                        String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
+                        Pattern pattern = Pattern.compile(patternStr);
+                        Matcher matcher = pattern.matcher(e.toString());
+                        boolean matchFound = matcher.find();
+                        if (matchFound) {
+                            realMeetAVLink.add(matcher.group(1));
+                            realMeetAVTitle.add(meetAVTitle.get(meetAVLuckyNum).length() >= 20 ?
+                                    meetAVTitle.get(meetAVLuckyNum).substring(0,19) : meetAVTitle.get(meetAVLuckyNum));
+                            realMeetAVImage.add(meetAVImage.get(meetAVLuckyNum));
+                            break;
+                        }
                     }
                 }
-                this.reply(replyToken, Arrays.asList(new TextMessage(meetAVTitle.get(meetAVLuckyNum)), new TextMessage(meetAVMp4)));
+
+                    /*meetAvElements = Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().select("script[type=text/javascript]");
+                    for (Element e : meetAvElements) {
+                        String patternStr = "var\\shq_video_file\\s=\\s'(.*)'";
+                        Pattern pattern = Pattern.compile(patternStr);
+                        Matcher matcher = pattern.matcher(e.toString());
+                        boolean matchFound = matcher.find();
+                        if (matchFound) {
+                            meetAVMp4 = matcher.group(1);
+                            break;
+                        }
+                    }*/
+                ArrayList<ImageCarouselColumn> meetAVCarouselColumns = new ArrayList<>();
+                for (int i = 0; i < numberOfMeetAV; i++) {
+                    meetAVCarouselColumns.add(
+                            new ImageCarouselColumn(meetAVImage.get(i),
+                                    new URIAction(realMeetAVTitle.get(i), realMeetAVLink.get(i))));
+                }
+
+                ImageCarouselTemplate meetAVCarouselTemplate = new ImageCarouselTemplate(
+                        meetAVCarouselColumns);
+
+                this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", meetAVCarouselTemplate));
+
+//                this.reply(replyToken, Arrays.asList(new TextMessage(meetAVTitle.get(meetAVLuckyNum)), new TextMessage(meetAVMp4)));
                 break;
 
             case "抽":
@@ -817,7 +857,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, new ImageMessage(pexelsImageUri, pexelsImageUri));
                 break;*/
 
-            case "抓":
+           /* case "抓":
                 Document xvideosDoc = Jsoup.connect("https://www.xvideos.com/rss/rss.xml").get();
                 Elements xvideoUrlSet = xvideosDoc.select("flv_embed");
                 List<String> xvideos = new ArrayList<>();
@@ -838,9 +878,6 @@ public class KitchenSinkController {
                 String url = thumbs.get(randNum).replace("http", "https");
                 String videoUrl = xvideos.get(randNum);
 
-                /*System.out.println("抓 url : "+url);
-                this.reply(replyToken, new ImageMessage(url, url));*/
-
                 ArrayList<ImageCarouselColumn> imageCarouselColumns = new ArrayList<>();
                 for (int i = 0; i < 1; i++) {
                     imageCarouselColumns.add(
@@ -852,7 +889,7 @@ public class KitchenSinkController {
                         imageCarouselColumns);
 
                 this.reply(replyToken, new TemplateMessage("ImageCarousel alt text", imageCarouselTemplate));
-                break;
+                break;*/
 
             case "moto":
             case "機車":
