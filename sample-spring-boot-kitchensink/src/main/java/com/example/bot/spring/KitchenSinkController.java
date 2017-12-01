@@ -86,6 +86,8 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @LineMessageHandler
@@ -551,7 +553,25 @@ public class KitchenSinkController {
                         }
                         break;
                 }
+
                 this.reply(replyToken, new ImageMessage(image18Uri, image18Uri));
+                break;
+            case "test":
+                Document meetAvDoc = Jsoup.connect(String.format("http://www.meetav.com/?page=%d", new Random().nextInt(2000))).get();
+                Elements meetAvElements = meetAvDoc.select("h2[class=title fulltitle]");
+                List<String> meetAVUrl = new ArrayList<String>();
+                List<String> meetAVTitle = new ArrayList<String>();
+                for (Element e: meetAvElements) {
+                    meetAVTitle.add(e.text());
+                    meetAVUrl.add(e.select("a[lang=zh-Hant]").attr("href"));
+                }
+
+                int meetAVLuckyNum = new Random().nextInt(20);
+                String patternStr = "var hq_video_file = '(.*)'";
+                Pattern pattern = Pattern.compile(patternStr);
+                Matcher matcher = pattern.matcher(Jsoup.connect(meetAVUrl.get(meetAVLuckyNum)).get().html());
+                String meetAVMp4 = matcher.group(1);
+                this.reply(replyToken, new TextMessage(meetAVMp4, meetAVMp4));
                 break;
 
             case "抽":
