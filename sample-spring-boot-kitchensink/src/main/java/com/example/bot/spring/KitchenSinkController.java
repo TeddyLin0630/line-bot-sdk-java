@@ -111,13 +111,13 @@ public class KitchenSinkController {
 //        plus28,
         hkCom,
 //        news_gamme,
-//        forum_gamme,
+        forum_gamme,
 //        beautify_leg,
 //        ookkk,
 //        rosiyy,
 //        k163k163,
 //        sina_poppy,
-        ptt_beauty
+//        ptt_beauty
     }
 
     enum WEB_SITES_18 {
@@ -663,6 +663,7 @@ public class KitchenSinkController {
                         break;*/
 
                     case hkCom://discuss.com.hk
+                    default:
                         Document hkDoc = Jsoup.connect("http://www.discuss.com.hk/archiver/?fid-140.html").get();
                         Elements hkElements = hkDoc.select("li").select("a");
                         Random hkRandom = new Random();
@@ -749,13 +750,12 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
                         break;*/
 
-                   /* case forum_gamme: //forum 聊天事 - 正妹研究所
+                    case forum_gamme: //forum 聊天事 - 正妹研究所
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
-                        break;*/
+                        break;
 
-                    case ptt_beauty: //PTT BEAUTIFY
-                    default:
+                   /* case ptt_beauty: //PTT BEAUTIFY
                         Document ptt_beautify_doc = Jsoup.connect("http://feed43.com/getbeaktyurl.xml").get();
                         Elements ptt_beautifyElements = ptt_beautify_doc.select("item");
                         List<String> ptt_beauty_url_set = new ArrayList<String>();
@@ -770,7 +770,7 @@ public class KitchenSinkController {
                                 imageUriSet.add(ptt_beautifyElement.html());
                             }
                         }
-                        break;
+                        break;*/
                     /*case voc:
                         //http://bbs.voc.com.cn/
                         Document vocDoc = Jsoup.connect("http://bbs.voc.com.cn/rss.php?fid=50").get();
