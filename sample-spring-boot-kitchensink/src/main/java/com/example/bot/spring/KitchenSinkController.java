@@ -105,18 +105,18 @@ public class KitchenSinkController {
     }
 
     enum WEB_SITES {
-        jpBeautifyHouse,
+//        jpBeautifyHouse,
 //        ck101,
         //        voc,
-        plus28,
+//        plus28,
         hkCom,
 //        news_gamme,
-        forum_gamme,
-        beautify_leg,
-        ookkk,
-        rosiyy,
-        k163k163,
-        sina_poppy,
+//        forum_gamme,
+//        beautify_leg,
+//        ookkk,
+//        rosiyy,
+//        k163k163,
+//        sina_poppy,
         ptt_beauty
     }
 
@@ -630,7 +630,7 @@ public class KitchenSinkController {
                 System.out.println("抽 website : " + who.name());
                 switch (who) {
                     //jpBeautyHouse
-                    case jpBeautifyHouse:
+                    /*case jpBeautifyHouse:
                         Document jpDoc = Jsoup.connect("http://jpbeautyhouse.blogspot.com/feeds/posts/default").get();
                         Elements jpBeautyHouseSet = jpDoc.select("content");
                         for (Element jpBeautyHouse : jpBeautyHouseSet) {
@@ -660,7 +660,7 @@ public class KitchenSinkController {
                         for (Element plus28Img : plus28ImgSet) {
                             imageUriSet.add(plus28Img.attr("src"));
                         }
-                        break;
+                        break;*/
 
                     case hkCom://discuss.com.hk
                         Document hkDoc = Jsoup.connect("http://www.discuss.com.hk/archiver/?fid-140.html").get();
@@ -722,7 +722,7 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(newsGammeUrl, 1));
                         break;*/
 
-                    case rosiyy:
+                    /*case rosiyy:
                         String rosiyy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fwww.rosiyy.com%2Ffeed%2F&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(rosiyy, 2));
                         break;
@@ -747,12 +747,12 @@ public class KitchenSinkController {
                     case sina_poppy: //□■□□妖色
                         String sina_poppy = "https://feedly.com/v3/mixes/contents?streamId=feed%2Fhttp%3A%2F%2Fblog.sina.com.cn%2Frss%2F1579071145.xml&count=20&hours=23&backfill=true&boostMustRead=true&unreadOnly=false&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1408";
                         imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
-                        break;
+                        break;*/
 
-                    case forum_gamme: //forum 聊天事 - 正妹研究所
+                   /* case forum_gamme: //forum 聊天事 - 正妹研究所
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
-                        break;
+                        break;*/
 
                     case ptt_beauty: //PTT BEAUTIFY
                     default:
