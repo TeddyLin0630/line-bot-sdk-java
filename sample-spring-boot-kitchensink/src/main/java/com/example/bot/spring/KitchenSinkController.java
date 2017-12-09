@@ -1412,8 +1412,8 @@ public class KitchenSinkController {
                 "\"動\" : 正妹影片\n" );
     }
 
-    public static ArrayList<String>  getGigaCirclePicMap(String url) {
-        ArrayList<String> imageUriSet = new ArrayList<>();
+    public static List<String>  getGigaCirclePicMap(String url) {
+        List<String> imageUriSet = new ArrayList<>();
         try {
             Document gigaCircleDoc = Jsoup.connect(url).get();
             List<String> gigaCircleLinkSet = new ArrayList<String>();
