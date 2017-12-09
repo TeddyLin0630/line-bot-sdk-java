@@ -196,19 +196,19 @@ public class KitchenSinkController {
 
     @EventMapping
     public void handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
-        LocationMessageContent locationMessage = event.getMessage();
+      /*  LocationMessageContent locationMessage = event.getMessage();
         reply(event.getReplyToken(), new LocationMessage(
                 locationMessage.getTitle(),
                 locationMessage.getAddress(),
                 locationMessage.getLatitude(),
                 locationMessage.getLongitude()
-        ));
+        ));*/
     }
 
     @EventMapping
     public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) throws IOException {
         // You need to install ImageMagick
-        handleHeavyContent(
+       /* handleHeavyContent(
                 event.getReplyToken(),
                 event.getMessage().getId(),
                 responseBody -> {
@@ -221,7 +221,7 @@ public class KitchenSinkController {
                             previewImg.path.toString());
                     reply(((MessageEvent) event).getReplyToken(),
                             new ImageMessage(jpg.getUri(), jpg.getUri()));
-                });
+                });*/
     }
 
     @EventMapping
