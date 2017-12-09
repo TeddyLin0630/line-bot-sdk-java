@@ -109,8 +109,9 @@ public class KitchenSinkController {
 //        ck101,
         //        voc,
 //        plus28,
+        timliao,
         gigacircle_31,
-        gigacircle_32,
+        gigacircle_32
 //        hkCom,
 //        news_gamme,
 //        forum_gamme,
@@ -663,7 +664,26 @@ public class KitchenSinkController {
                             imageUriSet.add(plus28Img.attr("src"));
                         }
                         break;*/
+                    case timliao:
+                        //timliao
+                        Document timliaoDoc = Jsoup.connect(String.format("http://www.timliao.com/bbs/forumdisplay_beauty_wall.php?fid=18&filter=5000000&orderby=dateline&page=%d", new Random().nextInt(10))).get();
+                        List<String> timliaoLinkSet = new ArrayList<String>();
+                        for (Element e : timliaoDoc.select("div[class=pic]")) {
+                            timliaoLinkSet.add("http://www.timliao.com/bbs/" + e.select("a").attr("href"));
+                            System.out.println("http://www.timliao.com/bbs/" + e.select("a").attr("href"));
 
+                        }
+                        String gigaCircleThumbLink = timliaoLinkSet.get(new Random().nextInt(timliaoLinkSet.size()));
+                        System.out.println(gigaCircleThumbLink);
+                        timliaoDoc = Jsoup.connect(gigaCircleThumbLink).get();
+                        timliaoLinkSet.clear();
+                        for (Element e : timliaoDoc.select("div[class=postcontent]")) {
+                            for(Element imge : e.select("img[src$=jpg]")) {
+                                imageUriSet.add(imge.attr("src"));
+                            }
+
+                        }
+                        break;
                     case gigacircle_32:
                         //GigaCircle - 日韓美女
                         String gigacircle32MainUrl = String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10));
