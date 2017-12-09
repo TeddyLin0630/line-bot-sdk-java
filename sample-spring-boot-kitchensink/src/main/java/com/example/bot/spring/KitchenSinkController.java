@@ -109,6 +109,7 @@ public class KitchenSinkController {
 //        ck101,
         //        voc,
 //        plus28,
+        gigacircle_32,
         hkCom,
 //        news_gamme,
         forum_gamme,
@@ -661,6 +662,27 @@ public class KitchenSinkController {
                             imageUriSet.add(plus28Img.attr("src"));
                         }
                         break;*/
+                    case gigacircle_32:
+                        //GigaCircle - 日韓美女
+                        Document gigaCircleDoc = Jsoup.connect(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))).get();
+                        System.out.println();
+                        List<String> gigaCircleLinkSet = new ArrayList<String>();
+                        for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
+                            gigaCircleLinkSet.add(e.select("a").attr("href"));
+                        }
+                        String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
+                        gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
+                        gigaCircleLinkSet.clear();
+                        for (Element e : gigaCircleDoc.select("p")) {
+                            for (Element se : e.select("img")) {
+                                gigaCircleThumbLink = se.attr("data-original");
+                                if (!gigaCircleThumbLink.contains("https")) {
+                                    gigaCircleThumbLink = gigaCircleThumbLink.replace("http", "https");
+                                }
+                                imageUriSet.add(gigaCircleThumbLink);
+                            }
+                        }
+                        break;
 
                     case hkCom://discuss.com.hk
                     default:
