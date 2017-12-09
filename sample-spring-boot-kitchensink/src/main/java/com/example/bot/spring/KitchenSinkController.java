@@ -110,7 +110,7 @@ public class KitchenSinkController {
         //        voc,
 //        plus28,
         gigacircle_31,
-        gigacircle_32,
+//        gigacircle_32,
 //        hkCom,
 //        news_gamme,
 //        forum_gamme,
@@ -664,7 +664,7 @@ public class KitchenSinkController {
                         }
                         break;*/
 
-                    case gigacircle_32:
+                    /*case gigacircle_32:
                         //GigaCircle - 日韓美女
                         String gigacircle32MainUrl = String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10));
                         System.out.println("gigacircle32MainUrl : " + gigacircle32MainUrl);
@@ -692,7 +692,7 @@ public class KitchenSinkController {
                         }
 
                         imageUriSet.addAll(getGigaCirclePicMap(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))));
-                        break;
+                        break;*/
 
                     case gigacircle_31:
                     default:
