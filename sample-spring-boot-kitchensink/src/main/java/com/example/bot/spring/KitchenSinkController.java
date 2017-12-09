@@ -666,8 +666,11 @@ public class KitchenSinkController {
 
                     case gigacircle_32:
                         //GigaCircle - 日韓美女
-                        Document gigaCircle32Doc = Jsoup.connect(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))).get();
-                        List<String> gigaCircle32LinkSet = new ArrayList<String>();
+                        String gigacircle32MainUrl = String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10));
+                        System.out.println("gigacircle32MainUrl : " + gigacircle32MainUrl);
+                        Document gigaCircle32Doc = Jsoup.connect(gigacircle32MainUrl).get();
+                        List<String> gigaCircle32LinkSet = new ArrayList<>();
+
                         for (Element e : gigaCircle32Doc.select("div[class=thumbs]")) {
                             gigaCircle32LinkSet.add(e.select("a").attr("href"));
                         }
@@ -694,7 +697,9 @@ public class KitchenSinkController {
                     case gigacircle_31:
                     default:
                         //GigaCircle - 正妹美眉
-                        Document gigaCircle31Doc = Jsoup.connect(String.format("http://tw.gigacircle.com/s31-%d", new Random().nextInt(10))).get();
+                        String gigacircle31MainUrl = String.format("http://tw.gigacircle.com/s31-%d", new Random().nextInt(10));
+                        System.out.println("gigacircle31MainUrl : " + gigacircle31MainUrl);
+                        Document gigaCircle31Doc = Jsoup.connect(gigacircle31MainUrl).get();
                         List<String> gigaCircle31LinkSet = new ArrayList<String>();
                         for (Element e : gigaCircle31Doc.select("div[class=thumbs]")) {
                             gigaCircle31LinkSet.add(e.select("a").attr("href"));
