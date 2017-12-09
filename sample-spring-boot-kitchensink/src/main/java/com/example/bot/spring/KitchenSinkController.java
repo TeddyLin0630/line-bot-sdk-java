@@ -1416,7 +1416,7 @@ public class KitchenSinkController {
         List<String> imageUriSet = new ArrayList<>();
         try {
             Document gigaCircleDoc = Jsoup.connect(url).get();
-            List<String> gigaCircleLinkSet = new ArrayList<String>();
+            List<String> gigaCircleLinkSet = new ArrayList<>();
             for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
                 gigaCircleLinkSet.add(e.select("a").attr("href"));
             }
