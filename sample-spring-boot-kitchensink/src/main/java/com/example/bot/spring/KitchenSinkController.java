@@ -712,8 +712,6 @@ public class KitchenSinkController {
                                 imageUriSet.add(gigaCircle32ThumbLink);
                             }
                         }
-
-                        imageUriSet.addAll(getGigaCirclePicMap(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))));
                         break;
 
                     case gigacircle_31:
@@ -1479,37 +1477,5 @@ public class KitchenSinkController {
                 "\"sg\" : show girl\n" +
                 "\"健身\" : 健身影片\n" +
                 "\"動\" : 正妹影片\n" );
-    }
-
-    public static ArrayList<String>  getGigaCirclePicMap(String url) {
-        ArrayList<String> imageUriSet = new ArrayList<>();
-        try {
-            Document gigaCircleDoc = Jsoup.connect(url).get();
-            List<String> gigaCircleLinkSet = new ArrayList<String>();
-            for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
-                gigaCircleLinkSet.add(e.select("a").attr("href"));
-            }
-            String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
-            System.out.println("gigaCircleThumbLink : " + gigaCircleThumbLink);
-            gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
-            gigaCircleLinkSet.clear();
-            for (Element e : gigaCircleDoc.select("div[id=gallery]")) {
-                for (Element se : e.select("img")) {
-                    gigaCircleThumbLink = se.attr("data-original");
-
-                    if (gigaCircleThumbLink.isEmpty()) {
-                        continue;
-                    }
-
-                    if (!gigaCircleThumbLink.contains("https")) {
-                        gigaCircleThumbLink = gigaCircleThumbLink.replace("http", "https");
-                    }
-
-                    imageUriSet.add(gigaCircleThumbLink);
-                }
-            }
-        } catch (IOException e) {
-        }
-        return imageUriSet;
     }
 }
