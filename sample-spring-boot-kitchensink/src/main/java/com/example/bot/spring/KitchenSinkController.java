@@ -109,10 +109,11 @@ public class KitchenSinkController {
 //        ck101,
         //        voc,
 //        plus28,
+        gigacircle_31,
         gigacircle_32,
-        hkCom,
+//        hkCom,
 //        news_gamme,
-        forum_gamme,
+//        forum_gamme,
 //        beautify_leg,
 //        ookkk,
 //        rosiyy,
@@ -662,6 +663,7 @@ public class KitchenSinkController {
                             imageUriSet.add(plus28Img.attr("src"));
                         }
                         break;*/
+
                     case gigacircle_32:
                         //GigaCircle - 日韓美女
                         Document gigaCircleDoc = Jsoup.connect(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))).get();
@@ -673,7 +675,7 @@ public class KitchenSinkController {
                         String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
                         gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
                         gigaCircleLinkSet.clear();
-                        for (Element e : gigaCircleDoc.select("p")) {
+                        for (Element e : gigaCircleDoc.select("div[id=gallery]")) {
                             for (Element se : e.select("img")) {
                                 gigaCircleThumbLink = se.attr("data-original");
                                 if (!gigaCircleThumbLink.contains("https")) {
@@ -684,8 +686,30 @@ public class KitchenSinkController {
                         }
                         break;
 
-                    case hkCom://discuss.com.hk
-                    default:
+                    case gigacircle_31:
+                        default:
+                        //GigaCircle - 日韓美女
+                        Document gigaCircleDoc = Jsoup.connect(String.format("http://tw.gigacircle.com/s31-%d", new Random().nextInt(10))).get();
+                        System.out.println();
+                        List<String> gigaCircleLinkSet = new ArrayList<String>();
+                        for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
+                            gigaCircleLinkSet.add(e.select("a").attr("href"));
+                        }
+                        String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
+                        gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
+                        gigaCircleLinkSet.clear();
+                        for (Element e : gigaCircleDoc.select("div[id=gallery]")) {
+                            for (Element se : e.select("img")) {
+                                gigaCircleThumbLink = se.attr("data-original");
+                                if (!gigaCircleThumbLink.contains("https")) {
+                                    gigaCircleThumbLink = gigaCircleThumbLink.replace("http", "https");
+                                }
+                                imageUriSet.add(gigaCircleThumbLink);
+                            }
+                        }
+                        break;
+
+                    /*case hkCom://discuss.com.hk
                         Document hkDoc = Jsoup.connect("http://www.discuss.com.hk/archiver/?fid-140.html").get();
                         Elements hkElements = hkDoc.select("li").select("a");
                         Random hkRandom = new Random();
@@ -715,7 +739,7 @@ public class KitchenSinkController {
                             }
                             imageUriSet.add(hkElementContent);
                         }
-                        break;
+                        break;*/
 
                     /*case ck101:
                         //ck101
@@ -772,10 +796,10 @@ public class KitchenSinkController {
                         imageUriSet.addAll(runCommonFeedParser(sina_poppy, 3));
                         break;*/
 
-                    case forum_gamme: //forum 聊天事 - 正妹研究所
+                    /*case forum_gamme: //forum 聊天事 - 正妹研究所
                         String forumGammeUrl = "https://feedly.com/v3/streams/contents?streamId=feed%2Fhttp%3A%2F%2Fforum.gamme.com.tw%2Fforum.php%3Fmod%3Drss%26fid%3D2%26auth%3D0&count=20&unreadOnly=false&ranked=newest&similar=true&ck="+getTimestamp()+"&ct=feedly.desktop&cv=30.0.1403";
                         imageUriSet.addAll(runCommonFeedParser(forumGammeUrl, 1));
-                        break;
+                        break;*/
 
                    /* case ptt_beauty: //PTT BEAUTIFY
                         Document ptt_beautify_doc = Jsoup.connect("http://feed43.com/getbeaktyurl.xml").get();
