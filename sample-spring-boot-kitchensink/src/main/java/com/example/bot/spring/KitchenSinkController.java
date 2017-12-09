@@ -666,11 +666,14 @@ public class KitchenSinkController {
                         break;*/
                     case timliao:
                         //timliao
-                        Document timliaoDoc = Jsoup.connect(String.format("http://www.timliao.com/bbs/forumdisplay_beauty_wall.php?fid=18&filter=5000000&orderby=dateline&page=%d", new Random().nextInt(10))).get();
+                        String[] timliaoHomeSet = {String.format("http://www.timliao.com/bbs/forumdisplay.php?fid=18&filter=0&orderby=dateline&ascdesc=DESC&page=%d", new Random().nextInt(5)) ,
+                                String.format("http://www.timliao.com/bbs/forumdisplay_beauty_wall.php?fid=18&filter=5000000&orderby=dateline&page=%d", new Random().nextInt(10))} ;
+                        String timliaoHome = timliaoHomeSet[new Random().nextInt(timliaoHomeSet.length)];
+                        System.out.println("timliao home link : " + timliaoHome);
+                        Document timliaoDoc = Jsoup.connect(timliaoHome).get();
                         List<String> timliaoLinkSet = new ArrayList<String>();
                         for (Element e : timliaoDoc.select("div[class=pic]")) {
                             timliaoLinkSet.add("http://www.timliao.com/bbs/" + e.select("a").attr("href"));
-                            System.out.println("http://www.timliao.com/bbs/" + e.select("a").attr("href"));
 
                         }
                         String gigaCircleThumbLink = timliaoLinkSet.get(new Random().nextInt(timliaoLinkSet.size()));
@@ -681,7 +684,6 @@ public class KitchenSinkController {
                             for(Element imge : e.select("img[src$=jpg]")) {
                                 imageUriSet.add(imge.attr("src"));
                             }
-
                         }
                         break;
                     case gigacircle_32:
