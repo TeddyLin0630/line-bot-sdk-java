@@ -666,22 +666,21 @@ public class KitchenSinkController {
 
                     case gigacircle_32:
                         //GigaCircle - 日韓美女
-                        Document gigaCircleDoc = Jsoup.connect(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))).get();
-                        System.out.println();
-                        List<String> gigaCircleLinkSet = new ArrayList<String>();
-                        for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
-                            gigaCircleLinkSet.add(e.select("a").attr("href"));
+                        Document gigaCircle32Doc = Jsoup.connect(String.format("http://tw.gigacircle.com/s32-%d", new Random().nextInt(10))).get();
+                        List<String> gigaCircle32LinkSet = new ArrayList<String>();
+                        for (Element e : gigaCircle32Doc.select("div[class=thumbs]")) {
+                            gigaCircle32LinkSet.add(e.select("a").attr("href"));
                         }
-                        String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
-                        gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
-                        gigaCircleLinkSet.clear();
-                        for (Element e : gigaCircleDoc.select("div[id=gallery]")) {
+                        String gigaCircle32ThumbLink = gigaCircle32LinkSet.get(new Random().nextInt(gigaCircle32LinkSet.size()));
+                        gigaCircle32Doc = Jsoup.connect(gigaCircle32ThumbLink).get();
+                        gigaCircle32LinkSet.clear();
+                        for (Element e : gigaCircle32Doc.select("div[id=gallery]")) {
                             for (Element se : e.select("img")) {
-                                gigaCircleThumbLink = se.attr("data-original");
-                                if (!gigaCircleThumbLink.contains("https")) {
-                                    gigaCircleThumbLink = gigaCircleThumbLink.replace("http", "https");
+                                gigaCircle32ThumbLink = se.attr("data-original");
+                                if (!gigaCircle32ThumbLink.contains("https")) {
+                                    gigaCircle32ThumbLink = gigaCircle32ThumbLink.replace("http", "https");
                                 }
-                                imageUriSet.add(gigaCircleThumbLink);
+                                imageUriSet.add(gigaCircle32ThumbLink);
                             }
                         }
                         break;
@@ -689,22 +688,21 @@ public class KitchenSinkController {
                     case gigacircle_31:
                         default:
                         //GigaCircle - 日韓美女
-                        Document gigaCircleDoc = Jsoup.connect(String.format("http://tw.gigacircle.com/s31-%d", new Random().nextInt(10))).get();
-                        System.out.println();
-                        List<String> gigaCircleLinkSet = new ArrayList<String>();
-                        for (Element e : gigaCircleDoc.select("div[class=thumbs]")) {
-                            gigaCircleLinkSet.add(e.select("a").attr("href"));
+                        Document gigaCircle31Doc = Jsoup.connect(String.format("http://tw.gigacircle.com/s31-%d", new Random().nextInt(10))).get();
+                        List<String> gigaCircle31LinkSet = new ArrayList<String>();
+                        for (Element e : gigaCircle31Doc.select("div[class=thumbs]")) {
+                            gigaCircle31LinkSet.add(e.select("a").attr("href"));
                         }
-                        String gigaCircleThumbLink = gigaCircleLinkSet.get(new Random().nextInt(gigaCircleLinkSet.size()));
-                        gigaCircleDoc = Jsoup.connect(gigaCircleThumbLink).get();
-                        gigaCircleLinkSet.clear();
-                        for (Element e : gigaCircleDoc.select("div[id=gallery]")) {
+                        String gigaCircle31ThumbLink = gigaCircle31LinkSet.get(new Random().nextInt(gigaCircle31LinkSet.size()));
+                        gigaCircle31Doc = Jsoup.connect(gigaCircle31ThumbLink).get();
+                        gigaCircle31LinkSet.clear();
+                        for (Element e : gigaCircle31Doc.select("div[id=gallery]")) {
                             for (Element se : e.select("img")) {
-                                gigaCircleThumbLink = se.attr("data-original");
-                                if (!gigaCircleThumbLink.contains("https")) {
-                                    gigaCircleThumbLink = gigaCircleThumbLink.replace("http", "https");
+                                gigaCircle31ThumbLink = se.attr("data-original");
+                                if (!gigaCircle31ThumbLink.contains("https")) {
+                                    gigaCircle31ThumbLink = gigaCircle31ThumbLink.replace("http", "https");
                                 }
-                                imageUriSet.add(gigaCircleThumbLink);
+                                imageUriSet.add(gigaCircle31ThumbLink);
                             }
                         }
                         break;
